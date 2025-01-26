@@ -1,0 +1,17 @@
+macro(addUnitTest name)
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${name}.cpp)
+    add_executable(${name} ${name}.cpp ${ARGN})
+  elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${name}.in.cpp)
+    configure_file(${name}.in.cpp
+      ${CMAKE_CURRENT_BINARY_DIR}/${name}.cpp)
+    add_executable(${name} ${CMAKE_CURRENT_BINARY_DIR}/${name}.cpp ${ARGN})
+    target_include_directories(${name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+  else()
+    message(SEND_ERROR "Cannot add a test ${name}, neither ${name}.cpp nor ${name}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
+  endif()
+  target_link_libraries(${name} hqp)
+  add_test(${name}Unit ${name})
+  # Adding a project configuration file (for MSVC only)
+endmacro(addUnitTest)
+
+addUnitTest(test1 test1.cpp)
