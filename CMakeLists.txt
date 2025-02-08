@@ -1,14 +1,15 @@
 cmake_minimum_required(VERSION 3.4)
 
+# set(CMAKE_INSTALL_PREFIX "/home/deshi") cat install_manifest.txt | xargs echo sudo rm | sh
 project(HQP)
 
 # set(CMAKE_BUILD_TYPE Release CACHE STRING "Release RelWithDebInfo Debug DEFAULT: Release" FORCE)
-set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ version selection")
+set(CMAKE_CXX_STANDARD 20 CACHE STRING "C++ version selection")
 
 option(COMPILE_TESTS "compile the tests" ON)
 
 add_compile_options(
-  -O3 -g -Wall -Wpedantic -fPIC -std=c++17 -Wno-terminate
+  -O3 -g -Wall -Wpedantic -fPIC -std=c++20 -Wno-terminate
   )
 
 ################################################################################

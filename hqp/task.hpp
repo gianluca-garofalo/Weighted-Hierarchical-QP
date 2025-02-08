@@ -1,0 +1,29 @@
+#ifndef _Task_
+#define _Task_
+
+#include <Eigen/Dense>
+
+namespace hqp
+{
+
+    class Task
+    {
+    protected:
+        Eigen::MatrixXd matrix_;
+        Eigen::VectorXd vector_;
+        bool is_computed_ = false;
+
+    public:
+        Eigen::VectorXi is_equality_;
+        Eigen::VectorXi is_active_;
+        Task() {}
+        virtual void compute() = 0;
+        Eigen::MatrixXd get_matrix() { if (!is_computed_) compute(); return matrix_; }
+        Eigen::VectorXd get_vector() { if (!is_computed_) compute(); return vector_; }
+        // TODO: add set_equality and other methods.
+        // bool set_equality(const Eigen::VectorXi &is_equality) { is_equality_ = is_equality; }
+    };
+
+} // namespace hqp
+
+#endif // _Task_
