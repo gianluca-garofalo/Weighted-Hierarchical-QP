@@ -14,4 +14,4 @@ macro(addUnitTest name)
   # Adding a project configuration file (for MSVC only)
 endmacro(addUnitTest)
 
-addUnitTest(test1 test1.cpp)
+addUnitTest(test0 test0.cpp)
