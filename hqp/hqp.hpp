@@ -1,45 +1,40 @@
-#ifndef _HQP_
-#define _HQP_
+#ifndef _HierarchicalQP_
+#define _HierarchicalQP_
 
+#include <vector>
+#include <memory>
 #include <Eigen/Dense>
+#include "task.hpp"
+#include "library.hpp"
 
 namespace hqp
 {
 
-    template <int m, int n>
-    class HQP
+    class HierarchicalQP
     {
 
     private:
-        Eigen::Matrix<double, m, n> Matrix_;
+        std::vector<std::shared_ptr<Task>> sot_;
+        Eigen::VectorXd primal_;
+        Eigen::VectorXd tasks_;
+        Eigen::VectorXd slack_;
+        uint row_;
+        uint col_;
+        uint k_;
+        Eigen::MatrixXd nullSpace;
+        Eigen::MatrixXd inverse_;
+        Eigen::MatrixXd codRight;
+        bool is_solved_ = false;
+
+        void eHQP();
 
     public:
-        HQP()
-        {
-            Matrix_ = Eigen::Matrix<double, m, n>::Identity();
-        }
-
-        HQP(const Eigen::Matrix<double, m, n> &A)
-        {
-            Matrix_ = A;
-        }
-
-        Eigen::Matrix<double, m, n> get_A() { return Matrix_; };
+        HierarchicalQP(uint m, uint n);
+        void solve();
+        void push_back(std::shared_ptr<Task> task);
+        Eigen::VectorXd get_primal();
     };
 
-    Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1> &in)
-    {
-        Eigen::VectorXi out = Eigen::VectorXi::Zero(in.cast<int>().sum());
-        for (auto j = 0, i = 0; i < in.rows(); ++i)
-        {
-            if (in(i))
-            {
-                out(j++) = i;
-            }
-        }
-        return out;
-    }
+} // namespace hqp
 
-}
-
-#endif // _HQP_
+#endif // _HierarchicalQP_
