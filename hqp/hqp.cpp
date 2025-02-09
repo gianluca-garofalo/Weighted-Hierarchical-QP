@@ -19,9 +19,10 @@ namespace hqp
         {
             task->is_active_ = task->is_equality_;
         }
-        eHQP();
+        iHQP();
         is_solved_ = true;
     }
+
 
     void HierarchicalQP::eHQP()
     {
@@ -74,6 +75,7 @@ namespace hqp
         }
     }
 
+
     void HierarchicalQP::push_back(std::shared_ptr<Task> task)
     {
         sot_.push_back(task);
@@ -81,9 +83,116 @@ namespace hqp
 
     Eigen::VectorXd HierarchicalQP::get_primal()
     {
-        if (!is_solved_)
-            solve();
+        if (!is_solved_) solve();
         return primal_;
+    }
+
+    void HierarchicalQP::iHQP()
+    {
+        for (auto& task : sot_)
+        {
+            task->is_locked_.setZero();
+            task->dual_.setZero();
+        }
+        uint h = 0;
+        bool is_active_set_new = true;
+
+        while (h < sot_.size())
+        {
+            while (is_active_set_new)
+            {
+                eHQP();
+
+                // Add tasks to the active set.
+                is_active_set_new = false;
+                for (uint k = 0; k < k_; ++k)
+                {
+                    auto row = find(!sot_[k]->is_active_);
+                    Eigen::MatrixXd matrix = sot_[k]->get_matrix();
+                    Eigen::VectorXd vector = sot_[k]->get_vector();
+                    // TODO: set tolerance as a parameter.
+                    sot_[k]->is_active_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > 1e-9;
+                    is_active_set_new = is_active_set_new || sot_[k]->is_active_(row).any();
+                    // TODO: break if is_active_set_new.
+                }
+            }
+
+            // Remove tasks from the active set.
+            while (h < sot_.size())
+            {
+                for (uint k = 0; k <= h; ++k)
+                {
+                    sot_[k]->is_free_ = sot_[k]->is_active_ && !sot_[k]->is_equality_ && !sot_[k]->is_locked_;
+                }
+
+                if (sot_[h]->is_free_.any())
+                {
+                    auto row = find(sot_[h]->is_free_);
+                    Eigen::MatrixXd matrix = sot_[h]->get_matrix();
+                    Eigen::VectorXd vector = sot_[h]->get_vector();
+
+                    if (h >= k_)
+                    {
+                        sot_[h]->slack_(row) = matrix(row, Eigen::all) * primal_ - vector(row);
+                    }
+                    sot_[h]->dual_(row) = sot_[h]->slack_(row);
+                    dual_update(h, matrix(row, Eigen::all).transpose() * sot_[h]->dual_(row));
+
+                    for (uint k = 0; k <= h; ++k)
+                    {
+                        if (sot_[k]->is_free_.any())
+                        {
+                            auto row = find(sot_[k]->is_free_);
+                            auto test = (sot_[k]->dual_(row)).array() > 1e-9;
+                            sot_[k]->is_active_(row) = !test;
+                            sot_[k]->is_locked_(row) = test;
+                            is_active_set_new = is_active_set_new || (k < k_ && test.any());
+                        }
+                    }
+                }
+
+                if (is_active_set_new) break;
+                h++;
+            }
+        }
+    }
+
+
+    void HierarchicalQP::dual_update(uint h, const Eigen::VectorXd& tau)
+    {
+        uint k = 0;
+        auto dof = col_;
+        auto oldDof = col_;
+
+        while (k < h && dof > 0)
+        {
+            if (sot_[k]->is_active_.any())
+            {
+                uint leftDof = dof - sot_[k]->rank_;
+                auto row = find(sot_[k]->is_active_ && sot_[k]->is_free_);
+                if (row.any())
+                {
+                    Eigen::VectorXd f = inverse_.block(0, col_ - dof, oldDof, sot_[k]->rank_).transpose() * tau.head(oldDof);
+                    sot_[k]->codMid_
+                        .topLeftCorner(sot_[k]->rank_, sot_[k]->rank_)
+                        .triangularView<Eigen::Upper>()
+                        .transpose()
+                        .solveInPlace<Eigen::OnTheLeft>(f);
+                    sot_[k]->dual_(row) = -sot_[k]->codLeft_(row, Eigen::seqN(0, sot_[k]->rank_)) * f;
+                }
+
+                oldDof = dof;
+                dof = leftDof;
+            }
+            k++;
+        }
+
+        while (k < h)
+        {
+            auto row = find(sot_[k]->is_free_);
+            sot_[k]->dual_(row).setZero();
+            k++;
+        }
     }
 
 
