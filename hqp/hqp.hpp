@@ -28,6 +28,8 @@ namespace hqp
 
         void eHQP();
 
+        Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
+
     public:
         HierarchicalQP(uint m, uint n);
         void solve();
