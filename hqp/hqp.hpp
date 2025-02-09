@@ -25,6 +25,8 @@ namespace hqp
         bool is_solved_ = false;
 
         void eHQP();
+        void iHQP();
+        void dual_update(uint h, const Eigen::VectorXd& tau);
 
         Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
 
