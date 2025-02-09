@@ -14,8 +14,8 @@ namespace hqp
         bool is_computed_ = false;
 
     public:
-        Eigen::VectorXi is_equality_;
-        Eigen::VectorXi is_active_;
+        Eigen::Array<bool, Eigen::Dynamic, 1> is_equality_;
+        Eigen::Array<bool, Eigen::Dynamic, 1> is_active_;
         Task() {}
         virtual void compute() = 0;
         Eigen::MatrixXd get_matrix() { if (!is_computed_) compute(); return matrix_; }

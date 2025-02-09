@@ -36,9 +36,10 @@ namespace hqp
         {
             if (sot_[k_]->is_active_.any())
             {
-                Eigen::MatrixXd matrix = sot_[k_]->get_matrix();
-                Eigen::VectorXd vector = sot_[k_]->get_vector() - matrix * primal_;
-                assert(matrix_.cols() == col_);
+                auto row = find(sot_[k_]->is_active_);
+                Eigen::MatrixXd matrix = sot_[k_]->get_matrix()(row, Eigen::all);
+                Eigen::VectorXd vector = sot_[k_]->get_vector()(row) - matrix * primal_;
+                assert(matrix.cols() == col_);
 
                 Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod(matrix * nullSpace.leftCols(dof));
                 // TODO: each task should have its own threshold.
@@ -47,13 +48,13 @@ namespace hqp
                 auto leftDof = dof - rank;
                 if (leftDof > 0)
                 {
-                    // In this case matrixZ() is the identity, so Eigen does not compute it explicitly and matrixZ() returns garbage
-                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
+                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
                     nullSpace.leftCols(leftDof) = codRight.rightCols(leftDof);
                 }
                 else
                 {
-                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
+                    // In this case matrixZ() is the identity, so Eigen does not compute it explicitly and matrixZ() returns garbage
+                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
                 }
                 Eigen::MatrixXd codLeft = cod.householderQ();
 
@@ -82,6 +83,17 @@ namespace hqp
         if (!is_solved_)
             solve();
         return primal_;
+    }
+
+
+    Eigen::VectorXi HierarchicalQP::find(const Eigen::Array<bool, Eigen::Dynamic, 1>& in)
+    {
+        Eigen::VectorXi out = Eigen::VectorXi::Zero(in.cast<int>().sum());
+        for (auto j = 0, i = 0; i < in.rows(); ++i)
+        {
+            if (in(i)) out(j++) = i;
+        }
+        return out;
     }
 
 } // namespace hqp
