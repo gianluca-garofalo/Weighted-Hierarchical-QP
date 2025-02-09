@@ -16,6 +16,10 @@ namespace hqp
     public:
         Eigen::Array<bool, Eigen::Dynamic, 1> is_equality_;
         Eigen::Array<bool, Eigen::Dynamic, 1> is_active_;
+        Eigen::VectorXd slack_;
+        uint rank_;
+        Eigen::MatrixXd codMid_;
+        Eigen::MatrixXd codLeft_;
         Task() {}
         virtual void compute() = 0;
         Eigen::MatrixXd get_matrix() { if (!is_computed_) compute(); return matrix_; }
