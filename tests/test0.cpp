@@ -1,11 +1,12 @@
 #include <iostream>
-#include <hqp/hqp.hpp>
 #include <Eigen/Dense>
+#include <hqp/hqp.hpp>
+#include <hqp/library.hpp>
 
 
 int main()
 {
-    hqp::HierarchicalQP solver(3, 2);
+    hqp::HierarchicalQP solver(2);
     auto task0 = std::make_shared<hqp::Task0>();
     auto task1 = std::make_shared<hqp::Task1>();
     task0->is_equality_ = Eigen::VectorXi::Ones(1);
