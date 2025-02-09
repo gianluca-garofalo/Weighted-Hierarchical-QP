@@ -3,11 +3,9 @@
 namespace hqp
 {
 
-    HierarchicalQP::HierarchicalQP(uint m, uint n)
+    HierarchicalQP::HierarchicalQP(uint n)
         : primal_{ Eigen::VectorXd::Zero(n) }
         , tasks_{ Eigen::VectorXd::Zero(n) }
-        , slack_{ Eigen::VectorXd::Zero(m) }
-        , row_{ m }
         , col_{ n }
         , nullSpace{ Eigen::MatrixXd::Identity(n, n) }
         , inverse_{ Eigen::MatrixXd::Zero(n, n) }
@@ -60,7 +58,7 @@ namespace hqp
 
                 inverse_.middleCols(col_ - dof, rank) = codRight.leftCols(rank);
                 tasks_.segment(col_ - dof, rank) = codLeft.leftCols(rank).transpose() * vector;
-                slack_ = codLeft.leftCols(rank) * tasks_.segment(col_ - dof, rank) - vector;
+                sot_[k_]->slack_(row) = codLeft.leftCols(rank) * tasks_.segment(col_ - dof, rank) - vector;
                 cod.matrixT()
                     .topLeftCorner(rank, rank)
                     .triangularView<Eigen::Upper>()
@@ -68,6 +66,9 @@ namespace hqp
                 primal_ += inverse_.middleCols(col_ - dof, rank) * tasks_.segment(col_ - dof, rank);
 
                 dof = leftDof;
+                sot_[k_]->rank_ = rank;
+                sot_[k_]->codMid_.topLeftCorner(rank, rank) = cod.matrixT().topLeftCorner(rank, rank);
+                sot_[k_]->codLeft_(row, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
             }
             k_++;
         }
