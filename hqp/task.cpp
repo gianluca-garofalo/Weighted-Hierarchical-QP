@@ -28,4 +28,11 @@ namespace hqp
         return true;
     }
 
+    bool Task::set_guess(const Eigen::VectorXd& guess)
+    {
+        has_guess_ = true;
+        guess_ = guess;
+        return true;
+    }
+
 } // namespace hqp
