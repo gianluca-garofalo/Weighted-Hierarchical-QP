@@ -8,6 +8,12 @@ namespace hqp
 
     class Task
     {
+    private:
+        bool set_guess(const Eigen::VectorXd&);
+        Eigen::VectorXd guess_;
+        bool has_guess_ = false;
+        friend class HierarchicalQP;
+
     protected:
         Eigen::MatrixXd matrix_;
         Eigen::VectorXd vector_;
