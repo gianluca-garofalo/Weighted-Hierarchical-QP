@@ -5,6 +5,7 @@
 #include <memory>
 #include <Eigen/Dense>
 #include "task.hpp"
+// #include "options.hpp"
 
 namespace hqp
 {
@@ -22,6 +23,7 @@ namespace hqp
         Eigen::MatrixXd nullSpace;
         Eigen::MatrixXd inverse_;
         Eigen::MatrixXd codRight;
+        Eigen::VectorXd guess_;
         bool is_solved_ = false;
 
         void eHQP();
@@ -30,10 +32,13 @@ namespace hqp
 
         Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
 
+        friend Eigen::VectorXd Task::get_vector();
+
     public:
         HierarchicalQP(uint n);
         void solve();
         void push_back(std::shared_ptr<Task> task);
+        std::vector<std::shared_ptr<Task>>& get_sot();
         Eigen::VectorXd get_primal();
     };
 
