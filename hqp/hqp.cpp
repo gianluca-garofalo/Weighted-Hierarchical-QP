@@ -10,16 +10,25 @@ namespace hqp
         , nullSpace{ Eigen::MatrixXd::Identity(n, n) }
         , inverse_{ Eigen::MatrixXd::Zero(n, n) }
         , codRight{ Eigen::MatrixXd::Zero(n, n) }
+        , guess_{ Eigen::VectorXd::Zero(n) }
     {
     }
 
     void HierarchicalQP::solve()
     {
+        bool isAllEquality = true;
         for (auto& task : sot_)
         {
-            task->is_active_ = task->is_equality_;
+            if (!task->is_active_.size()) task->is_active_ = task->is_equality_;
+            // Shift problem to the origin
+            task->set_guess(guess_);
+            isAllEquality = isAllEquality && task->is_equality_.all();
         }
-        iHQP();
+        if (isAllEquality) eHQP();
+        else iHQP();
+        // Shift problem back
+        primal_ += guess_;
+        guess_ = primal_;
         is_solved_ = true;
     }
 
@@ -79,6 +88,11 @@ namespace hqp
     void HierarchicalQP::push_back(std::shared_ptr<Task> task)
     {
         sot_.push_back(task);
+    }
+
+    std::vector<std::shared_ptr<Task>>& HierarchicalQP::get_sot()
+    {
+        return sot_;
     }
 
     Eigen::VectorXd HierarchicalQP::get_primal()
