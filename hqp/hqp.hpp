@@ -24,6 +24,7 @@ namespace hqp
         Eigen::MatrixXd inverse_;
         Eigen::MatrixXd codRight;
         Eigen::VectorXd guess_;
+        double tolerance = 1e-9;
         bool isSolved_ = false;
 
         void eHQP();
