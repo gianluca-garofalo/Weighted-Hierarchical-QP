@@ -16,7 +16,7 @@ namespace hqp
     private:
         std::vector<std::shared_ptr<Task>> sot_;
         Eigen::VectorXd primal_;
-        Eigen::VectorXd tasks_;
+        Eigen::VectorXd task_;
         Eigen::VectorXd slack_;
         uint col_;
         uint k_;
@@ -24,7 +24,7 @@ namespace hqp
         Eigen::MatrixXd inverse_;
         Eigen::MatrixXd codRight;
         Eigen::VectorXd guess_;
-        bool is_solved_ = false;
+        bool isSolved_ = false;
 
         void eHQP();
         void iHQP();

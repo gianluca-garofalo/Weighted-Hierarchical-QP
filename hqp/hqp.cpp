@@ -5,7 +5,7 @@ namespace hqp
 
     HierarchicalQP::HierarchicalQP(uint n)
         : primal_{ Eigen::VectorXd::Zero(n) }
-        , tasks_{ Eigen::VectorXd::Zero(n) }
+        , task_{ Eigen::VectorXd::Zero(n) }
         , col_{ n }
         , nullSpace{ Eigen::MatrixXd::Identity(n, n) }
         , inverse_{ Eigen::MatrixXd::Zero(n, n) }
@@ -19,17 +19,17 @@ namespace hqp
         bool isAllEquality = true;
         for (auto& task : sot_)
         {
-            if (!task->is_active_.size()) task->is_active_ = task->is_equality_;
+            if (!task->activeSet_.size()) task->activeSet_ = task->equalitySet_;
             // Shift problem to the origin
             task->set_guess(guess_);
-            isAllEquality = isAllEquality && task->is_equality_.all();
+            isAllEquality = isAllEquality && task->equalitySet_.all();
         }
         if (isAllEquality) eHQP();
         else iHQP();
         // Shift problem back
         primal_ += guess_;
         guess_ = primal_;
-        is_solved_ = true;
+        isSolved_ = true;
     }
 
 
@@ -42,9 +42,9 @@ namespace hqp
         nullSpace.setIdentity();
         while (k_ < sot_.size() && dof > 0)
         {
-            if (sot_[k_]->is_active_.any())
+            if (sot_[k_]->activeSet_.any())
             {
-                auto row = find(sot_[k_]->is_active_);
+                auto row = find(sot_[k_]->activeSet_);
                 Eigen::MatrixXd matrix = sot_[k_]->get_matrix()(row, Eigen::all);
                 Eigen::VectorXd vector = sot_[k_]->get_vector()(row) - matrix * primal_;
                 assert(matrix.cols() == col_);
@@ -67,13 +67,13 @@ namespace hqp
                 Eigen::MatrixXd codLeft = cod.householderQ();
 
                 inverse_.middleCols(col_ - dof, rank) = codRight.leftCols(rank);
-                tasks_.segment(col_ - dof, rank) = codLeft.leftCols(rank).transpose() * vector;
-                sot_[k_]->slack_(row) = codLeft.leftCols(rank) * tasks_.segment(col_ - dof, rank) - vector;
+                task_.segment(col_ - dof, rank) = codLeft.leftCols(rank).transpose() * vector;
+                sot_[k_]->slack_(row) = codLeft.leftCols(rank) * task_.segment(col_ - dof, rank) - vector;
                 cod.matrixT()
                     .topLeftCorner(rank, rank)
                     .triangularView<Eigen::Upper>()
-                    .solveInPlace<Eigen::OnTheLeft>(tasks_.segment(col_ - dof, rank));
-                primal_ += inverse_.middleCols(col_ - dof, rank) * tasks_.segment(col_ - dof, rank);
+                    .solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, rank));
+                primal_ += inverse_.middleCols(col_ - dof, rank) * task_.segment(col_ - dof, rank);
 
                 dof = leftDof;
                 sot_[k_]->rank_ = rank;
@@ -97,7 +97,7 @@ namespace hqp
 
     Eigen::VectorXd HierarchicalQP::get_primal()
     {
-        if (!is_solved_) solve();
+        if (!isSolved_) solve();
         return primal_;
     }
 
@@ -105,29 +105,29 @@ namespace hqp
     {
         for (auto& task : sot_)
         {
-            task->is_locked_.setZero();
+            task->lockedSet_.setZero();
             task->dual_.setZero();
         }
         uint h = 0;
-        bool is_active_set_new = true;
+        bool isActiveSetNew = true;
 
         while (h < sot_.size())
         {
-            while (is_active_set_new)
+            while (isActiveSetNew)
             {
                 eHQP();
 
                 // Add tasks to the active set.
-                is_active_set_new = false;
+                isActiveSetNew = false;
                 for (uint k = 0; k < k_; ++k)
                 {
-                    auto row = find(!sot_[k]->is_active_);
+                    auto row = find(!sot_[k]->activeSet_);
                     Eigen::MatrixXd matrix = sot_[k]->get_matrix();
                     Eigen::VectorXd vector = sot_[k]->get_vector();
                     // TODO: set tolerance as a parameter.
-                    sot_[k]->is_active_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > 1e-9;
-                    is_active_set_new = is_active_set_new || sot_[k]->is_active_(row).any();
-                    // TODO: break if is_active_set_new.
+                    sot_[k]->activeSet_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > 1e-9;
+                    isActiveSetNew = isActiveSetNew || sot_[k]->activeSet_(row).any();
+                    // TODO: break if isActiveSetNew.
                 }
             }
 
@@ -136,12 +136,12 @@ namespace hqp
             {
                 for (uint k = 0; k <= h; ++k)
                 {
-                    sot_[k]->is_free_ = sot_[k]->is_active_ && !sot_[k]->is_equality_ && !sot_[k]->is_locked_;
+                    sot_[k]->workSet_ = sot_[k]->activeSet_ && !sot_[k]->equalitySet_ && !sot_[k]->lockedSet_;
                 }
 
-                if (sot_[h]->is_free_.any())
+                if (sot_[h]->workSet_.any())
                 {
-                    auto row = find(sot_[h]->is_free_);
+                    auto row = find(sot_[h]->workSet_);
                     Eigen::MatrixXd matrix = sot_[h]->get_matrix();
                     Eigen::VectorXd vector = sot_[h]->get_vector();
 
@@ -154,18 +154,18 @@ namespace hqp
 
                     for (uint k = 0; k <= h; ++k)
                     {
-                        if (sot_[k]->is_free_.any())
+                        if (sot_[k]->workSet_.any())
                         {
-                            auto row = find(sot_[k]->is_free_);
+                            auto row = find(sot_[k]->workSet_);
                             auto test = (sot_[k]->dual_(row)).array() > 1e-9;
-                            sot_[k]->is_active_(row) = !test;
-                            sot_[k]->is_locked_(row) = test;
-                            is_active_set_new = is_active_set_new || (k < k_ && test.any());
+                            sot_[k]->activeSet_(row) = !test;
+                            sot_[k]->lockedSet_(row) = test;
+                            isActiveSetNew = isActiveSetNew || (k < k_ && test.any());
                         }
                     }
                 }
 
-                if (is_active_set_new) break;
+                if (isActiveSetNew) break;
                 h++;
             }
         }
@@ -180,10 +180,10 @@ namespace hqp
 
         while (k < h && dof > 0)
         {
-            if (sot_[k]->is_active_.any())
+            if (sot_[k]->activeSet_.any())
             {
                 uint leftDof = dof - sot_[k]->rank_;
-                auto row = find(sot_[k]->is_active_ && sot_[k]->is_free_);
+                auto row = find(sot_[k]->activeSet_ && sot_[k]->workSet_);
                 if (row.any())
                 {
                     Eigen::VectorXd f = inverse_.block(0, col_ - dof, oldDof, sot_[k]->rank_).transpose() * tau.head(oldDof);
@@ -203,7 +203,7 @@ namespace hqp
 
         while (k < h)
         {
-            auto row = find(sot_[k]->is_free_);
+            auto row = find(sot_[k]->workSet_);
             sot_[k]->dual_(row).setZero();
             k++;
         }

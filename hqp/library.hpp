@@ -25,8 +25,8 @@ namespace hqp
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
-            assert(is_equality_.size() == vector_.rows());
-            is_computed_ = true;
+            assert(equalitySet_.size() == vector_.rows());
+            isComputed_ = true;
         }
     };
 
@@ -43,12 +43,13 @@ namespace hqp
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
-            assert(is_equality_.size() == vector_.rows());
-            is_computed_ = true;
+            assert(equalitySet_.size() == vector_.rows());
+            isComputed_ = true;
         }
         void update(int a, double b)
         {
             map_.second = std::make_tuple();
+            isComputed_ = false;
         }
     };
 
@@ -64,8 +65,8 @@ namespace hqp
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
-            assert(is_equality_.size() == vector_.rows());
-            is_computed_ = true;
+            assert(equalitySet_.size() == vector_.rows());
+            isComputed_ = true;
         }
     };
 
@@ -81,8 +82,8 @@ namespace hqp
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
-            assert(is_equality_.size() == vector_.rows());
-            is_computed_ = true;
+            assert(equalitySet_.size() == vector_.rows());
+            isComputed_ = true;
         }
     };
 
@@ -98,8 +99,8 @@ namespace hqp
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
-            assert(is_equality_.size() == vector_.rows());
-            is_computed_ = true;
+            assert(equalitySet_.size() == vector_.rows());
+            isComputed_ = true;
         }
     };
 
