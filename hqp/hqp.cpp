@@ -119,55 +119,49 @@ namespace hqp
 
                 // Add tasks to the active set.
                 isActiveSetNew = false;
-                for (uint k = 0; k < k_; ++k)
+                for (uint k = 0; k < k_ && !isActiveSetNew; ++k)
                 {
                     auto row = find(!sot_[k]->activeSet_);
                     Eigen::MatrixXd matrix = sot_[k]->get_matrix();
                     Eigen::VectorXd vector = sot_[k]->get_vector();
-                    // TODO: set tolerance as a parameter.
-                    sot_[k]->activeSet_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > 1e-9;
-                    isActiveSetNew = isActiveSetNew || sot_[k]->activeSet_(row).any();
-                    // TODO: break if isActiveSetNew.
+                    sot_[k]->activeSet_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > tolerance;
+                    isActiveSetNew = sot_[k]->activeSet_(row).any();
                 }
             }
 
             // Remove tasks from the active set.
-            while (h < sot_.size())
+            for (uint k = 0; k <= h; ++k)
             {
-                for (uint k = 0; k <= h; ++k)
-                {
-                    sot_[k]->workSet_ = sot_[k]->activeSet_ && !sot_[k]->equalitySet_ && !sot_[k]->lockedSet_;
-                }
-
-                if (sot_[h]->workSet_.any())
-                {
-                    auto row = find(sot_[h]->workSet_);
-                    Eigen::MatrixXd matrix = sot_[h]->get_matrix();
-                    Eigen::VectorXd vector = sot_[h]->get_vector();
-
-                    if (h >= k_)
-                    {
-                        sot_[h]->slack_(row) = matrix(row, Eigen::all) * primal_ - vector(row);
-                    }
-                    sot_[h]->dual_(row) = sot_[h]->slack_(row);
-                    dual_update(h, matrix(row, Eigen::all).transpose() * sot_[h]->dual_(row));
-
-                    for (uint k = 0; k <= h; ++k)
-                    {
-                        if (sot_[k]->workSet_.any())
-                        {
-                            auto row = find(sot_[k]->workSet_);
-                            auto test = (sot_[k]->dual_(row)).array() > 1e-9;
-                            sot_[k]->activeSet_(row) = !test;
-                            sot_[k]->lockedSet_(row) = test;
-                            isActiveSetNew = isActiveSetNew || (k < k_ && test.any());
-                        }
-                    }
-                }
-
-                if (isActiveSetNew) break;
-                h++;
+                sot_[k]->workSet_ = sot_[k]->activeSet_ && !sot_[k]->equalitySet_ && !sot_[k]->lockedSet_;
             }
+
+            if (sot_[h]->workSet_.any())
+            {
+                auto row = find(sot_[h]->workSet_);
+                Eigen::MatrixXd matrix = sot_[h]->get_matrix();
+                Eigen::VectorXd vector = sot_[h]->get_vector();
+
+                if (h >= k_)
+                {
+                    sot_[h]->slack_(row) = matrix(row, Eigen::all) * primal_ - vector(row);
+                }
+                sot_[h]->dual_(row) = sot_[h]->slack_(row);
+                dual_update(h, matrix(row, Eigen::all).transpose() * sot_[h]->dual_(row));
+
+                for (uint k = 0; k <= h && !isActiveSetNew; ++k)
+                {
+                    if (sot_[k]->workSet_.any())
+                    {
+                        auto row = find(sot_[k]->workSet_);
+                        auto test = (sot_[k]->dual_(row)).array() > tolerance;
+                        sot_[k]->activeSet_(row) = !test;
+                        sot_[k]->lockedSet_(row) = test;
+                        isActiveSetNew = k < k_ && test.any();
+                    }
+                }
+            }
+
+            if (!isActiveSetNew) h++;
         }
     }
 

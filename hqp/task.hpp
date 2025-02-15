@@ -36,8 +36,6 @@ namespace hqp
         Eigen::VectorXd get_vector();
         // TODO: add set_equality and other methods.
         bool set_equality(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
-        // bool is_active() {return activeSet_.any();};
-        // bool is_active(uint row) {return activeSet_(row);};
     };
 
 } // namespace hqp
