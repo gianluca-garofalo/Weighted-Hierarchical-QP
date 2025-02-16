@@ -20,7 +20,7 @@ namespace hqp
         static Return run();
 
     public:
-        Task0() : Task(), map_{Map<>(run, std::make_tuple())} {}
+        Task0(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
         void compute() override
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
@@ -38,7 +38,7 @@ namespace hqp
         static Return run();
 
     public:
-        Task1() : Task(), map_{Map<>(run, std::make_tuple())} {}
+        Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
         void compute() override
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
@@ -60,7 +60,7 @@ namespace hqp
         static Return run();
 
     public:
-        Task2() : Task(), map_{Map<>(run, std::make_tuple())} {}
+        Task2(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
         void compute() override
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
@@ -77,7 +77,7 @@ namespace hqp
         static Return run();
 
     public:
-        Task3() : Task(), map_{Map<>(run, std::make_tuple())} {}
+        Task3(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
         void compute() override
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
@@ -94,7 +94,7 @@ namespace hqp
         static Return run();
 
     public:
-        Task4() : Task(), map_{Map<>(run, std::make_tuple())} {}
+        Task4(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
         void compute() override
         {
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
