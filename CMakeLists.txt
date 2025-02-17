@@ -1,45 +1,83 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.22)
 
-# set(CMAKE_INSTALL_PREFIX "/home/deshi") cat install_manifest.txt | xargs echo sudo rm | sh
-project(HQP)
+project(HQP VERSION 0.0.1 DESCRIPTION "A HQP solver" LANGUAGES CXX)
+message(PROJECT_NAME="${PROJECT_NAME}")
+message(PROJECT_VERSION="${PROJECT_VERSION}")
+message(CMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+message(CMAKE_INSTALL_INCLUDEDIR="${CMAKE_INSTALL_INCLUDEDIR}")
+message(CMAKE_CURRENT_LIST_DIR="${CMAKE_CURRENT_LIST_DIR}")
+message(CMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}")
 
-# set(CMAKE_BUILD_TYPE Release CACHE STRING "Release RelWithDebInfo Debug DEFAULT: Release" FORCE)
-set(CMAKE_CXX_STANDARD 20 CACHE STRING "C++ version selection")
+set(CMAKE_EXPORT_COMPILE_COMMANDS True)
+set(CMAKE_DEBUG_POSTFIX deb)
+option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
-option(COMPILE_TESTS "compile the tests" ON)
+include(CTest)
+include(CMakePackageConfigHelpers)
+include(GNUInstallDirs)
 
-add_compile_options(
-  -O3 -g -Wall -Wpedantic -fPIC -std=c++20 -Wno-terminate
-  )
 
-################################################################################
+file(GLOB SRC_FILES src/*.cpp)
+message(SRC_FILES="${SRC_FILES}")
+add_library(${PROJECT_NAME} ${SRC_FILES})
+add_library("${PROJECT_NAME}::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
-file(GLOB SRC_Hqp hqp/*.cpp)
-file(GLOB INC_Hqp hqp/*.hpp)
-
-add_library(hqp SHARED
-    ${SRC_Hqp}
-  )
-
-################################################################################
+set_target_properties(
+    ${PROJECT_NAME}
+    PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+)
 
 find_package (Eigen3 3.4.0 REQUIRED NO_MODULE)
-target_link_libraries(hqp Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
 
-################################################################################
+target_include_directories(
+    ${PROJECT_NAME}
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
-set_target_properties(hqp PROPERTIES SOVERSION 0)
+
+target_compile_features(${PROJECT_NAME}	PRIVATE	cxx_std_20)
+
+
+if(BUILD_TESTING)
+	add_subdirectory(tests)
+endif()
+
+
+set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/install/" CACHE PATH "Force CMAKE_INSTALL_PREFIX" FORCE)
 
 install(
-	TARGETS hqp
-    EXPORT "${TARGETS_EXPORT_NAME}"
-    LIBRARY DESTINATION "lib"
-    ARCHIVE DESTINATION "lib"
-    RUNTIME DESTINATION "bin"
-    INCLUDES DESTINATION "${INCLUDE_INSTALL_DIR}"
+    TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}_targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
-install(FILES ${INC_Hqp} DESTINATION "include/hqp")
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-if(${COMPILE_TESTS})
-         add_subdirectory(tests)
-endif()
+
+write_basic_package_version_file(
+    ${PROJECT_NAME}ConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+configure_package_config_file(
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}_config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME}
+)
+
+install(
+    EXPORT ${PROJECT_NAME}_targets
+    FILE ${PROJECT_NAME}_targets.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME}
+)
