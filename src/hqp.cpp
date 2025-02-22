@@ -32,7 +32,8 @@ namespace hqp
         // Deactivate unused tasks for next guess
         for (uint k = k_; k < sot.size(); ++k)
         {
-            sot[k]->activeSet_.setZero();
+            auto row = find(!sot[k]->equalitySet_);
+            sot[k]->activeSet_(row).setZero();
         }
     }
 
@@ -44,6 +45,7 @@ namespace hqp
         k_ = 0;
         // TODO: replace identity with Cholesky factor.
         nullSpace_.setIdentity();
+        // Eigen::MatrixXd L( P.llt().matrixL() );
         while (k_ < sot.size() && dof > 0)
         {
             if (sot[k_]->activeSet_.any())
@@ -229,9 +231,9 @@ namespace hqp
     void HierarchicalQP::print_active_set()
     {
         std::cout << "Active set:\n";
-        for (uint k = 0; const auto& task : sot)
+        for (uint k = 0; const auto & task : sot)
         {
-            if (task->activeSet_.any())
+            if (k < k_ && task->activeSet_.any())
             {
                 std::cout << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
             }
