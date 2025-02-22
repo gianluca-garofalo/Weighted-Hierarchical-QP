@@ -102,6 +102,11 @@ namespace hqp
             assert(equalitySet_.size() == vector_.rows());
             isComputed_ = true;
         }
+        void update()
+        {
+            map_.second = std::make_tuple();
+            isComputed_ = false;
+        }
     };
 
 } // namespace hqp
