@@ -29,8 +29,7 @@ namespace hqp
         void inequality_hqp();
         void dual_update(uint h, const Eigen::VectorXd& tau);
         Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
-        Eigen::MatrixXd get_matrix(std::shared_ptr<Task>);
-        Eigen::VectorXd get_vector(std::shared_ptr<Task>);
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(std::shared_ptr<Task> task, const Eigen::VectorXi& row);
 
     public:
         double tolerance = 1e-9;

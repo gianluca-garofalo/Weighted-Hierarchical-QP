@@ -51,8 +51,8 @@ namespace hqp
             if (sot[k_]->activeSet_.any())
             {
                 auto row = find(sot[k_]->activeSet_);
-                Eigen::MatrixXd matrix = get_matrix(sot[k_])(row, Eigen::all);
-                Eigen::VectorXd vector = get_vector(sot[k_])(row) - matrix * primal_;
+                auto [matrix, vector] = get_task(sot[k_], row);
+                vector -= matrix * primal_;
                 assert(matrix.cols() == col_);
 
                 Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod(matrix * nullSpace_.leftCols(dof));
@@ -120,9 +120,8 @@ namespace hqp
                 for (uint k = 0; k < k_ && !isActiveSetNew; ++k)
                 {
                     auto row = find(!sot[k]->activeSet_);
-                    Eigen::MatrixXd matrix = get_matrix(sot[k]);
-                    Eigen::VectorXd vector = get_vector(sot[k]);
-                    sot[k]->activeSet_(row) = (vector(row) - matrix(row, Eigen::all) * primal_).array() > tolerance;
+                    auto [matrix, vector] = get_task(sot[k], row);
+                    sot[k]->activeSet_(row) = (vector - matrix * primal_).array() > tolerance;
                     isActiveSetNew = sot[k]->activeSet_(row).any();
                 }
             }
@@ -136,15 +135,14 @@ namespace hqp
             if (sot[h]->workSet_.any())
             {
                 auto row = find(sot[h]->workSet_);
-                Eigen::MatrixXd matrix = get_matrix(sot[h]);
-                Eigen::VectorXd vector = get_vector(sot[h]);
+                auto [matrix, vector] = get_task(sot[h], row);
 
                 if (h >= k_)
                 {
-                    sot[h]->slack_(row) = matrix(row, Eigen::all) * primal_ - vector(row);
+                    sot[h]->slack_(row) = matrix * primal_ - vector;
                 }
                 sot[h]->dual_(row) = sot[h]->slack_(row);
-                dual_update(h, matrix(row, Eigen::all).transpose() * sot[h]->dual_(row));
+                dual_update(h, matrix.transpose() * sot[h]->dual_(row));
 
                 for (uint k = 0; k <= h && !isActiveSetNew; ++k)
                 {
@@ -212,20 +210,14 @@ namespace hqp
         return out;
     }
 
-    Eigen::MatrixXd HierarchicalQP::get_matrix(std::shared_ptr<Task> task)
-    {
-        if (!task->isComputed_) task->compute();
-        return task->matrix_;
-    }
-
-    Eigen::VectorXd HierarchicalQP::get_vector(std::shared_ptr<Task> task)
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(std::shared_ptr<Task> task, const Eigen::VectorXi& row)
     {
         if (!task->isComputed_)
         {
             task->compute();
             task->vector_ -= task->matrix_ * guess_; // Shift problem to the origin
         }
-        return task->vector_;
+        return { task->matrix_(row, Eigen::all), task->vector_(row) };
     }
 
     void HierarchicalQP::print_active_set()
