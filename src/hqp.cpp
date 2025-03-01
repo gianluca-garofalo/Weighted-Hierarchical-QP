@@ -11,8 +11,10 @@ namespace hqp
         , inverse_{ Eigen::MatrixXd::Zero(n, n) }
         , nullSpace_{ Eigen::MatrixXd::Identity(n, n) }
         , codRight_{ Eigen::MatrixXd::Zero(n, n) }
+        , cholMetric_{ Eigen::MatrixXd::Identity(n, n) }
     {
     }
+
 
     void HierarchicalQP::solve()
     {
@@ -43,9 +45,7 @@ namespace hqp
         primal_.setZero();
         auto dof = col_;
         k_ = 0;
-        // TODO: replace identity with Cholesky factor.
-        nullSpace_.setIdentity();
-        // Eigen::MatrixXd L( P.llt().matrixL() );
+        nullSpace_ = cholMetric_;
         while (k_ < sot.size() && dof > 0)
         {
             if (sot[k_]->activeSet_.any())
@@ -91,6 +91,15 @@ namespace hqp
     }
 
 
+    void HierarchicalQP::set_metric(const Eigen::MatrixXd& metric)
+    {
+        Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
+        assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
+        cholMetric_.setIdentity();
+        lltOf.matrixU().solveInPlace<Eigen::OnTheLeft>(cholMetric_);    
+    }
+
+
     Eigen::VectorXd HierarchicalQP::get_primal()
     {
         uint k = 0;
@@ -98,6 +107,7 @@ namespace hqp
         if (k <= k_) solve();
         return primal_;
     }
+
 
     void HierarchicalQP::inequality_hqp()
     {
@@ -210,6 +220,7 @@ namespace hqp
         return out;
     }
 
+
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(std::shared_ptr<Task> task, const Eigen::VectorXi& row)
     {
         if (!task->isComputed_)
@@ -219,6 +230,7 @@ namespace hqp
         }
         return { task->matrix_(row, Eigen::all), task->vector_(row) };
     }
+
 
     void HierarchicalQP::print_active_set()
     {
