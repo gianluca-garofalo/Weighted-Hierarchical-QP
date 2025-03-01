@@ -27,6 +27,7 @@ namespace hqp
 
         Task(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
         virtual void compute() = 0;
+        virtual ~Task() = default;
     };
 
 } // namespace hqp
