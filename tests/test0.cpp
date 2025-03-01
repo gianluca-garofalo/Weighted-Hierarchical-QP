@@ -21,6 +21,9 @@ int main()
     {
         problem.sot.push_back(task);
     }
+    Eigen::Matrix<double, 2, 2> M;
+    M << 10, 5, 5, 7;
+    problem.set_metric(M);
     std::cout << "Solution: " << problem.get_primal().transpose() << std::endl;
     problem.print_active_set();
 

@@ -22,6 +22,7 @@ namespace hqp
         Eigen::MatrixXd inverse_;
         Eigen::MatrixXd nullSpace_;
         Eigen::MatrixXd codRight_;
+        Eigen::MatrixXd cholMetric_;
         uint k_ = 0;
 
         void solve();
@@ -36,6 +37,7 @@ namespace hqp
         std::vector<std::shared_ptr<Task>> sot;
 
         HierarchicalQP(uint n);
+        void set_metric(const Eigen::MatrixXd&);
         Eigen::VectorXd get_primal();
         void print_active_set();
     };
