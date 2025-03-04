@@ -226,7 +226,11 @@ namespace hqp
         if (!task->isComputed_)
         {
             task->compute();
-            task->vector_ -= task->matrix_ * guess_; // Shift problem to the origin
+            // Weight subtasks within task 
+            task->matrix_ = task->weight_.matrixU() * task->matrix_;
+            task->vector_ = task->weight_.matrixU() * task->vector_;
+            // Shift problem to the origin
+            task->vector_ -= task->matrix_ * guess_;
         }
         return { task->matrix_(row, Eigen::all), task->vector_(row) };
     }

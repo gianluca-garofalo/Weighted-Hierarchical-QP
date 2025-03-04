@@ -17,6 +17,7 @@ namespace hqp
         Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
         Eigen::MatrixXd codMid_;
         Eigen::MatrixXd codLeft_;
+        Eigen::LLT<Eigen::MatrixXd> weight_;
         friend class HierarchicalQP;
 
     protected:
@@ -28,6 +29,9 @@ namespace hqp
         Task(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
         virtual void compute() = 0;
         virtual ~Task() = default;
+
+    public:
+        void set_weight(const Eigen::MatrixXd&);
     };
 
 } // namespace hqp
