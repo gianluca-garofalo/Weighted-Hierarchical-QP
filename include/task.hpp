@@ -31,6 +31,8 @@ namespace hqp
         virtual ~Task() = default;
 
     public:
+        double tolerance = 1e-9;
+        
         void set_weight(const Eigen::MatrixXd&);
     };
 

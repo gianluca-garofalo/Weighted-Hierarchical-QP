@@ -27,6 +27,8 @@ int main()
     std::cout << "Solution: " << problem.get_primal().transpose() << std::endl;
     problem.print_active_set();
 
+    // TODO: create task reusing previous ones as subtasks and then set weight
+
     std::swap(problem.sot[0], problem.sot[2]);
     dynamic_cast<hqp::Task4 *>(problem.sot[0].get())->update();
     std::cout << "Solution: " << problem.get_primal().transpose() << std::endl;
