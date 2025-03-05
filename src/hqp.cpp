@@ -55,9 +55,10 @@ namespace hqp
                 vector -= matrix * primal_;
                 assert(matrix.cols() == col_);
 
-                Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod(matrix * nullSpace_.leftCols(dof));
-                // TODO: each task should have its own threshold.
-                cod.setThreshold(1e-3);
+                Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
+                // TODO: dynamically update tolerances to avoid tasks oscillations
+                cod.setThreshold(sot[k_]->tolerance);
+                cod.compute(matrix * nullSpace_.leftCols(dof));
                 auto rank = cod.rank();
                 auto leftDof = dof - rank;
                 if (leftDof > 0)
@@ -210,6 +211,7 @@ namespace hqp
     }
 
 
+    // TODO: move to utils
     Eigen::VectorXi HierarchicalQP::find(const Eigen::Array<bool, Eigen::Dynamic, 1>& in)
     {
         Eigen::VectorXi out = Eigen::VectorXi::Zero(in.cast<int>().sum());
@@ -236,6 +238,7 @@ namespace hqp
     }
 
 
+    // TODO: upgrade to a logger keeping track of the active set
     void HierarchicalQP::print_active_set()
     {
         std::cout << "Active set:\n";
