@@ -1,7 +1,6 @@
 #ifndef _HierarchicalQP_
 #define _HierarchicalQP_
 
-#include <iostream>
 #include <vector>
 #include <memory>
 #include <Eigen/Dense>
@@ -29,7 +28,6 @@ namespace hqp
         void equality_hqp();
         void inequality_hqp();
         void dual_update(uint h, const Eigen::VectorXd& tau);
-        Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
         std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(std::shared_ptr<Task> task, const Eigen::VectorXi& row);
 
     public:
