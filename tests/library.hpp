@@ -26,6 +26,11 @@ namespace hqp
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
             assert(equalitySet_.size() == vector_.rows());
+            if (!indices_.size())
+            {
+                auto n = matrix_.cols();
+                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            }
             isComputed_ = true;
         }
     };
@@ -44,6 +49,11 @@ namespace hqp
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
             assert(equalitySet_.size() == vector_.rows());
+            if (!indices_.size())
+            {
+                auto n = matrix_.cols();
+                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            }
             isComputed_ = true;
         }
         void update(int a, double b)
@@ -66,6 +76,11 @@ namespace hqp
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
             assert(equalitySet_.size() == vector_.rows());
+            if (!indices_.size())
+            {
+                auto n = matrix_.cols();
+                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            }
             isComputed_ = true;
         }
     };
@@ -83,6 +98,11 @@ namespace hqp
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
             assert(equalitySet_.size() == vector_.rows());
+            if (!indices_.size())
+            {
+                auto n = matrix_.cols();
+                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            }
             isComputed_ = true;
         }
     };
@@ -100,6 +120,11 @@ namespace hqp
             std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
             assert(matrix_.rows() == vector_.rows());
             assert(equalitySet_.size() == vector_.rows());
+            if (!indices_.size())
+            {
+                auto n = matrix_.cols();
+                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            }
             isComputed_ = true;
         }
         void update()

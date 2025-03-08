@@ -30,6 +30,9 @@ namespace hqp
         weight_ = lltOf;
     }
 
-    // TODO: implement setting of indices to fill only a block of the matrix in hqp after the task is computed
+    void Task::select_variables(const Eigen::VectorXi& indices)
+    {
+        indices_ = indices;
+    }
 
 } // namespace hqp
