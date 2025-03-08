@@ -222,9 +222,11 @@ namespace hqp
             task->matrix_ = task->weight_.matrixU() * task->matrix_;
             task->vector_ = task->weight_.matrixU() * task->vector_;
             // Shift problem to the origin
-            task->vector_ -= task->matrix_ * guess_;
+            task->vector_ -= task->matrix_ * guess_(task->indices_);
         }
-        return { task->matrix_(row, Eigen::all), task->vector_(row) };
+        Eigen::MatrixXd A = Eigen::MatrixXd::Zero(row.size(), col_);
+        A(Eigen::all, task->indices_) = task->matrix_(row, Eigen::all);
+        return { A, task->vector_(row) };
     }
 
 

@@ -24,6 +24,7 @@ namespace hqp
         Eigen::MatrixXd matrix_;
         Eigen::VectorXd vector_;
         Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
+        Eigen::VectorXi indices_;
         bool isComputed_ = false;
 
         Task(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
@@ -34,6 +35,7 @@ namespace hqp
         double tolerance = 1e-9;
         
         void set_weight(const Eigen::MatrixXd&);
+        void select_variables(const Eigen::VectorXi& indices);
     };
 
 } // namespace hqp

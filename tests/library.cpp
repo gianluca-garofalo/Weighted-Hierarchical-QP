@@ -5,7 +5,7 @@ namespace hqp
 
     Return Task0::run()
     {
-        return { Eigen::MatrixXd::Identity(1, 2), Eigen::VectorXd::Zero(1) };
+        return { Eigen::MatrixXd::Identity(1, 1), Eigen::VectorXd::Zero(1) };
     }
 
     Return Task1::run()

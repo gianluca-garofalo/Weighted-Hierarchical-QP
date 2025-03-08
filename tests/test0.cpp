@@ -8,6 +8,7 @@ int main()
 {
     hqp::HierarchicalQP solver(2);
     auto task0 = std::make_shared<hqp::Task0>(Eigen::VectorXi::Ones(1).cast<bool>());
+    task0->select_variables(Eigen::VectorXi::Zero(1));
     auto task1 = std::make_shared<hqp::Task1>(Eigen::VectorXi::Ones(2).cast<bool>());
     solver.sot.push_back(task0);
     solver.sot.push_back(task1);
