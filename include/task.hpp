@@ -19,7 +19,6 @@ namespace hqp
         Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
         Eigen::MatrixXd codMid_;
         Eigen::MatrixXd codLeft_;
-        Eigen::LLT<Eigen::MatrixXd> weight_;
         friend class HierarchicalQP;
         friend class SubTasks;
 
@@ -29,6 +28,7 @@ namespace hqp
         Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
         Eigen::VectorXi indices_;
         bool isComputed_ = false;
+        Eigen::LLT<Eigen::MatrixXd> weight_;
 
         virtual void compute() = 0;
 
@@ -73,9 +73,6 @@ namespace hqp
 
     class SubTasks : public Task
     {
-    private:
-        Eigen::LLT<Eigen::MatrixXd> weight_;
-
     public:
         std::vector<std::unique_ptr<Task>> sot;
 
@@ -83,11 +80,11 @@ namespace hqp
         void compute() override;
         void set_weight(const Eigen::MatrixXd&);
 
-        template <typename T>
-        T* cast(uint k)
+        template <typename T, typename... Args>
+        void update(uint k, Args... args)
         {
             isComputed_ = false;
-            return static_cast<T*>(sot[k].get());
+            static_cast<T*>(sot[k].get())->update(args...);
         }
     };
 
