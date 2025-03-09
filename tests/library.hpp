@@ -1,137 +1,54 @@
 #ifndef _LibraryOfTasks_
 #define _LibraryOfTasks_
 
-#include <functional>
-#include <tuple>
 #include <Eigen/Dense>
 #include "task.hpp"
 
 namespace hqp
 {
 
-    using Return = std::tuple<Eigen::MatrixXd, Eigen::VectorXd>;
-    template <typename... Args>
-    using Map = std::pair<std::function<Return(Args...)>, std::tuple<Args...>>;
-
-    class Task0 : public Task
+    class Task0 : public TaskInterface<>
     {
     private:
-        Map<> map_;
-        static Return run();
-
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
     public:
-        Task0(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
-        void compute() override
-        {
-            std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
-            assert(matrix_.rows() == vector_.rows());
-            assert(equalitySet_.size() == vector_.rows());
-            if (!indices_.size())
-            {
-                auto n = matrix_.cols();
-                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
-            }
-            isComputed_ = true;
-        }
+        Task0(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
 
-    class Task1 : public Task
+    class Task1 : public TaskInterface<double, double>
     {
     private:
-        Map<> map_;
-        static Return run();
-
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run(double b0, double b1) override;
     public:
-        Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
-        void compute() override
-        {
-            std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
-            assert(matrix_.rows() == vector_.rows());
-            assert(equalitySet_.size() == vector_.rows());
-            if (!indices_.size())
-            {
-                auto n = matrix_.cols();
-                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
-            }
-            isComputed_ = true;
-        }
-        void update(int a, double b)
-        {
-            map_.second = std::make_tuple();
-            isComputed_ = false;
-        }
+        Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
-    class Task2 : public Task
+
+    class Task2 : public TaskInterface<>
     {
     private:
-        Map<> map_;
-        static Return run();
-
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
     public:
-        Task2(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
-        void compute() override
-        {
-            std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
-            assert(matrix_.rows() == vector_.rows());
-            assert(equalitySet_.size() == vector_.rows());
-            if (!indices_.size())
-            {
-                auto n = matrix_.cols();
-                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
-            }
-            isComputed_ = true;
-        }
+        Task2(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
-    class Task3 : public Task
+
+    class Task3 : public TaskInterface<>
     {
     private:
-        Map<> map_;
-        static Return run();
-
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
     public:
-        Task3(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
-        void compute() override
-        {
-            std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
-            assert(matrix_.rows() == vector_.rows());
-            assert(equalitySet_.size() == vector_.rows());
-            if (!indices_.size())
-            {
-                auto n = matrix_.cols();
-                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
-            }
-            isComputed_ = true;
-        }
+        Task3(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
-    class Task4 : public Task
+    
+    class Task4 : public TaskInterface<>
     {
     private:
-        Map<> map_;
-        static Return run();
-
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
     public:
-        Task4(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set), map_{ Map<>(run, std::make_tuple()) } {}
-        void compute() override
-        {
-            std::tie(matrix_, vector_) = std::apply(map_.first, map_.second);
-            assert(matrix_.rows() == vector_.rows());
-            assert(equalitySet_.size() == vector_.rows());
-            if (!indices_.size())
-            {
-                auto n = matrix_.cols();
-                indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
-            }
-            isComputed_ = true;
-        }
-        void update()
-        {
-            map_.second = std::make_tuple();
-            isComputed_ = false;
-        }
+        Task4(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
 } // namespace hqp

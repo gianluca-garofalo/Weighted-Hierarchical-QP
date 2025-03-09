@@ -99,7 +99,7 @@ namespace hqp
         Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
         assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
         cholMetric_.setIdentity();
-        lltOf.matrixU().solveInPlace<Eigen::OnTheLeft>(cholMetric_);    
+        lltOf.matrixU().solveInPlace<Eigen::OnTheLeft>(cholMetric_);
     }
 
 
