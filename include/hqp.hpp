@@ -2,6 +2,7 @@
 #define _HierarchicalQP_
 
 #include <vector>
+#include <tuple>
 #include <memory>
 #include <Eigen/Dense>
 #include "task.hpp"

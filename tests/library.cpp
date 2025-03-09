@@ -3,17 +3,17 @@
 namespace hqp
 {
 
-    Return Task0::run()
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> Task0::run()
     {
         return { Eigen::MatrixXd::Identity(1, 1), Eigen::VectorXd::Zero(1) };
     }
 
-    Return Task1::run()
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> Task1::run(double b0, double b1)
     {
-        return { Eigen::MatrixXd::Identity(2, 2), Eigen::VectorXd::Ones(2) };
+        return { Eigen::MatrixXd::Identity(2, 2), (Eigen::VectorXd(2) << b0, b1).finished() };
     }
 
-    Return Task2::run()
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> Task2::run()
     {
         Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 2);
         Eigen::VectorXd b = Eigen::VectorXd::Zero(2);
@@ -22,7 +22,7 @@ namespace hqp
         return { A, b };
     }
 
-    Return Task3::run()
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> Task3::run()
     {
         Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 2);
         Eigen::VectorXd b = Eigen::VectorXd::Zero(2);
@@ -31,7 +31,7 @@ namespace hqp
         return { A, b };
     }
 
-    Return Task4::run()
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> Task4::run()
     {
         Eigen::MatrixXd A = Eigen::MatrixXd::Zero(2, 2);
         Eigen::VectorXd b = Eigen::VectorXd::Zero(2);
