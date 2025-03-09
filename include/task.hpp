@@ -2,6 +2,7 @@
 #define _Task_
 
 #include <tuple>
+#include <memory>
 #include <Eigen/Dense>
 
 namespace hqp
@@ -20,6 +21,7 @@ namespace hqp
         Eigen::MatrixXd codLeft_;
         Eigen::LLT<Eigen::MatrixXd> weight_;
         friend class HierarchicalQP;
+        friend class SubTasks;
 
     protected:
         Eigen::MatrixXd matrix_;
@@ -28,14 +30,13 @@ namespace hqp
         Eigen::VectorXi indices_;
         bool isComputed_ = false;
 
-        Task(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
         virtual void compute() = 0;
-        virtual ~Task() = default;
 
     public:
         double tolerance = 1e-9;
 
-        void set_weight(const Eigen::MatrixXd&);
+        Task(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
+        virtual ~Task() = default;
         void select_variables(const Eigen::VectorXi& indices);
     };
 
@@ -66,6 +67,27 @@ namespace hqp
         {
             args_ = std::make_tuple(args...);
             isComputed_ = false;
+        }
+    };
+
+
+    class SubTasks : public Task
+    {
+    private:
+        Eigen::LLT<Eigen::MatrixXd> weight_;
+
+    public:
+        std::vector<std::unique_ptr<Task>> sot;
+
+        SubTasks(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
+        void compute() override;
+        void set_weight(const Eigen::MatrixXd&);
+
+        template <typename T>
+        T* cast(uint k)
+        {
+            isComputed_ = false;
+            return static_cast<T*>(sot[k].get());
         }
     };
 

@@ -43,12 +43,21 @@ namespace hqp
     };
 
     
-    class Task4 : public TaskInterface<>
+    class Task5 : public TaskInterface<>
     {
     private:
         std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
     public:
-        Task4(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
+        Task5(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
+    };
+
+    
+    class Task6 : public TaskInterface<>
+    {
+    private:
+        std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    public:
+        Task6(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : TaskInterface(set) {}
     };
 
 } // namespace hqp
