@@ -13,10 +13,7 @@ namespace hqp
     }
 
 
-    void Task::select_variables(const Eigen::VectorXi& indices)
-    {
-        indices_ = indices;
-    }
+    void Task::select_variables(const Eigen::VectorXi& indices) { indices_ = indices; }
 
 
     SubTasks::SubTasks(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set) {}
