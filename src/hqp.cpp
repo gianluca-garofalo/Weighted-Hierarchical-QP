@@ -55,7 +55,6 @@ namespace hqp
                 auto row = find(sot[k_]->activeSet_);
                 auto [matrix, vector] = get_task(sot[k_], row);
                 vector -= matrix * primal_;
-                assert(matrix.cols() == col_);
 
                 Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
                 // TODO: dynamically update tolerances to avoid tasks oscillations
@@ -218,9 +217,13 @@ namespace hqp
         if (!task->isComputed_)
         {
             task->compute();
-            // Weight subtasks within task 
-            task->matrix_ = task->weight_.matrixU() * task->matrix_;
-            task->vector_ = task->weight_.matrixU() * task->vector_;
+            assert(task->indices_.maxCoeff() < col_);
+            if (task->weight_.size())
+            {
+                // Weight subtasks within task 
+                task->matrix_ = task->weight_.matrixU() * task->matrix_;
+                task->vector_ = task->weight_.matrixU() * task->vector_;
+            }
             // Shift problem to the origin
             task->vector_ -= task->matrix_ * guess_(task->indices_);
         }
