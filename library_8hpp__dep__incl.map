@@ -1,0 +1,5 @@
+<map id="tests/library.hpp" name="tests/library.hpp">
+<area shape="rect" id="node1" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="78,5,205,31"/>
+<area shape="rect" id="node2" href="$library_8cpp.html" title="Implements the run() functions for various test tasks." alt="" coords="5,79,131,104"/>
+<area shape="rect" id="node3" href="$test0_8cpp.html" title="Test driver for validating the Hierarchical&#45;QP solver functionality." alt="" coords="155,79,274,104"/>
+</map>
