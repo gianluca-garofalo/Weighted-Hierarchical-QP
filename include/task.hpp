@@ -11,6 +11,10 @@
 
 #include <tuple>
 #include <memory>
+#include <utility>
+#include <type_traits>
+#include <cassert>
+#include <optional>
 #include <Eigen/Dense>
 
 namespace hqp {
@@ -59,38 +63,85 @@ class Task {
 
 template<typename... Args>
 class TaskInterface : public Task {
+  private:
+    template<typename T>
+    struct is_reference_wrapper : std::false_type {};
+
+    template<typename U>
+    struct is_reference_wrapper<std::reference_wrapper<U>> : std::true_type {};
+
+    // Unwrap a reference_wrapper; otherwise, forward the value
+    template<typename T>
+    static decltype(auto) unwrap(T&& t) {
+        if constexpr (is_reference_wrapper<std::decay_t<T>>::value) {
+            return t.get();
+        } else {
+            return std::forward<T>(t);
+        }
+    }
+
+    // If T is a reference, store as reference_wrapper (to allow rebinding) otherwise, store by value
+    template<typename T>
+    using ArgStorage =
+      std::conditional_t< std::is_reference<T>::value, std::reference_wrapper<std::remove_reference_t<T>>, T>;
+
   protected:
-    std::tuple<std::decay_t<Args>...> args_; ///< Cached parameters for the run() function.  return run(unpacked...);
+    // Use an optional tuple to delay initialization.
+    std::optional<std::tuple<ArgStorage<Args>...>> args_;
+
     /**
-     * @brief Executes the task with provided parameters.
-     * @param args The arguments necessary to compute the task's matrix and vector.
-     * @return A tuple containing the computed matrix and vector.
+     * @brief Executes the task using the provided parameters.
+     * Derived classes must implement this function to compute and assign
+     * the task's matrix_ and vector_ members.
+     *
+     * @param args The parameters necessary for the task.
      */
     virtual std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run(Args... args) = 0;
 
     void compute() override {
-        std::tie(matrix_, vector_) = std::apply([this](Args... unpacked) { return run(unpacked...); }, args_);
+        assert(args_.has_value() && "Arguments must be set before compute() is called.");
+        std::tie(matrix_, vector_) = std::apply(
+            [this](auto &&...storedArgs) -> std::tuple<Eigen::MatrixXd, Eigen::VectorXd> {
+                return run(unwrap(std::forward<decltype(storedArgs)>(storedArgs))...);
+            },
+            *args_);
+
         assert(matrix_.rows() == vector_.rows());
         assert(equalitySet_.size() == vector_.rows());
+
         if (!indices_.size()) {
-            auto n = matrix_.cols();
+            auto n   = matrix_.cols();
             indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
         }
         isComputed_ = true;
     }
 
   public:
-    /// @brief Constructs the TaskInterface with the given equality set.
-    /// @param set Boolean array specifying equality constraints.
-    TaskInterface(const Eigen::Array<bool, Eigen::Dynamic, 1>& set) : Task(set) {
+    /**
+     * @brief Constructs the TaskInterface with the specified equality set.
+     * @param set Boolean array specifying equality constraints.
+     *
+     * Note: No task arguments are initialized here. You must call update() before compute().
+     */
+    TaskInterface(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
+      : Task(set)
+      , args_(std::nullopt) {
     }
 
     /**
-     * @brief Updates task parameters and marks the task for re-computation.};
+     * @brief Updates task parameters and marks the task for re-computation.
+     *
+     * For reference parameters (or const references), the corresponding argument must be an lvalue.
+     *
      * @param args New parameters for the task.
      */
-    void update(Args... args) {
-        args_ = std::make_tuple(args...);
+    // If a parameter is a reference (or const reference), the corresponding argument must be an lvalue.
+    template<
+      typename... U,
+      typename = std::enable_if_t< (sizeof...(U) == sizeof...(Args)) &&
+                                   ((!std::is_reference<Args>::value || std::is_lvalue_reference<U>::value) && ...)>>
+    void update(U&&... args) {
+        args_       = std::tuple<ArgStorage<Args>...>(std::forward<U>(args)...);
         isComputed_ = false;
     }
 };
@@ -120,6 +171,6 @@ class SubTasks : public Task {
     }
 };
 
-} // namespace hqp
+}  // namespace hqp
 
-#endif // _Task_
+#endif  // _Task_
