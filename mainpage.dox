@@ -1,0 +1,30 @@
+/**
+ * @mainpage Weighted-Hierarchical-QP Documentation
+ *
+ * # Weighted-Hierarchical-QP
+ *
+ * **Weighted-Hierarchical-QP** is a sophisticated solver designed to tackle prioritized quadratic programming problems.
+ *
+ * ## Overview
+ *
+ * This project combines task-based hierarchies with advanced matrix decomposition techniques 
+ * to resolve both equality and inequality constraints with exceptional numerical stability.
+ *
+ * **Features include:**
+ * - Hierarchical Task Management: Aggregates multiple tasks with different priority levels.
+ * - Flexible Constraint Handling: Supports both equality and inequality constraints.
+ * - Robust Numerical Methods: Uses Cholesky decompositions and orthogonal decompositions.
+ * - Comprehensive Documentation: Built with Doxygen to offer full API insights and diagrams.
+ *
+ * ## Getting Started
+ *
+ * For instructions on installation, build, and usage, please refer to the [README.md](README.md).
+ *
+ * ## Contributing
+ *
+ * Contributions are welcome! For guidelines, see the CONTRIBUTING.md.
+ *
+ * ## License
+ *
+ * Distributed under the BSD 3-Clause License.
+ */

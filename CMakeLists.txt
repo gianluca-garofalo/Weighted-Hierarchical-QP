@@ -36,21 +36,19 @@ target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 
-target_compile_features(${PROJECT_NAME}	PRIVATE	cxx_std_20)
+target_compile_features(${PROJECT_NAME}	PUBLIC cxx_std_20)
 
 
 if(BUILD_TESTING)
 	add_subdirectory(tests)
 endif()
 
-
-set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/install/" CACHE PATH "Force CMAKE_INSTALL_PREFIX" FORCE)
 
 install(
     TARGETS ${PROJECT_NAME}
@@ -62,6 +60,14 @@ install(
 )
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
+find_package(Doxygen QUIET)
+if(DOXYGEN_FOUND)
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Running Doxygen to generate full API documentation with detailed descriptions and diagrams..."
+    )
+endif()
 
 write_basic_package_version_file(
     ${PROJECT_NAME}ConfigVersion.cmake

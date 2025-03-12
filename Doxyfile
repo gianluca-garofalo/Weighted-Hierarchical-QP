@@ -1,0 +1,22 @@
+# Minimal Doxyfile configuration for Weighted-Hierarchical-QP with enhanced descriptions
+# This Doxyfile is tuned for enhanced documentation
+PROJECT_NAME           = "Weighted-Hierarchical-QP"
+PROJECT_NUMBER         = "0.0.1"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = include src tests .        # Include current directory for mainpage.dox
+FILE_PATTERNS          = *.h *.hpp *.c *.cpp *.md *.dox
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES                 # Detailed docs include private members
+EXTRACT_STATIC         = YES                 # Documentation of static symbols
+FULL_PATH_NAMES        = YES                 # Full file names in output
+CALL_GRAPH             = YES                 # Generate function call graphs
+CALLER_GRAPH           = YES                 # Generate caller graphs for functions
+HAVE_DOT               = YES                 # Enable graph generation with dot
+DOT_IMAGE_FORMAT       = svg                 # Use SVG for diagrams
+JAVADOC_AUTOBRIEF      = YES                 # Auto-extract the brief description
+WARN_AS_ERROR          = NO
+QUIET                  = NO
+USE_MDFILE_AS_MAINPAGE = mainpage.dox        # Ensure mainpage.dox is used as the main page
