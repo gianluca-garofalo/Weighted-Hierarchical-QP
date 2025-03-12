@@ -101,9 +101,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2de92e9afcc6891e7ad643147e56b40a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#a2de92e9afcc6891e7ad643147e56b40a">TaskInterface</a> (const Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt; &amp;set)</td></tr>
 <tr class="memdesc:a2de92e9afcc6891e7ad643147e56b40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="classhqp_1_1TaskInterface.html">TaskInterface</a> with the given equality set.  <br /></td></tr>
 <tr class="separator:a2de92e9afcc6891e7ad643147e56b40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af85cdf6cf77baf5dd4fe2bc63cf9e745"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#af85cdf6cf77baf5dd4fe2bc63cf9e745">update</a> (Args... args)</td></tr>
-<tr class="memdesc:af85cdf6cf77baf5dd4fe2bc63cf9e745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates task parameters and marks the task for re-computation.  <br /></td></tr>
-<tr class="separator:af85cdf6cf77baf5dd4fe2bc63cf9e745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60876176967826c18117d866141c97ee"><td class="memTemplParams" colspan="2">template&lt;typename... U, typename  = std::enable_if_t&lt;                      (sizeof...(U) == sizeof...(Args)) &amp;&amp;                      (( !std::is_reference&lt;Args&gt;::value || std::is_lvalue_reference&lt;U&gt;::value) &amp;&amp; ...)&gt;&gt; </td></tr>
+<tr class="memitem:a60876176967826c18117d866141c97ee"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#a60876176967826c18117d866141c97ee">update</a> (U &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a60876176967826c18117d866141c97ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates task parameters and marks the task for re-computation.  <br /></td></tr>
+<tr class="separator:a60876176967826c18117d866141c97ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classhqp_1_1Task"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhqp_1_1Task')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
 <tr class="memitem:a19c516e5a3e080e580c06ab3eef96fb0 inherit pub_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a19c516e5a3e080e580c06ab3eef96fb0">Task</a> (const Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt; &amp;set)</td></tr>
 <tr class="memdesc:a19c516e5a3e080e580c06ab3eef96fb0 inherit pub_methods_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classhqp_1_1Task.html">Task</a> by initializing constraint sets.  <br /></td></tr>
@@ -128,9 +129,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a111445c1580f9b628fcf906b4a921d11"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; std::decay_t&lt; Args &gt;... &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#a111445c1580f9b628fcf906b4a921d11">args_</a></td></tr>
-<tr class="memdesc:a111445c1580f9b628fcf906b4a921d11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached parameters for the <a class="el" href="classhqp_1_1TaskInterface.html#af38552cde69558b0642d62e04c2636bb" title="Executes the task with provided parameters.">run()</a> function. return run(unpacked...);.  <br /></td></tr>
-<tr class="separator:a111445c1580f9b628fcf906b4a921d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14240bd78f680d81b34290723a4db2ee"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::tuple&lt; <a class="el" href="namespacehqp.html#a55a244219fedd43fafb304713f73f947">ArgStorage</a>&lt; Args &gt;... &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#a14240bd78f680d81b34290723a4db2ee">args_</a></td></tr>
+<tr class="separator:a14240bd78f680d81b34290723a4db2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classhqp_1_1Task"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classhqp_1_1Task')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
 <tr class="memitem:ac50347ebfb913039837e2de3025e5ce6 inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac50347ebfb913039837e2de3025e5ce6">matrix_</a></td></tr>
 <tr class="memdesc:ac50347ebfb913039837e2de3025e5ce6 inherit pro_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraint matrix computed by the task.  <br /></td></tr>
@@ -224,6 +224,12 @@ template&lt;typename... Args&gt; </div>
 <p>Pure virtual function to compute task-specific output. </p>
 
 <p>Implements <a class="el" href="classhqp_1_1Task.html#a1e71bc66fcbaa2a73895373b6091b180">hqp::Task</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1TaskInterface_a23e607e49230479472ea687297604d1f_cgraph.svg" width="371" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -261,16 +267,24 @@ template&lt;typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classA.html">A</a> tuple containing the computed matrix and vector. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1TaskInterface_af38552cde69558b0642d62e04c2636bb_icgraph.svg" width="371" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
-<a id="af85cdf6cf77baf5dd4fe2bc63cf9e745" name="af85cdf6cf77baf5dd4fe2bc63cf9e745"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af85cdf6cf77baf5dd4fe2bc63cf9e745">&#9670;&#160;</a></span>update()</h2>
+<a id="a60876176967826c18117d866141c97ee" name="a60876176967826c18117d866141c97ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60876176967826c18117d866141c97ee">&#9670;&#160;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename... Args&gt; </div>
+<div class="memtemplate">
+template&lt;typename... U, typename  = std::enable_if_t&lt;                      (sizeof...(U) == sizeof...(Args)) &amp;&amp;                      (( !std::is_reference&lt;Args&gt;::value || std::is_lvalue_reference&lt;U&gt;::value) &amp;&amp; ...)&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -278,7 +292,7 @@ template&lt;typename... Args&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classhqp_1_1TaskInterface.html">hqp::TaskInterface</a>&lt; Args &gt;::update </td>
           <td>(</td>
-          <td class="paramtype">Args...&#160;</td>
+          <td class="paramtype">U &amp;&amp;...&#160;</td>
           <td class="paramname"><em>args</em></td><td>)</td>
           <td></td>
         </tr>
@@ -301,8 +315,8 @@ template&lt;typename... Args&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a111445c1580f9b628fcf906b4a921d11" name="a111445c1580f9b628fcf906b4a921d11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a111445c1580f9b628fcf906b4a921d11">&#9670;&#160;</a></span>args_</h2>
+<a id="a14240bd78f680d81b34290723a4db2ee" name="a14240bd78f680d81b34290723a4db2ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14240bd78f680d81b34290723a4db2ee">&#9670;&#160;</a></span>args_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,7 +327,7 @@ template&lt;typename... Args&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::tuple&lt;std::decay_t&lt;Args&gt;...&gt; <a class="el" href="classhqp_1_1TaskInterface.html">hqp::TaskInterface</a>&lt; Args &gt;::args_</td>
+          <td class="memname">std::optional&lt;std::tuple&lt;<a class="el" href="namespacehqp.html#a55a244219fedd43fafb304713f73f947">ArgStorage</a>&lt;Args&gt;...&gt; &gt; <a class="el" href="classhqp_1_1TaskInterface.html">hqp::TaskInterface</a>&lt; Args &gt;::args_</td>
         </tr>
       </table>
   </td>
@@ -322,8 +336,6 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Cached parameters for the <a class="el" href="classhqp_1_1TaskInterface.html#af38552cde69558b0642d62e04c2636bb" title="Executes the task with provided parameters.">run()</a> function. return run(unpacked...);. </p>
 
 </div>
 </div>

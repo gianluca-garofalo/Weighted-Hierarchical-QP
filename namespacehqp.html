@@ -71,6 +71,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">hqp Namespace Reference</div></div>
 </div><!--header-->
@@ -79,6 +80,10 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html">HierarchicalQP</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1is__reference__wrapper.html">is_reference_wrapper</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1is__reference__wrapper_3_01std_1_1reference__wrapper_3_01U_01_4_01_4.html">is_reference_wrapper&lt; std::reference_wrapper&lt; U &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1SubTasks.html">SubTasks</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,11 +104,37 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html">TaskInterface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a55a244219fedd43fafb304713f73f947"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a55a244219fedd43fafb304713f73f947"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a55a244219fedd43fafb304713f73f947">ArgStorage</a> = std::conditional_t&lt; std::is_reference&lt; T &gt;::value, std::reference_wrapper&lt; std::remove_reference_t&lt; T &gt; &gt;, T &amp; &gt;</td></tr>
+<tr class="separator:a55a244219fedd43fafb304713f73f947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a3995044fda58d1086e53fba48d3e5fa9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a3995044fda58d1086e53fba48d3e5fa9"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a3995044fda58d1086e53fba48d3e5fa9">unwrap</a> (T &amp;&amp;t)</td></tr>
+<tr class="separator:a3995044fda58d1086e53fba48d3e5fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab85e1340e7fee0a8d13730c50a970ceb"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXi&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb">find</a> (const Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt; &amp;)</td></tr>
 <tr class="separator:ab85e1340e7fee0a8d13730c50a970ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a55a244219fedd43fafb304713f73f947" name="a55a244219fedd43fafb304713f73f947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a244219fedd43fafb304713f73f947">&#9670;&#160;</a></span>ArgStorage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacehqp.html#a55a244219fedd43fafb304713f73f947">hqp::ArgStorage</a> = typedef std::conditional_t&lt; std::is_reference&lt;T&gt;::value, std::reference_wrapper&lt;std::remove_reference_t&lt;T&gt; &gt;, T &amp;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ab85e1340e7fee0a8d13730c50a970ceb" name="ab85e1340e7fee0a8d13730c50a970ceb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab85e1340e7fee0a8d13730c50a970ceb">&#9670;&#160;</a></span>find()</h2>
@@ -142,6 +173,32 @@ Functions</h2></td></tr>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="namespacehqp_ab85e1340e7fee0a8d13730c50a970ceb_icgraph.svg" width="987" height="280"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a3995044fda58d1086e53fba48d3e5fa9" name="a3995044fda58d1086e53fba48d3e5fa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3995044fda58d1086e53fba48d3e5fa9">&#9670;&#160;</a></span>unwrap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">decltype(auto) hqp::unwrap </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&amp;&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="namespacehqp_a3995044fda58d1086e53fba48d3e5fa9_icgraph.svg" width="303" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
