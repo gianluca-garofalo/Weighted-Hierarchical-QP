@@ -1,0 +1,23 @@
+<map id="src/hqp.cpp" name="src/hqp.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="149,5,245,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="55,79,135,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,33,125,73,122,68,179,28"/>
+<area shape="rect" id="Node000003" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="159,79,234,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,31,199,65,194,65,194,31"/>
+<area shape="rect" id="Node000009" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="324,152,403,177"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="212,29,341,141,338,145,209,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="135,152,197,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="194,105,179,141,174,139,189,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,225,60,251"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="160,105,75,131,39,144,21,154,16,167,15,182,23,212,18,213,10,182,10,166,17,150,37,139,73,126,158,100"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="109,225,186,251"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="205,103,214,137,216,158,211,178,197,201,179,219,175,215,193,197,206,176,210,158,209,138,199,105"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="235,225,337,251"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="206,103,274,212,270,215,202,106"/>
+<area shape="rect" id="Node000008" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="32,152,111,177"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="178,106,105,147,102,143,175,102"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="67,179,48,215,43,212,63,176"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="85,175,127,214,123,218,82,179"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="107,175,239,218,237,223,105,180"/>
+<area shape="poly" id="edge12_Node000009_Node000007" title=" " alt="" coords="353,179,311,218,307,214,349,175"/>
+</map>

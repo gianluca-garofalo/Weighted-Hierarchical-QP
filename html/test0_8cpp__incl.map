@@ -1,0 +1,25 @@
+<map id="tests/test0.cpp" name="tests/test0.cpp">
+<area shape="rect" id="Node000001" title="Test driver for validating the Hierarchical&#45;QP solver functionality." alt="" coords="105,5,223,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,85,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,33,78,74,75,69,144,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="154,225,257,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="161,32,152,64,149,84,151,103,170,163,194,212,189,215,165,165,145,105,144,84,146,63,156,30"/>
+<area shape="rect" id="Node000004" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="316,79,391,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,28,310,71,309,76,193,33"/>
+<area shape="rect" id="Node000009" href="$library_8hpp.html" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="160,79,251,104"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="173,30,194,65,189,68,169,32"/>
+<area shape="poly" id="edge7_Node000004_Node000003" title=" " alt="" coords="325,107,287,126,251,154,230,183,216,213,211,211,226,180,247,150,284,121,322,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="365,152,427,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="363,103,384,139,380,142,358,106"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="293,225,347,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="383,102,408,115,432,133,446,154,447,166,442,179,426,198,405,213,361,231,359,226,403,208,422,194,438,176,442,166,441,156,428,137,405,120,380,106"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="433,225,511,251"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="392,102,430,120,447,134,462,151,474,181,477,211,471,212,469,182,458,153,444,138,427,125,390,106"/>
+<area shape="rect" id="Node000008" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="262,152,341,177"/>
+<area shape="poly" id="edge8_Node000004_Node000008" title=" " alt="" coords="347,106,320,142,316,139,343,103"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="287,180,234,219,231,215,284,175"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="307,177,316,212,311,213,302,178"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="330,175,433,218,431,222,328,180"/>
+<area shape="poly" id="edge13_Node000009_Node000003" title=" " alt="" coords="208,104,208,212,203,212,203,104"/>
+<area shape="poly" id="edge14_Node000009_Node000008" title=" " alt="" coords="222,102,276,141,273,146,219,106"/>
+</map>

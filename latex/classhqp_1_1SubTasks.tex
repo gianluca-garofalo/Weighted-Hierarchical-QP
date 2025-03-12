@@ -1,0 +1,183 @@
+\doxysection{hqp\+::Sub\+Tasks Class Reference}
+\hypertarget{classhqp_1_1SubTasks}{}\label{classhqp_1_1SubTasks}\index{hqp::SubTasks@{hqp::SubTasks}}
+
+
+{\ttfamily \#include $<$task.\+hpp$>$}
+
+
+
+Inheritance diagram for hqp\+::Sub\+Tasks\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classhqp_1_1SubTasks__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for hqp\+::Sub\+Tasks\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{classhqp_1_1SubTasks__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhqp_1_1SubTasks_a9f480533d44d102d2f86c7d62493a307}{Sub\+Tasks}} (const Eigen\+::\+Array$<$ bool, Eigen\+::\+Dynamic, 1 $>$ \&set)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classhqp_1_1SubTasks}{Sub\+Tasks} instance with a given equality constraint set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1SubTasks_ab921fb5342842ae371b33a839d3a76e7}{compute}} () override
+\begin{DoxyCompactList}\small\item\em Computes the aggregated result from all subtasks. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1SubTasks_a4d97606db3df832515c56fe7baea94d8}{set\+\_\+weight}} (const Eigen\+::\+Matrix\+Xd \&weight)
+\begin{DoxyCompactList}\small\item\em Applies a weight matrix to adjust the combined outputs of the subtasks. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\void \mbox{\hyperlink{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0}{update}} (uint k, Args... args)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classhqp_1_1Task}{hqp\+::\+Task}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhqp_1_1Task_a19c516e5a3e080e580c06ab3eef96fb0}{Task}} (const Eigen\+::\+Array$<$ bool, Eigen\+::\+Dynamic, 1 $>$ \&set)
+\begin{DoxyCompactList}\small\item\em Constructs a \doxylink{classhqp_1_1Task}{Task} by initializing constraint sets. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classhqp_1_1Task_abe8e505e97a3e642a51e044c1bb99795}{\texorpdfstring{$\sim$}{\string~}\+Task}} ()=default
+\item 
+void \mbox{\hyperlink{classhqp_1_1Task_ac247b5a10cc505d841a0449923d8ad9f}{select\+\_\+variables}} (const Eigen\+::\+Vector\+Xi \&indices)
+\begin{DoxyCompactList}\small\item\em Sets the indices of variables that are selected for this task. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classhqp_1_1Task}{Task}} $>$ $>$ \mbox{\hyperlink{classhqp_1_1SubTasks_a8f501b232f3638f5be67bab14fb3891d}{sot}}
+\begin{DoxyCompactList}\small\item\em Container holding smart pointers to subtasks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classhqp_1_1Task}{hqp\+::\+Task}}}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classhqp_1_1Task_af97ea56dd647086bbe4842de98bea197}{tolerance}} = 1e-\/9
+\begin{DoxyCompactList}\small\item\em Tolerance value for computation accuracy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classhqp_1_1Task}{hqp\+::\+Task}}}
+\begin{DoxyCompactItemize}
+\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classhqp_1_1Task_ac50347ebfb913039837e2de3025e5ce6}{matrix\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Constraint matrix computed by the task. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classhqp_1_1Task_a29220dd8eac0fa182d7b43f415b3e05a}{vector\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Right-\/hand side vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Array$<$ bool, Eigen\+::\+Dynamic, 1 $>$ \mbox{\hyperlink{classhqp_1_1Task_aa7761e65e5dabe87839768a6e68b4a7e}{equality\+Set\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Initial equality constraints. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xi \mbox{\hyperlink{classhqp_1_1Task_a7f7c96cfb63bafebd91d4c5819a80934}{indices\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Indices of active variables. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classhqp_1_1Task_ac535de879ea195bcdf317ad17d041d7a}{is\+Computed\+\_\+}} = false
+\begin{DoxyCompactList}\small\item\em Flag indicating if task computation is up-\/to-\/date. \end{DoxyCompactList}\item 
+Eigen\+::\+LLT$<$ Eigen\+::\+Matrix\+Xd $>$ \mbox{\hyperlink{classhqp_1_1Task_a8f44fc95e8c02521f34e59e2213905e5}{weight\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Weight based on Cholesky decomposition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classhqp_1_1SubTasks_a9f480533d44d102d2f86c7d62493a307}\label{classhqp_1_1SubTasks_a9f480533d44d102d2f86c7d62493a307} 
+\index{hqp::SubTasks@{hqp::SubTasks}!SubTasks@{SubTasks}}
+\index{SubTasks@{SubTasks}!hqp::SubTasks@{hqp::SubTasks}}
+\doxysubsubsection{\texorpdfstring{SubTasks()}{SubTasks()}}
+{\footnotesize\ttfamily hqp\+::\+Sub\+Tasks\+::\+Sub\+Tasks (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Array$<$ bool, Eigen\+::\+Dynamic, 1 $>$ \&}]{set }\end{DoxyParamCaption})}
+
+
+
+Constructs a \doxylink{classhqp_1_1SubTasks}{Sub\+Tasks} instance with a given equality constraint set. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em set} & Boolean array indicating equality constraints. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classhqp_1_1SubTasks_ab921fb5342842ae371b33a839d3a76e7}\label{classhqp_1_1SubTasks_ab921fb5342842ae371b33a839d3a76e7} 
+\index{hqp::SubTasks@{hqp::SubTasks}!compute@{compute}}
+\index{compute@{compute}!hqp::SubTasks@{hqp::SubTasks}}
+\doxysubsubsection{\texorpdfstring{compute()}{compute()}}
+{\footnotesize\ttfamily void hqp\+::\+Sub\+Tasks\+::compute (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Computes the aggregated result from all subtasks. 
+
+Aggregates the results from all subtasks to form a composite solution.
+
+The method computes each subtask and concatenates their matrices and vectors, ensuring consistency in dimensions and variable indices.
+
+Implements \mbox{\hyperlink{classhqp_1_1Task_a1e71bc66fcbaa2a73895373b6091b180}{hqp\+::\+Task}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1SubTasks_ab921fb5342842ae371b33a839d3a76e7_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1SubTasks_a4d97606db3df832515c56fe7baea94d8}\label{classhqp_1_1SubTasks_a4d97606db3df832515c56fe7baea94d8} 
+\index{hqp::SubTasks@{hqp::SubTasks}!set\_weight@{set\_weight}}
+\index{set\_weight@{set\_weight}!hqp::SubTasks@{hqp::SubTasks}}
+\doxysubsubsection{\texorpdfstring{set\_weight()}{set\_weight()}}
+{\footnotesize\ttfamily void hqp\+::\+Sub\+Tasks\+::set\+\_\+weight (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{weight }\end{DoxyParamCaption})}
+
+
+
+Applies a weight matrix to adjust the combined outputs of the subtasks. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em weight} & The metric matrix used for scaling. \\
+\hline
+\end{DoxyParams}
+Applies a weight matrix to adjust the subtasks\textquotesingle{} outputs.
+
+Uses a Cholesky decomposition to modify the task\textquotesingle{}s matrix and vector, enhancing numerical stability during the solution process.
+
+
+\begin{DoxyParams}{Parameters}
+{\em weight} & The metric matrix applied to the subtasks.\\
+\hline
+\end{DoxyParams}
+\Hypertarget{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0}\label{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0} 
+\index{hqp::SubTasks@{hqp::SubTasks}!update@{update}}
+\index{update@{update}!hqp::SubTasks@{hqp::SubTasks}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily template$<$typename T , typename... Args$>$ \\
+void hqp\+::\+Sub\+Tasks\+::update (\begin{DoxyParamCaption}\item[{uint}]{k,  }\item[{Args...}]{args }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classhqp_1_1SubTasks_a8f501b232f3638f5be67bab14fb3891d}\label{classhqp_1_1SubTasks_a8f501b232f3638f5be67bab14fb3891d} 
+\index{hqp::SubTasks@{hqp::SubTasks}!sot@{sot}}
+\index{sot@{sot}!hqp::SubTasks@{hqp::SubTasks}}
+\doxysubsubsection{\texorpdfstring{sot}{sot}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classhqp_1_1Task}{Task}}$>$ $>$ hqp\+::\+Sub\+Tasks\+::sot}
+
+
+
+Container holding smart pointers to subtasks. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{task_8hpp}{task.\+hpp}}\item 
+src/\mbox{\hyperlink{task_8cpp}{task.\+cpp}}\end{DoxyCompactItemize}

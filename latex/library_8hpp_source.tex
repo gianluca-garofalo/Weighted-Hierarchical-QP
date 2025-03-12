@@ -1,0 +1,78 @@
+\doxysection{library.\+hpp}
+\hypertarget{library_8hpp_source}{}\label{library_8hpp_source}\index{tests/library.hpp@{tests/library.hpp}}
+\mbox{\hyperlink{library_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#ifndef\ \_LibraryOfTasks\_}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ \_LibraryOfTasks\_}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{task_8hpp}{task.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacehqp}{hqp}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task0}{Task0}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<>\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task0_a668a9a7b457322b4781bb80957dfd69e}{run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task0_a5a78c54e8d9e65eeefc9d6e20ccbfe03}{Task0}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task1}{Task1}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<double\ const\&,\ Eigen::VectorXd\ const\&>\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task1_af9b0e4aeaa7abacc7572ff81bb3378ac}{run}}(\textcolor{keywordtype}{double}\ \textcolor{keyword}{const}\&\ b0,\ Eigen::VectorXd\ \textcolor{keyword}{const}\&\ vec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task1_a1ac1c3e02c49c0461b5e407783928ece}{Task1}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task2}{Task2}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<>\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task2_a76c88fe227468f80abcbc9871b7c865d}{run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task2_a31577377dcd5a38969b30771a25fa75c}{Task2}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task3}{Task3}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<>\ \{}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00048\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task3_a01d7f086269b09528f88c6c4cc8b7ae1}{run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task3_a67f72218e2b6cf4bee090659814173f1}{Task3}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task5}{Task5}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<>\ \{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task5_afd4e7b87c6f3f9eaa516e8df6b926420}{run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task5_aac6b299c174e4424976adfaaf87e4b27}{Task5}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task6}{Task6}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}<>\ \{}
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00068\ \ \ \ \ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1Task6_aa57fcee5337b5e19b1659d782cf7e002}{run}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task6_a4142797dbcd9262f157c05b38776287f}{Task6}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ :\ \mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}(set)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \}\ \ \textcolor{comment}{//\ namespace\ hqp}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ \_LibraryOfTasks\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,98 @@
+\doxysection{task.\+hpp}
+\hypertarget{task_8hpp_source}{}\label{task_8hpp_source}\index{include/task.hpp@{include/task.hpp}}
+\mbox{\hyperlink{task_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ \_Task\_}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ \_Task\_}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacehqp}{hqp}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1Task}{Task}}\ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ uint\ \mbox{\hyperlink{classhqp_1_1Task_a015e5a14b3b2e9da0e88550ef884a243}{rank\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ Eigen::VectorXd\ \mbox{\hyperlink{classhqp_1_1Task_a71645bf15065c3537956055fb97676a1}{slack\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ Eigen::VectorXd\ \mbox{\hyperlink{classhqp_1_1Task_a67660f2c3a08266d23dd90d216682373}{dual\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00023\ \ \ \ \ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\ \mbox{\hyperlink{classhqp_1_1Task_a739be79690107fa0d9f0808e32735516}{activeSet\_}};\ \ }
+\DoxyCodeLine{00024\ \ \ \ \ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\ \mbox{\hyperlink{classhqp_1_1Task_a718e61480fb09ff3e500184444771dee}{lockedSet\_}};\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\ \mbox{\hyperlink{classhqp_1_1Task_a07ee485f710ee924dcdafff3f54ec9d1}{workSet\_}};\ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ Eigen::MatrixXd\ \mbox{\hyperlink{classhqp_1_1Task_a6828de92a8156ce7b9ee4e12b32980ed}{codMid\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ Eigen::MatrixXd\ \mbox{\hyperlink{classhqp_1_1Task_ada10c92c553d4230680271c4f3cb32a9}{codLeft\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1HierarchicalQP}{HierarchicalQP}};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1SubTasks}{SubTasks}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00032\ \ \ \ \ Eigen::MatrixXd\ \mbox{\hyperlink{classhqp_1_1Task_ac50347ebfb913039837e2de3025e5ce6}{matrix\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ Eigen::VectorXd\ \mbox{\hyperlink{classhqp_1_1Task_a29220dd8eac0fa182d7b43f415b3e05a}{vector\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\ \mbox{\hyperlink{classhqp_1_1Task_aa7761e65e5dabe87839768a6e68b4a7e}{equalitySet\_}};\ \ }
+\DoxyCodeLine{00035\ \ \ \ \ Eigen::VectorXi\ \mbox{\hyperlink{classhqp_1_1Task_a7f7c96cfb63bafebd91d4c5819a80934}{indices\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classhqp_1_1Task_ac535de879ea195bcdf317ad17d041d7a}{isComputed\_}}\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ \ \ \ \ Eigen::LLT<Eigen::MatrixXd>\ \mbox{\hyperlink{classhqp_1_1Task_a8f44fc95e8c02521f34e59e2213905e5}{weight\_}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1Task_a1e71bc66fcbaa2a73895373b6091b180}{compute}}()\ =\ 0;}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classhqp_1_1Task_af97ea56dd647086bbe4842de98bea197}{tolerance}}\ =\ 1e-\/9;\ \ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task}{Task}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classhqp_1_1Task_abe8e505e97a3e642a51e044c1bb99795}{\string~Task}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1Task_ac247b5a10cc505d841a0449923d8ad9f}{select\_variables}}(\textcolor{keyword}{const}\ Eigen::VectorXi\&\ indices);}
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1TaskInterface}{TaskInterface}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1Task}{Task}}\ \{}
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00063\ \ \ \ \ std::tuple<std::decay\_t<Args>...>\ \mbox{\hyperlink{classhqp_1_1TaskInterface_a111445c1580f9b628fcf906b4a921d11}{args\_}};\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{virtual}\ std::tuple<Eigen::MatrixXd,\ Eigen::VectorXd>\ \mbox{\hyperlink{classhqp_1_1TaskInterface_af38552cde69558b0642d62e04c2636bb}{run}}(Args...\ args)\ =\ 0;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1TaskInterface_a23e607e49230479472ea687297604d1f}{compute}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ std::tie(\mbox{\hyperlink{classhqp_1_1Task_ac50347ebfb913039837e2de3025e5ce6}{matrix\_}},\ \mbox{\hyperlink{classhqp_1_1Task_a29220dd8eac0fa182d7b43f415b3e05a}{vector\_}})\ =\ std::apply([\textcolor{keyword}{this}](Args...\ unpacked)\ \{\ return\ run(unpacked...);\ \},\ \mbox{\hyperlink{classhqp_1_1TaskInterface_a111445c1580f9b628fcf906b4a921d11}{args\_}});}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{classhqp_1_1Task_ac50347ebfb913039837e2de3025e5ce6}{matrix\_}}.rows()\ ==\ \mbox{\hyperlink{classhqp_1_1Task_a29220dd8eac0fa182d7b43f415b3e05a}{vector\_}}.rows());}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ assert(\mbox{\hyperlink{classhqp_1_1Task_aa7761e65e5dabe87839768a6e68b4a7e}{equalitySet\_}}.size()\ ==\ \mbox{\hyperlink{classhqp_1_1Task_a29220dd8eac0fa182d7b43f415b3e05a}{vector\_}}.rows());}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{classhqp_1_1Task_a7f7c96cfb63bafebd91d4c5819a80934}{indices\_}}.size())\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ \mbox{\hyperlink{classhqp_1_1Task_ac50347ebfb913039837e2de3025e5ce6}{matrix\_}}.cols();}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task_a7f7c96cfb63bafebd91d4c5819a80934}{indices\_}}\ =\ Eigen::VectorXi::LinSpaced(n,\ 0,\ n\ -\/\ 1);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task_ac535de879ea195bcdf317ad17d041d7a}{isComputed\_}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \ \ \ \ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1TaskInterface_a2de92e9afcc6891e7ad643147e56b40a}{TaskInterface}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set)\ :\ \mbox{\hyperlink{classhqp_1_1Task}{Task}}(set)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1TaskInterface_af85cdf6cf77baf5dd4fe2bc63cf9e745}{update}}(Args...\ args)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhqp_1_1TaskInterface_a111445c1580f9b628fcf906b4a921d11}{args\_}}\ =\ std::make\_tuple(args...);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task_ac535de879ea195bcdf317ad17d041d7a}{isComputed\_}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ Composite\ task\ that\ aggregates\ multiple\ subtasks.}}
+\DoxyCodeLine{00099\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhqp_1_1SubTasks}{SubTasks}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhqp_1_1Task}{Task}}\ \{}
+\DoxyCodeLine{00100\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00102\ \ \ \ \ std::vector<std::unique\_ptr<Task>>\ \mbox{\hyperlink{classhqp_1_1SubTasks_a8f501b232f3638f5be67bab14fb3891d}{sot}};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00106\ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task_a38cc77de13ac53fb9c5226b5d52889a3}{SubTasks}}(\textcolor{keyword}{const}\ Eigen::Array<bool,\ Eigen::Dynamic,\ 1>\&\ set);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1SubTasks_ab921fb5342842ae371b33a839d3a76e7}{compute}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1SubTasks_a4d97606db3df832515c56fe7baea94d8}{set\_weight}}(\textcolor{keyword}{const}\ Eigen::MatrixXd\&\ weight);}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0}{update}}(uint\ k,\ Args...\ args)}
+\DoxyCodeLine{00117\ \ \ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhqp_1_1Task_ac535de879ea195bcdf317ad17d041d7a}{isComputed\_}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}T*\textcolor{keyword}{>}(\mbox{\hyperlink{classhqp_1_1SubTasks_a8f501b232f3638f5be67bab14fb3891d}{sot}}[k].get())-\/>\mbox{\hyperlink{classhqp_1_1SubTasks_a3189da34474844c2dd20cb83ca6bd3e0}{update}}(args...);}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \};}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \}\ \textcolor{comment}{//\ namespace\ hqp}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_Task\_}}
+
+\end{DoxyCode}

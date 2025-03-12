@@ -1,0 +1,23 @@
+<map id="hqp::Task" name="hqp::Task">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,200,88,225"/>
+<area shape="rect" id="Node000002" href="$classhqp_1_1TaskInterface.html" title=" " alt="" coords="144,104,307,129"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,188,99,162,135,138,163,127,165,132,137,143,102,166,72,192"/>
+<area shape="rect" id="Node000008" href="$classhqp_1_1TaskInterface.html" title=" " alt="" coords="136,153,315,208"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="101,200,135,194,136,199,102,206"/>
+<area shape="rect" id="Node000009" href="$classhqp_1_1SubTasks.html" title=" " alt="" coords="168,232,283,257"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="102,220,168,232,167,237,101,225"/>
+<area shape="rect" id="Node000010" href="$classhqp_1_1TaskInterface.html" title=" " alt="" coords="155,282,296,322"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="78,231,137,268,164,279,162,284,135,272,75,236"/>
+<area shape="rect" id="Node000003" href="$classhqp_1_1Task0.html" title=" " alt="" coords="410,5,501,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="256,95,305,67,362,40,409,25,410,30,364,44,307,71,259,99"/>
+<area shape="rect" id="Node000004" href="$classhqp_1_1Task2.html" title=" " alt="" coords="410,55,501,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="298,99,409,74,410,80,299,104"/>
+<area shape="rect" id="Node000005" href="$classhqp_1_1Task3.html" title=" " alt="" coords="410,104,501,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="320,114,410,114,410,119,320,119"/>
+<area shape="rect" id="Node000006" href="$classhqp_1_1Task5.html" title=" " alt="" coords="410,153,501,179"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="299,130,410,154,409,159,298,135"/>
+<area shape="rect" id="Node000007" href="$classhqp_1_1Task6.html" title=" " alt="" coords="410,203,501,228"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="304,132,316,138,332,151,341,164,350,176,364,188,387,198,411,205,409,211,385,203,361,192,346,180,337,167,328,155,313,143,301,137"/>
+<area shape="rect" id="Node000011" href="$classhqp_1_1Task1.html" title=" " alt="" coords="363,275,548,329"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="310,299,362,299,362,305,310,305"/>
+</map>

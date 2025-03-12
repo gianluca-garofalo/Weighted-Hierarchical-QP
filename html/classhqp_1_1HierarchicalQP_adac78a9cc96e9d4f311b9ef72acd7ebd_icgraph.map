@@ -1,0 +1,7 @@
+<map id="hqp::HierarchicalQP::solve" name="hqp::HierarchicalQP::solve">
+<area shape="rect" id="Node000001" title="Solves the overall HQP by combining tasks." alt="" coords="307,5,457,45"/>
+<area shape="rect" id="Node000002" href="$classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01" title="Computes and retrieves the primal solution." alt="" coords="108,5,259,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="293,28,259,28,259,23,293,23"/>
+<area shape="rect" id="Node000003" href="$test0_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

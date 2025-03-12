@@ -1,0 +1,5 @@
+<map id="hqp::Task::compute" name="hqp::Task::compute">
+<area shape="rect" id="Node000001" title="Pure virtual function to compute task&#45;specific output." alt="" coords="232,5,380,31"/>
+<area shape="rect" id="Node000002" href="$classhqp_1_1SubTasks.html#ab921fb5342842ae371b33a839d3a76e7" title="Computes the aggregated result from all subtasks." alt="" coords="5,5,184,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="218,21,184,21,184,15,218,15"/>
+</map>

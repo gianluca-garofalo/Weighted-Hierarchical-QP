@@ -1,0 +1,7 @@
+<map id="hqp::HierarchicalQP::equality_hqp" name="hqp::HierarchicalQP::equality_hqp">
+<area shape="rect" id="Node000001" title="Handles equality constraint resolution." alt="" coords="5,27,156,67"/>
+<area shape="rect" id="Node000002" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="240,5,319,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,34,226,23,226,28,156,39"/>
+<area shape="rect" id="Node000003" href="$classhqp_1_1HierarchicalQP.html#a7f754bcfa36f0f97fd9063ad079940e9" title="Retrieves task data." alt="" coords="204,55,355,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,55,191,60,190,65,156,61"/>
+</map>

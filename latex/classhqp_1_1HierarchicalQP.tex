@@ -1,0 +1,398 @@
+\doxysection{hqp\+::Hierarchical\+QP Class Reference}
+\hypertarget{classhqp_1_1HierarchicalQP}{}\label{classhqp_1_1HierarchicalQP}\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+
+
+{\ttfamily \#include $<$hqp.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classhqp_1_1HierarchicalQP_a82ae4d2d83d1068020069ba0a7264a5c}{Hierarchical\+QP}} (uint n)
+\begin{DoxyCompactList}\small\item\em Constructs the \doxylink{classhqp_1_1HierarchicalQP}{Hierarchical\+QP} solver. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a126f16766c7f830ac0b5778a9ea4b7c2}{set\+\_\+metric}} (const Eigen\+::\+Matrix\+Xd \&metric)
+\begin{DoxyCompactList}\small\item\em Sets the metric matrix used to define the quadratic cost. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01}{get\+\_\+primal}} ()
+\begin{DoxyCompactList}\small\item\em Computes and retrieves the primal solution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4}{print\+\_\+active\+\_\+set}} ()
+\begin{DoxyCompactList}\small\item\em Outputs the active set details to the console. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{classhqp_1_1HierarchicalQP_aad6882023d685705437724a871f25462}{tolerance}} = 1e-\/9
+\begin{DoxyCompactList}\small\item\em Tolerance for convergence and numerical stability. \end{DoxyCompactList}\item 
+std\+::vector$<$ std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classhqp_1_1Task}{Task}} $>$ $>$ \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a26ce932f4fb4efe0f60c23a7354353d8}{sot}}
+\begin{DoxyCompactList}\small\item\em Container for all task pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd}{solve}} ()
+\begin{DoxyCompactList}\small\item\em Solves the overall HQP by combining tasks. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_add4448ad1c21585e607457463016a027}{equality\+\_\+hqp}} ()
+\begin{DoxyCompactList}\small\item\em Handles equality constraint resolution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_aaf6df9e4aa247e25e1ff253bd6501028}{inequality\+\_\+hqp}} ()
+\begin{DoxyCompactList}\small\item\em Handles inequality constrained tasks. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9}{dual\+\_\+update}} (uint h, const Eigen\+::\+Vector\+Xd \&tau)
+\begin{DoxyCompactList}\small\item\em Updates dual variables. \end{DoxyCompactList}\item 
+std\+::tuple$<$ Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd $>$ \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a7f754bcfa36f0f97fd9063ad079940e9}{get\+\_\+task}} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classhqp_1_1Task}{Task}} $>$ task, const Eigen\+::\+Vector\+Xi \&row)
+\begin{DoxyCompactList}\small\item\em Retrieves task data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a25c0c3a20b18c290bf8d1c384e61df68}{col\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Number of variables in the problem. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a495f67f3a60f9b637ea81ec742116819}{primal\+\_\+}}
+\begin{DoxyCompactList}\small\item\em The current solution vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a8f032f171b0981412fe32f7f6e6d1453}{task\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Intermediate task solution vector. \end{DoxyCompactList}\item 
+Eigen\+::\+Vector\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a96233fd5c1568f62a2a94fab1553ebbc}{guess\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Previous solution used as a warm start. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a6e4ed057e29c424d81be332b37ad3a01}{inverse\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Stores pseudo-\/inverse data. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a5d3b549a2d49ba1058053cde2ba045e8}{null\+Space\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Basis for the nullspace. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a67fd578b81d9690d8765e0d8e4a7fcdf}{cod\+Right\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Matrix used for decomposition adjustments. \end{DoxyCompactList}\item 
+Eigen\+::\+Matrix\+Xd \mbox{\hyperlink{classhqp_1_1HierarchicalQP_abbf5394d2dd09f7716f64741455003be}{chol\+Metric\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Cholesky metric used for stability. \end{DoxyCompactList}\item 
+uint \mbox{\hyperlink{classhqp_1_1HierarchicalQP_a645a8ebcecc4ae10505368f4bf8757d1}{k\+\_\+}} = 0
+\begin{DoxyCompactList}\small\item\em Index tracking the active task level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classhqp_1_1HierarchicalQP_a82ae4d2d83d1068020069ba0a7264a5c}\label{classhqp_1_1HierarchicalQP_a82ae4d2d83d1068020069ba0a7264a5c} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!HierarchicalQP@{HierarchicalQP}}
+\index{HierarchicalQP@{HierarchicalQP}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{HierarchicalQP()}{HierarchicalQP()}}
+{\footnotesize\ttfamily hqp\+::\+Hierarchical\+QP\+::\+Hierarchical\+QP (\begin{DoxyParamCaption}\item[{uint}]{n }\end{DoxyParamCaption})}
+
+
+
+Constructs the \doxylink{classhqp_1_1HierarchicalQP}{Hierarchical\+QP} solver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Number of degrees of freedom (columns) in the problem. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9}\label{classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!dual\_update@{dual\_update}}
+\index{dual\_update@{dual\_update}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{dual\_update()}{dual\_update()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::dual\+\_\+update (\begin{DoxyParamCaption}\item[{uint}]{h,  }\item[{const Eigen\+::\+Vector\+Xd \&}]{tau }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Updates dual variables. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_add4448ad1c21585e607457463016a027}\label{classhqp_1_1HierarchicalQP_add4448ad1c21585e607457463016a027} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!equality\_hqp@{equality\_hqp}}
+\index{equality\_hqp@{equality\_hqp}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{equality\_hqp()}{equality\_hqp()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::equality\+\_\+hqp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles equality constraint resolution. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classhqp_1_1HierarchicalQP_add4448ad1c21585e607457463016a027_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_add4448ad1c21585e607457463016a027_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01}\label{classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!get\_primal@{get\_primal}}
+\index{get\_primal@{get\_primal}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{get\_primal()}{get\_primal()}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd hqp\+::\+Hierarchical\+QP\+::get\+\_\+primal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Computes and retrieves the primal solution. 
+
+\begin{DoxyReturn}{Returns}
+The computed primal solution vector. 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_a7f754bcfa36f0f97fd9063ad079940e9}\label{classhqp_1_1HierarchicalQP_a7f754bcfa36f0f97fd9063ad079940e9} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!get\_task@{get\_task}}
+\index{get\_task@{get\_task}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{get\_task()}{get\_task()}}
+{\footnotesize\ttfamily std\+::tuple$<$ Eigen\+::\+Matrix\+Xd, Eigen\+::\+Vector\+Xd $>$ hqp\+::\+Hierarchical\+QP\+::get\+\_\+task (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classhqp_1_1Task}{Task}} $>$}]{task,  }\item[{const Eigen\+::\+Vector\+Xi \&}]{row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Retrieves task data. 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_a7f754bcfa36f0f97fd9063ad079940e9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_aaf6df9e4aa247e25e1ff253bd6501028}\label{classhqp_1_1HierarchicalQP_aaf6df9e4aa247e25e1ff253bd6501028} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!inequality\_hqp@{inequality\_hqp}}
+\index{inequality\_hqp@{inequality\_hqp}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{inequality\_hqp()}{inequality\_hqp()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::inequality\+\_\+hqp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Handles inequality constrained tasks. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_aaf6df9e4aa247e25e1ff253bd6501028_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_aaf6df9e4aa247e25e1ff253bd6501028_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4}\label{classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!print\_active\_set@{print\_active\_set}}
+\index{print\_active\_set@{print\_active\_set}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{print\_active\_set()}{print\_active\_set()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::print\+\_\+active\+\_\+set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Outputs the active set details to the console. 
+
+Provides a comprehensive summary of active constraints at each task level. Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_a126f16766c7f830ac0b5778a9ea4b7c2}\label{classhqp_1_1HierarchicalQP_a126f16766c7f830ac0b5778a9ea4b7c2} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!set\_metric@{set\_metric}}
+\index{set\_metric@{set\_metric}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{set\_metric()}{set\_metric()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::set\+\_\+metric (\begin{DoxyParamCaption}\item[{const Eigen\+::\+Matrix\+Xd \&}]{metric }\end{DoxyParamCaption})}
+
+
+
+Sets the metric matrix used to define the quadratic cost. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em metric} & The metric matrix that influences the solver\textquotesingle{}s behavior. \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{classhqp_1_1HierarchicalQP_a126f16766c7f830ac0b5778a9ea4b7c2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd}\label{classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!solve@{solve}}
+\index{solve@{solve}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{solve()}{solve()}}
+{\footnotesize\ttfamily void hqp\+::\+Hierarchical\+QP\+::solve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Solves the overall HQP by combining tasks. 
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classhqp_1_1HierarchicalQP_abbf5394d2dd09f7716f64741455003be}\label{classhqp_1_1HierarchicalQP_abbf5394d2dd09f7716f64741455003be} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!cholMetric\_@{cholMetric\_}}
+\index{cholMetric\_@{cholMetric\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{cholMetric\_}{cholMetric\_}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd hqp\+::\+Hierarchical\+QP\+::chol\+Metric\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Cholesky metric used for stability. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a67fd578b81d9690d8765e0d8e4a7fcdf}\label{classhqp_1_1HierarchicalQP_a67fd578b81d9690d8765e0d8e4a7fcdf} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!codRight\_@{codRight\_}}
+\index{codRight\_@{codRight\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{codRight\_}{codRight\_}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd hqp\+::\+Hierarchical\+QP\+::cod\+Right\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Matrix used for decomposition adjustments. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a25c0c3a20b18c290bf8d1c384e61df68}\label{classhqp_1_1HierarchicalQP_a25c0c3a20b18c290bf8d1c384e61df68} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!col\_@{col\_}}
+\index{col\_@{col\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{col\_}{col\_}}
+{\footnotesize\ttfamily uint hqp\+::\+Hierarchical\+QP\+::col\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Number of variables in the problem. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a96233fd5c1568f62a2a94fab1553ebbc}\label{classhqp_1_1HierarchicalQP_a96233fd5c1568f62a2a94fab1553ebbc} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!guess\_@{guess\_}}
+\index{guess\_@{guess\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{guess\_}{guess\_}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd hqp\+::\+Hierarchical\+QP\+::guess\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Previous solution used as a warm start. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a6e4ed057e29c424d81be332b37ad3a01}\label{classhqp_1_1HierarchicalQP_a6e4ed057e29c424d81be332b37ad3a01} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!inverse\_@{inverse\_}}
+\index{inverse\_@{inverse\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{inverse\_}{inverse\_}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd hqp\+::\+Hierarchical\+QP\+::inverse\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Stores pseudo-\/inverse data. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a645a8ebcecc4ae10505368f4bf8757d1}\label{classhqp_1_1HierarchicalQP_a645a8ebcecc4ae10505368f4bf8757d1} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!k\_@{k\_}}
+\index{k\_@{k\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{k\_}{k\_}}
+{\footnotesize\ttfamily uint hqp\+::\+Hierarchical\+QP\+::k\+\_\+ = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Index tracking the active task level. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a5d3b549a2d49ba1058053cde2ba045e8}\label{classhqp_1_1HierarchicalQP_a5d3b549a2d49ba1058053cde2ba045e8} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!nullSpace\_@{nullSpace\_}}
+\index{nullSpace\_@{nullSpace\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{nullSpace\_}{nullSpace\_}}
+{\footnotesize\ttfamily Eigen\+::\+Matrix\+Xd hqp\+::\+Hierarchical\+QP\+::null\+Space\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Basis for the nullspace. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a495f67f3a60f9b637ea81ec742116819}\label{classhqp_1_1HierarchicalQP_a495f67f3a60f9b637ea81ec742116819} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!primal\_@{primal\_}}
+\index{primal\_@{primal\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{primal\_}{primal\_}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd hqp\+::\+Hierarchical\+QP\+::primal\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The current solution vector. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a26ce932f4fb4efe0f60c23a7354353d8}\label{classhqp_1_1HierarchicalQP_a26ce932f4fb4efe0f60c23a7354353d8} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!sot@{sot}}
+\index{sot@{sot}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{sot}{sot}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{classhqp_1_1Task}{Task}}$>$ $>$ hqp\+::\+Hierarchical\+QP\+::sot}
+
+
+
+Container for all task pointers. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_a8f032f171b0981412fe32f7f6e6d1453}\label{classhqp_1_1HierarchicalQP_a8f032f171b0981412fe32f7f6e6d1453} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!task\_@{task\_}}
+\index{task\_@{task\_}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{task\_}{task\_}}
+{\footnotesize\ttfamily Eigen\+::\+Vector\+Xd hqp\+::\+Hierarchical\+QP\+::task\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Intermediate task solution vector. 
+
+\Hypertarget{classhqp_1_1HierarchicalQP_aad6882023d685705437724a871f25462}\label{classhqp_1_1HierarchicalQP_aad6882023d685705437724a871f25462} 
+\index{hqp::HierarchicalQP@{hqp::HierarchicalQP}!tolerance@{tolerance}}
+\index{tolerance@{tolerance}!hqp::HierarchicalQP@{hqp::HierarchicalQP}}
+\doxysubsubsection{\texorpdfstring{tolerance}{tolerance}}
+{\footnotesize\ttfamily double hqp\+::\+Hierarchical\+QP\+::tolerance = 1e-\/9}
+
+
+
+Tolerance for convergence and numerical stability. 
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{hqp_8hpp}{hqp.\+hpp}}\item 
+src/\mbox{\hyperlink{hqp_8cpp}{hqp.\+cpp}}\end{DoxyCompactItemize}
