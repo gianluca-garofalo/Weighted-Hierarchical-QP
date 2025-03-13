@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classhqp_1_1TaskInterface.html#af38552cde69558b0642d62e04c2636bb" target="_top" xlink:title="Executes the task with provided parameters.">
+<g id="a_node2"><a xlink:href="classhqp_1_1TaskInterface.html#adf438bcb5931d58002bd23db6857d567" target="_top" xlink:title="Executes the task with provided parameters.">
 <polygon fill="white" stroke="#666666" points="270,-56 142,-56 142,-37 270,-37 270,-56"/>
 <text text-anchor="middle" x="206" y="-44" font-family="Helvetica,sans-Serif" font-size="10.00">hqp::TaskInterface::run</text>
 </a>

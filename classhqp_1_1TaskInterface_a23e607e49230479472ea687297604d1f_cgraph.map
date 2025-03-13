@@ -1,5 +1,5 @@
 <map id="hqp::TaskInterface::compute" name="hqp::TaskInterface::compute">
 <area shape="rect" id="node1" title="Pure virtual function to compute task&#45;specific output." alt="" coords="5,23,147,63"/>
-<area shape="rect" id="node2" href="$classhqp_1_1TaskInterface.html#af38552cde69558b0642d62e04c2636bb" title="Executes the task with provided parameters." alt="" coords="195,5,365,31"/>
+<area shape="rect" id="node2" href="$classhqp_1_1TaskInterface.html#adf438bcb5931d58002bd23db6857d567" title="Executes the task with provided parameters." alt="" coords="195,5,365,31"/>
 <area shape="rect" id="node3" href="$namespacehqp.html#a3995044fda58d1086e53fba48d3e5fa9" title=" " alt="" coords="229,55,331,80"/>
 </map>
