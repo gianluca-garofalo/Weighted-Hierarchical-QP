@@ -15,7 +15,7 @@ namespace hqp {
 
 class Task0 : public TaskInterface<> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    void run() override;
 
   public:
     Task0(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
@@ -25,7 +25,7 @@ class Task0 : public TaskInterface<> {
 
 class Task1 : public TaskInterface<double const&, Eigen::VectorXd const&> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run(double const& b0, Eigen::VectorXd const& vec) override;
+    void run(double const& b0, Eigen::VectorXd const& vec) override;
 
   public:
     Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
@@ -35,7 +35,7 @@ class Task1 : public TaskInterface<double const&, Eigen::VectorXd const&> {
 
 class Task2 : public TaskInterface<> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    void run() override;
 
   public:
     Task2(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
@@ -45,7 +45,7 @@ class Task2 : public TaskInterface<> {
 
 class Task3 : public TaskInterface<> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    void run() override;
 
   public:
     Task3(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
@@ -55,7 +55,7 @@ class Task3 : public TaskInterface<> {
 
 class Task5 : public TaskInterface<> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    void run() override;
 
   public:
     Task5(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
@@ -65,7 +65,7 @@ class Task5 : public TaskInterface<> {
 
 class Task6 : public TaskInterface<> {
   private:
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run() override;
+    void run() override;
 
   public:
     Task6(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)

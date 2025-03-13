@@ -96,15 +96,12 @@ class TaskInterface : public Task {
      *
      * @param args The parameters necessary for the task.
      */
-    virtual std::tuple<Eigen::MatrixXd, Eigen::VectorXd> run(Args... args) = 0;
+    virtual void run(Args... args) = 0;
 
     void compute() override {
-        assert(args_.has_value() && "Arguments must be set before compute() is called.");
-        std::tie(matrix_, vector_) = std::apply(
-            [this](auto &&...storedArgs) -> std::tuple<Eigen::MatrixXd, Eigen::VectorXd> {
-                return run(unwrap(std::forward<decltype(storedArgs)>(storedArgs))...);
-            },
-            *args_);
+        std::apply(
+          [this](auto &&...args) {run(unwrap(std::forward<decltype(args)>(args))...);},
+          *args_);
 
         assert(matrix_.rows() == vector_.rows());
         assert(equalitySet_.size() == vector_.rows());
