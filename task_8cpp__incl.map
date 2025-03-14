@@ -1,11 +1,12 @@
 <map id="src/task.cpp" name="src/task.cpp">
-<area shape="rect" id="node1" title="Implements the methods declared in task.hpp." alt="" coords="267,5,367,31"/>
-<area shape="rect" id="node2" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="277,79,356,104"/>
+<area shape="rect" id="node1" title="Implements the methods declared in task.hpp." alt="" coords="228,5,328,31"/>
+<area shape="rect" id="node2" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="239,79,317,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,152,60,177"/>
-<area shape="rect" id="node4" title=" " alt="" coords="85,152,162,177"/>
-<area shape="rect" id="node5" title=" " alt="" coords="187,152,247,177"/>
-<area shape="rect" id="node6" title=" " alt="" coords="271,152,363,177"/>
-<area shape="rect" id="node7" title=" " alt="" coords="387,152,457,177"/>
-<area shape="rect" id="node8" title=" " alt="" coords="481,152,555,177"/>
-<area shape="rect" id="node9" title=" " alt="" coords="580,152,683,177"/>
+<area shape="rect" id="node4" title=" " alt="" coords="46,225,123,251"/>
+<area shape="rect" id="node5" title=" " alt="" coords="341,152,401,177"/>
+<area shape="rect" id="node6" title=" " alt="" coords="148,225,240,251"/>
+<area shape="rect" id="node7" title=" " alt="" coords="426,152,495,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="519,152,594,177"/>
+<area shape="rect" id="node9" title=" " alt="" coords="264,225,367,251"/>
+<area shape="rect" id="node10" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="136,152,215,177"/>
 </map>

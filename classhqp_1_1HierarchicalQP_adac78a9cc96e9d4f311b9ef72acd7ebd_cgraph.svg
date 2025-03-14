@@ -74,7 +74,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classhqp_1_1HierarchicalQP.html#a7f754bcfa36f0f97fd9063ad079940e9" target="_top" xlink:title="Retrieves task data.">
+<g id="a_node4"><a xlink:href="classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" target="_top" xlink:title="Retrieves task data.">
 <polygon fill="white" stroke="#666666" points="560,-30.47 447,-30.47 447,-0.47 560,-0.47 560,-30.47"/>
 <text text-anchor="start" x="455" y="-18.47" font-family="Helvetica,sans-Serif" font-size="10.00">hqp::HierarchicalQP</text>
 <text text-anchor="middle" x="503.5" y="-7.47" font-family="Helvetica,sans-Serif" font-size="10.00">::get_task</text>

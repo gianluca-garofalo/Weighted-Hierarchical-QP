@@ -89,7 +89,7 @@ $(function() {
 <div class="dynheader">
 Inheritance diagram for hqp::Task:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1Task__inherit__graph.svg" width="554" height="335"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1Task__inherit__graph.svg" width="576" height="328"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -115,6 +115,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1e71bc66fcbaa2a73895373b6091b180"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a1e71bc66fcbaa2a73895373b6091b180">compute</a> ()=0</td></tr>
 <tr class="memdesc:a1e71bc66fcbaa2a73895373b6091b180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual function to compute task-specific output.  <br /></td></tr>
 <tr class="separator:a1e71bc66fcbaa2a73895373b6091b180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b4252fd6c1abc46fe486308fd7ec862"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a1b4252fd6c1abc46fe486308fd7ec862">is_computed</a> ()</td></tr>
+<tr class="separator:a1b4252fd6c1abc46fe486308fd7ec862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -257,7 +259,34 @@ Friends</h2></td></tr>
 
 <p>Pure virtual function to compute task-specific output. </p>
 
-<p>Implemented in <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt; Args &gt;</a>, <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt;&gt;</a>, <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt; double const &amp;, Eigen::VectorXd const &amp; &gt;</a>, and <a class="el" href="classhqp_1_1SubTasks.html#ab921fb5342842ae371b33a839d3a76e7">hqp::SubTasks</a>.</p>
+<p>Implemented in <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt; Args &gt;</a>, <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt;&gt;</a>, <a class="el" href="classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f">hqp::TaskInterface&lt; double, Eigen::VectorXd const &amp; &gt;</a>, and <a class="el" href="classhqp_1_1SubTasks.html#ab921fb5342842ae371b33a839d3a76e7">hqp::SubTasks</a>.</p>
+
+</div>
+</div>
+<a id="a1b4252fd6c1abc46fe486308fd7ec862" name="a1b4252fd6c1abc46fe486308fd7ec862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b4252fd6c1abc46fe486308fd7ec862">&#9670;&#160;</a></span>is_computed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool hqp::Task::is_computed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classhqp_1_1SubTasks.html#a8011c872f9fd86a0271fd5dac419475a">hqp::SubTasks</a>.</p>
 
 </div>
 </div>

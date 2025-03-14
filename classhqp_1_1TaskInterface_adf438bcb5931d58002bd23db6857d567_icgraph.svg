@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="Executes the task with provided parameters.">
+<g id="a_node1"><a xlink:title="Executes the task using the provided parameters.">
 <polygon fill="#999999" stroke="#666666" points="270,-24.5 142,-24.5 142,-5.5 270,-5.5 270,-24.5"/>
 <text text-anchor="middle" x="206" y="-12.5" font-family="Helvetica,sans-Serif" font-size="10.00">hqp::TaskInterface::run</text>
 </a>

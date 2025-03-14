@@ -84,6 +84,12 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="hqp_8hpp_source.html">hqp.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for hqp::HierarchicalQP:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP__coll__graph.svg" width="699" height="80"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -105,9 +111,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aad6882023d685705437724a871f25462"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#aad6882023d685705437724a871f25462">tolerance</a> = 1e-9</td></tr>
 <tr class="memdesc:aad6882023d685705437724a871f25462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tolerance for convergence and numerical stability.  <br /></td></tr>
 <tr class="separator:aad6882023d685705437724a871f25462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26ce932f4fb4efe0f60c23a7354353d8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classhqp_1_1Task.html">Task</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a26ce932f4fb4efe0f60c23a7354353d8">sot</a></td></tr>
-<tr class="memdesc:a26ce932f4fb4efe0f60c23a7354353d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for all task pointers.  <br /></td></tr>
-<tr class="separator:a26ce932f4fb4efe0f60c23a7354353d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87f0e59878f2ef5b5f7ac6063ce73149"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacehqp.html#a47c8f3730505d394e1c65f8082bd5a23">TaskContainer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a87f0e59878f2ef5b5f7ac6063ce73149">sot</a></td></tr>
+<tr class="memdesc:a87f0e59878f2ef5b5f7ac6063ce73149"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for all task pointers.  <br /></td></tr>
+<tr class="separator:a87f0e59878f2ef5b5f7ac6063ce73149"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -123,9 +129,9 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9">dual_update</a> (uint h, const Eigen::VectorXd &amp;tau)</td></tr>
 <tr class="memdesc:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates dual variables.  <br /></td></tr>
 <tr class="separator:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f754bcfa36f0f97fd9063ad079940e9"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a7f754bcfa36f0f97fd9063ad079940e9">get_task</a> (std::shared_ptr&lt; <a class="el" href="classhqp_1_1Task.html">Task</a> &gt; task, const Eigen::VectorXi &amp;row)</td></tr>
-<tr class="memdesc:a7f754bcfa36f0f97fd9063ad079940e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves task data.  <br /></td></tr>
-<tr class="separator:a7f754bcfa36f0f97fd9063ad079940e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f7398b0f10bcc38452b0acf12f9997"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997">get_task</a> (<a class="el" href="namespacehqp.html#ad50f242da3c84a6a11c08193f886baf7">TaskPtr</a> task, const Eigen::VectorXi &amp;row)</td></tr>
+<tr class="memdesc:a69f7398b0f10bcc38452b0acf12f9997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves task data.  <br /></td></tr>
+<tr class="separator:a69f7398b0f10bcc38452b0acf12f9997"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -306,8 +312,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a7f754bcfa36f0f97fd9063ad079940e9" name="a7f754bcfa36f0f97fd9063ad079940e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f754bcfa36f0f97fd9063ad079940e9">&#9670;&#160;</a></span>get_task()</h2>
+<a id="a69f7398b0f10bcc38452b0acf12f9997" name="a69f7398b0f10bcc38452b0acf12f9997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69f7398b0f10bcc38452b0acf12f9997">&#9670;&#160;</a></span>get_task()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,7 +324,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">std::tuple&lt; Eigen::MatrixXd, Eigen::VectorXd &gt; hqp::HierarchicalQP::get_task </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classhqp_1_1Task.html">Task</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacehqp.html#ad50f242da3c84a6a11c08193f886baf7">TaskPtr</a>&#160;</td>
           <td class="paramname"><em>task</em>, </td>
         </tr>
         <tr>
@@ -344,7 +350,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a7f754bcfa36f0f97fd9063ad079940e9_icgraph.svg" width="1059" height="108"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a69f7398b0f10bcc38452b0acf12f9997_icgraph.svg" width="1059" height="108"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
@@ -685,14 +691,14 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a26ce932f4fb4efe0f60c23a7354353d8" name="a26ce932f4fb4efe0f60c23a7354353d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26ce932f4fb4efe0f60c23a7354353d8">&#9670;&#160;</a></span>sot</h2>
+<a id="a87f0e59878f2ef5b5f7ac6063ce73149" name="a87f0e59878f2ef5b5f7ac6063ce73149"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87f0e59878f2ef5b5f7ac6063ce73149">&#9670;&#160;</a></span>sot</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::shared_ptr&lt;<a class="el" href="classhqp_1_1Task.html">Task</a>&gt; &gt; hqp::HierarchicalQP::sot</td>
+          <td class="memname"><a class="el" href="namespacehqp.html#a47c8f3730505d394e1c65f8082bd5a23">TaskContainer</a> hqp::HierarchicalQP::sot</td>
         </tr>
       </table>
 </div><div class="memdoc">

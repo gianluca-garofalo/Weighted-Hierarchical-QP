@@ -68,7 +68,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classhqp_1_1HierarchicalQP.html#a7f754bcfa36f0f97fd9063ad079940e9" target="_top" xlink:title="Retrieves task data.">
+<g id="a_node5"><a xlink:href="classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" target="_top" xlink:title="Retrieves task data.">
 <polygon fill="white" stroke="#666666" points="411,-30 298,-30 298,0 411,0 411,-30"/>
 <text text-anchor="start" x="306" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">hqp::HierarchicalQP</text>
 <text text-anchor="middle" x="354.5" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">::get_task</text>

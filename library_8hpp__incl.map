@@ -1,11 +1,12 @@
 <map id="tests/library.hpp" name="tests/library.hpp">
-<area shape="rect" id="node1" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="137,5,264,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,152,108,177"/>
-<area shape="rect" id="node3" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="257,79,336,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="132,152,187,177"/>
-<area shape="rect" id="node5" title=" " alt="" coords="211,152,289,177"/>
-<area shape="rect" id="node6" title=" " alt="" coords="313,152,373,177"/>
-<area shape="rect" id="node7" title=" " alt="" coords="397,152,489,177"/>
-<area shape="rect" id="node8" title=" " alt="" coords="514,152,583,177"/>
-<area shape="rect" id="node9" title=" " alt="" coords="607,152,682,177"/>
+<area shape="rect" id="node1" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="65,5,191,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="63,225,166,251"/>
+<area shape="rect" id="node3" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="233,79,311,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="22,152,77,177"/>
+<area shape="rect" id="node5" title=" " alt="" coords="547,225,624,251"/>
+<area shape="rect" id="node6" title=" " alt="" coords="153,152,213,177"/>
+<area shape="rect" id="node7" title=" " alt="" coords="407,225,499,251"/>
+<area shape="rect" id="node8" title=" " alt="" coords="237,152,307,177"/>
+<area shape="rect" id="node9" title=" " alt="" coords="331,152,405,177"/>
+<area shape="rect" id="node10" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="481,152,559,177"/>
 </map>

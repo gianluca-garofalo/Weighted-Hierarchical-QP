@@ -76,8 +76,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">task.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -91,10 +90,11 @@ $(function() {
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &quot;<a class="el" href="utils_8hpp_source.html">utils.hpp</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for task.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="task_8hpp__incl.svg" width="688" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="task_8hpp__incl.svg" width="600" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -110,11 +110,11 @@ This graph shows which files directly or indirectly include this file:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1is__reference__wrapper.html">hqp::is_reference_wrapper&lt; T &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1is__reference__wrapper_3_01std_1_1reference__wrapper_3_01U_01_4_01_4.html">hqp::is_reference_wrapper&lt; std::reference_wrapper&lt; U &gt; &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html">hqp::TaskInterface&lt; Args &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1TaskInterface_1_1is__reference__wrapper.html">hqp::TaskInterface&lt; Args &gt;::is_reference_wrapper&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1TaskInterface_1_1is__reference__wrapper_3_01std_1_1reference__wrapper_3_01U_01_4_01_4.html">hqp::TaskInterface&lt; Args &gt;::is_reference_wrapper&lt; std::reference_wrapper&lt; U &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1SubTasks.html">hqp::SubTasks</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,15 +126,13 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a55a244219fedd43fafb304713f73f947"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a55a244219fedd43fafb304713f73f947"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a55a244219fedd43fafb304713f73f947">hqp::ArgStorage</a> = std::conditional_t&lt; std::is_reference&lt; T &gt;::value, std::reference_wrapper&lt; std::remove_reference_t&lt; T &gt; &gt;, T &amp; &gt;</td></tr>
-<tr class="separator:a55a244219fedd43fafb304713f73f947"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a3995044fda58d1086e53fba48d3e5fa9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3995044fda58d1086e53fba48d3e5fa9"><td class="memTemplItemLeft" align="right" valign="top">decltype(auto)&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a3995044fda58d1086e53fba48d3e5fa9">hqp::unwrap</a> (T &amp;&amp;t)</td></tr>
-<tr class="separator:a3995044fda58d1086e53fba48d3e5fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeaa1ccab8a2d282c2123626c86c014c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aeeaa1ccab8a2d282c2123626c86c014c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#aeeaa1ccab8a2d282c2123626c86c014c">hqp::SmartPtr</a> = GenericPtr&lt; std::shared_ptr, T &gt;</td></tr>
+<tr class="separator:aeeaa1ccab8a2d282c2123626c86c014c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad50f242da3c84a6a11c08193f886baf7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehqp.html#ad50f242da3c84a6a11c08193f886baf7">hqp::TaskPtr</a> = GenericPtr&lt; std::shared_ptr, Task &gt;</td></tr>
+<tr class="separator:ad50f242da3c84a6a11c08193f886baf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c8f3730505d394e1c65f8082bd5a23"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a47c8f3730505d394e1c65f8082bd5a23">hqp::TaskContainer</a> = SmartContainer&lt; std::vector, GenericPtr, std::shared_ptr, Task &gt;</td></tr>
+<tr class="separator:a47c8f3730505d394e1c65f8082bd5a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Declares the abstract Task interface and its derivatives used in the HQP solver. </p>

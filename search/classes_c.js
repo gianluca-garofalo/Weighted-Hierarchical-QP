@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['qtstyle_5ftest_0',['QTstyle_Test',['../classQTstyle__Test.html',1,'']]]
+  ['par_5ftest_0',['Par_Test',['../classPar__Test.html',1,'']]]
 ];
