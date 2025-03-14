@@ -11,7 +11,6 @@
 
 #include <vector>
 #include <tuple>
-#include <memory>
 #include <Eigen/Dense>
 #include "task.hpp"
 // #include "options.hpp"
@@ -34,12 +33,12 @@ class HierarchicalQP {
     void equality_hqp();                                   ///< Handles equality constraint resolution.
     void inequality_hqp();                                 ///< Handles inequality constrained tasks.
     void dual_update(uint h, const Eigen::VectorXd& tau);  ///< Updates dual variables.
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(std::shared_ptr<Task> task,
+    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
   public:
     double tolerance = 1e-9;                 ///< Tolerance for convergence and numerical stability.
-    std::vector<std::shared_ptr<Task>> sot;  ///< Container for all task pointers.
+    TaskContainer sot;                       ///< Container for all task pointers.
 
     /**
      * @brief Constructs the HierarchicalQP solver.

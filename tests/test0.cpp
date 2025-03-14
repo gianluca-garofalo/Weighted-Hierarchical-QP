@@ -13,24 +13,22 @@
 
 int main() {
     hqp::HierarchicalQP solver(2);
-    auto task0 = std::make_shared<hqp::Task0>(Eigen::VectorXi::Ones(1).cast<bool>());
-    task0->select_variables(Eigen::VectorXi::Zero(1));
-    auto task1 = std::make_shared<hqp::Task1>(Eigen::VectorXi::Ones(2).cast<bool>());
-    double b = 8;
+    solver.sot.reserve(2);
+    solver.sot.emplace_back<hqp::Task0>(Eigen::VectorXi::Ones(1).cast<bool>());
+    solver.sot.back()->select_variables(Eigen::VectorXi::Zero(1));
+    solver.sot.emplace_back<hqp::Task1>(Eigen::VectorXi::Ones(2).cast<bool>());
     Eigen::VectorXd v = Eigen::VectorXd::Ones(2);
-    task1->update(b, v);
-    solver.sot.push_back(task0);
-    solver.sot.push_back(task1);
+    solver.sot.back().cast<hqp::Task1>()->update(8, v);
     std::cout << "Initial Solution: " << solver.get_primal().transpose() << std::endl;
 
     hqp::HierarchicalQP problem(2);
-    auto task2 = std::make_shared<hqp::Task2>(Eigen::VectorXi::Zero(2).cast<bool>());
-    auto task3 = std::make_shared<hqp::Task3>(Eigen::VectorXi::Zero(2).cast<bool>());
-    auto task4 = std::make_shared<hqp::SubTasks>(Eigen::VectorXi::Ones(2).cast<bool>());
-    auto task5 = std::make_unique<hqp::Task5>(Eigen::VectorXi::Ones(1).cast<bool>());
-    auto task6 = std::make_unique<hqp::Task6>(Eigen::VectorXi::Ones(1).cast<bool>());
-    task4->sot.push_back(std::move(task5));
-    task4->sot.push_back(std::move(task6));
+    auto task2 = hqp::SmartPtr<hqp::Task2>(Eigen::VectorXi::Zero(2).cast<bool>());
+    auto task3 = hqp::SmartPtr<hqp::Task3>(Eigen::VectorXi::Zero(2).cast<bool>());
+    auto task4 = hqp::SmartPtr<hqp::SubTasks>(Eigen::VectorXi::Ones(2).cast<bool>());
+    auto task5 = hqp::SmartPtr<hqp::Task5>(Eigen::VectorXi::Ones(1).cast<bool>());
+    auto task6 = hqp::SmartPtr<hqp::Task6>(Eigen::VectorXi::Ones(1).cast<bool>());
+    task4->sot.push_back(task5);
+    task4->sot.push_back(task6);
     problem.sot.push_back(task2);
     problem.sot.push_back(task3);
     problem.sot.push_back(task4);
