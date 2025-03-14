@@ -43,6 +43,7 @@ class Task {
 
     /// @brief Pure virtual function to compute task-specific output.
     virtual void compute() = 0;
+    virtual bool is_computed();
 
   public:
     double tolerance = 1e-9;  ///< Tolerance value for computation accuracy.
@@ -150,6 +151,9 @@ class TaskInterface : public Task {
 
 // Composite task that aggregates multiple subtasks.
 class SubTasks : public Task {
+  protected:
+    bool is_computed() override;
+
   public:
     /// @brief Container holding smart pointers to subtasks.
     TaskContainer sot;
@@ -164,13 +168,6 @@ class SubTasks : public Task {
     /// @brief Applies a weight matrix to adjust the combined outputs of the subtasks.
     /// @param weight The metric matrix used for scaling.
     void set_weight(const Eigen::MatrixXd& weight);
-
-    template <typename T, typename... Args>
-    void update(uint k, Args... args)
-    {
-        isComputed_ = false;
-        static_cast<T*>(sot[k].get())->update(args...);
-    }
 };
 
 }  // namespace hqp
