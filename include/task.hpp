@@ -16,6 +16,7 @@
 #include <cassert>
 #include <optional>
 #include <Eigen/Dense>
+#include "utils.hpp"
 
 namespace hqp {
 
@@ -60,6 +61,10 @@ class Task {
     void select_variables(const Eigen::VectorXi& indices);
 };
 
+template<typename T>
+using SmartPtr      = GenericPtr<std::shared_ptr, T>;
+using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
+using TaskContainer = SmartContainer<std::vector, GenericPtr, std::shared_ptr, Task>;
 
 template<typename... Args>
 class TaskInterface : public Task {
@@ -147,7 +152,7 @@ class TaskInterface : public Task {
 class SubTasks : public Task {
   public:
     /// @brief Container holding smart pointers to subtasks.
-    std::vector<std::unique_ptr<Task>> sot;
+    TaskContainer sot;
 
     /// @brief Constructs a SubTasks instance with a given equality constraint set.
     /// @param set Boolean array indicating equality constraints.

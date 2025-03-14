@@ -14,7 +14,7 @@ void Task0::run() {
     vector_ = Eigen::VectorXd::Zero(1);
 }
 
-void Task1::run(double const& b0, Eigen::VectorXd const& vec) {
+void Task1::run(double b0, Eigen::VectorXd const& vec) {
     matrix_ = Eigen::MatrixXd::Identity(2, 2);
     vector_ = b0 * vec;
 }

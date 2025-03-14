@@ -23,9 +23,9 @@ class Task0 : public TaskInterface<> {
     }
 };
 
-class Task1 : public TaskInterface<double const&, Eigen::VectorXd const&> {
+class Task1 : public TaskInterface<double, Eigen::VectorXd const&> {
   private:
-    void run(double const& b0, Eigen::VectorXd const& vec) override;
+    void run(double, Eigen::VectorXd const& vec) override;
 
   public:
     Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
