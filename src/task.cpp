@@ -37,6 +37,10 @@ void Task::select_variables(const Eigen::VectorXi& indices) {
     indices_ = indices;
 }
 
+bool Task::is_computed() {
+    return isComputed_;
+}
+
 SubTasks::SubTasks(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
   : Task(set) {
 }
@@ -78,7 +82,7 @@ void SubTasks::set_weight(const Eigen::MatrixXd& weight) {
     Eigen::LLT<Eigen::MatrixXd> lltOf(weight);
     assert(weight.isApprox(weight.transpose()) && lltOf.info() != Eigen::NumericalIssue);
 
-    if (isComputed_) {
+    if (is_computed()) {
         weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(matrix_);
         weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(vector_);
         matrix_ = lltOf.matrixU() * matrix_;
@@ -86,6 +90,14 @@ void SubTasks::set_weight(const Eigen::MatrixXd& weight) {
     }
 
     weight_ = lltOf;
+}
+
+bool SubTasks::is_computed() {
+    isComputed_ = true;
+    for (const auto& task : sot) {
+        isComputed_ &= task->isComputed_;
+    }
+    return isComputed_;
 }
 
 }  // namespace hqp

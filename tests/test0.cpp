@@ -39,8 +39,7 @@ int main() {
     problem.print_active_set();
 
     std::swap(problem.sot[0], problem.sot[2]);
-    task4->update<hqp::Task5>(0);
-    // task6->update(); // Use unique_ptr, so that this is not possible
+    task5->update();
     std::cout << "Final Solution: " << problem.get_primal().transpose() << std::endl;
     problem.print_active_set();
 
