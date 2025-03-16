@@ -13,6 +13,9 @@ HierarchicalQP::HierarchicalQP(uint n)
   , nullSpace_{Eigen::MatrixXd::Identity(n, n)}
   , codRight_{Eigen::MatrixXd::Zero(n, n)}
   , cholMetric_{Eigen::MatrixXd::Identity(n, n)} {
+#if DEBUG
+    logger.log("HierarchicalQP initialized with " + std::to_string(n) + " degrees of freedom.");
+#endif
 }
 
 
@@ -34,11 +37,9 @@ void HierarchicalQP::solve() {
     primal_ += guess_;
     guess_   = primal_;
 
-    // Deactivate unused tasks for next guess
-    for (uint k = k_; k < sot.size(); ++k) {
-        auto rows = find(!sot[k]->equalitySet_);
-        sot[k]->activeSet_(rows).setZero();
-    }
+#if DEBUG
+    logger.log(print_active_set());
+#endif
 }
 
 
@@ -61,10 +62,9 @@ void HierarchicalQP::equality_hqp() {
             auto leftDof = dof - rank;
             if (leftDof > 0) {
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
-                nullSpace_.leftCols(leftDof) = codRight_.rightCols(leftDof);
+                nullSpace_.leftCols(leftDof) = codRight_.middleCols(rank, leftDof);
             } else {
-                // In this case matrixZ() is the identity, so Eigen does not compute it explicitly and matrixZ() returns
-                // garbage
+                // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             }
             Eigen::MatrixXd codLeft_ = cod.householderQ();
@@ -84,6 +84,12 @@ void HierarchicalQP::equality_hqp() {
             sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft_.leftCols(rank);
         }
         k_++;
+    }
+
+    // Deactivate unused tasks for next guess
+    for (uint k = k_; k < sot.size(); ++k) {
+        auto rows = find(!sot[k]->equalitySet_);
+        sot[k]->activeSet_(rows).setZero();
     }
 }
 
@@ -135,24 +141,22 @@ void HierarchicalQP::inequality_hqp() {
             sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
         }
 
-        if (sot[h]->workSet_.any()) {
-            auto rows             = find(sot[h]->workSet_);
-            auto [matrix, vector] = get_task(sot[h], rows);
+        auto rows             = find(sot[h]->activeSet_);
+        auto [matrix, vector] = get_task(sot[h], rows);
 
-            if (h >= k_) {
-                sot[h]->slack_(rows) = matrix * primal_ - vector;
-            }
-            sot[h]->dual_(rows) = sot[h]->slack_(rows);
-            dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
+        if (h >= k_) {
+            sot[h]->slack_(rows) = matrix * primal_ - vector;
+        }
+        sot[h]->dual_(rows) = sot[h]->slack_(rows);
+        dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
-            for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
-                if (sot[k]->workSet_.any()) {
-                    auto rows                = find(sot[k]->workSet_);
-                    auto test                = (sot[k]->dual_(rows)).array() > tolerance;
-                    sot[k]->activeSet_(rows) = !test;
-                    sot[k]->lockedSet_(rows) = test;
-                    isActiveSetNew           = k < k_ && test.any();
-                }
+        for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
+            if (sot[k]->workSet_.any()) {
+                auto rows                = find(sot[k]->workSet_);
+                auto test                = (sot[k]->dual_(rows)).array() > tolerance;
+                sot[k]->activeSet_(rows) = !test;
+                sot[k]->lockedSet_(rows) = test;
+                isActiveSetNew           = k < k_ && test.any();
             }
         }
 
@@ -214,16 +218,17 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
 }
 
 
-// TODO: upgrade to a logger keeping track of the active set
-void HierarchicalQP::print_active_set() {
-    std::cout << "Active set:\n";
+std::string HierarchicalQP::print_active_set() {
+    std::stringstream out;
+    out << "Active set:\n";
     for (uint k = 0; const auto& task : sot) {
         if (k < k_ && task->activeSet_.any()) {
-            std::cout << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
+            out << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
         }
         k++;
     }
-    std::cout << std::endl;
+    out << std::endl;
+    return out.str();
 }
 
 }  // namespace hqp
