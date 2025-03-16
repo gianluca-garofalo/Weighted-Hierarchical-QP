@@ -13,6 +13,9 @@ HierarchicalQP::HierarchicalQP(unsigned int n)
   , nullSpace_{Eigen::MatrixXd::Identity(n, n)}
   , codRight_{Eigen::MatrixXd::Zero(n, n)}
   , cholMetric_{Eigen::MatrixXd::Identity(n, n)} {
+#if DEBUG
+    logger.log("HierarchicalQP initialized with " + std::to_string(n) + " degrees of freedom.");
+#endif
 }
 
 
@@ -39,6 +42,10 @@ void HierarchicalQP::solve() {
         auto rows = find(!sot[k]->equalitySet_);
         sot[k]->activeSet_(rows).setZero();
     }
+
+#if DEBUG
+    logger.log(print_active_set());
+#endif
 }
 
 
@@ -199,16 +206,17 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
 }
 
 
-// TODO: upgrade to a logger keeping track of the active set
-void HierarchicalQP::print_active_set() {
-    std::cout << "Active set:\n";
+std::string HierarchicalQP::print_active_set() {
+    std::stringstream out;
+    out << "Active set:\n";
     for (unsigned int k = 0; const auto& task : sot) {
         if (k < k_ && task->activeSet_.any()) {
-            std::cout << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
+            out << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
         }
         k++;
     }
-    std::cout << std::endl;
+    out << std::endl;
+    return out.str();
 }
 
 }  // namespace hqp
