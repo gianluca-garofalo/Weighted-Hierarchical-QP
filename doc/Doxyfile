@@ -3,7 +3,7 @@
 PROJECT_NAME           = "Weighted-Hierarchical-QP"
 PROJECT_NUMBER         = "0.0.1"
 OUTPUT_DIRECTORY       = docs
-INPUT                  = include src tests .        # Include current directory for mainpage.dox
+INPUT                  = ../include ../src ../tests .        # Include current directory for mainpage.dox
 FILE_PATTERNS          = *.h *.hpp *.c *.cpp *.md *.dox
 RECURSIVE              = YES
 GENERATE_HTML          = YES
