@@ -9,7 +9,10 @@
 #define _UtilsHQP_
 
 #include <memory>
+#include <mutex>
+#include <string>
 #include <type_traits>
+#include <vector>
 #include <Eigen/Dense>
 
 namespace hqp {
@@ -65,6 +68,22 @@ class SmartContainer : public Container<PtrWrapper<SmartPtr, T>, std::allocator<
         static_assert(std::is_base_of_v<T, Derived>, "Derived must be a subclass of T");
         Base::emplace_back(PtrWrapper<SmartPtr, Derived>(std::forward<Args>(args)...));
     }
+};
+
+
+
+class Logger {
+  public:
+    explicit Logger(const std::string& filename);
+    ~Logger();
+    void log(const std::string& message);
+
+  private:
+    std::string filename_;
+    std::vector<std::string> logBuffer_;
+    std::mutex mutex_;
+
+    std::string getCurrentTime();
 };
 
 }  // namespace hqp

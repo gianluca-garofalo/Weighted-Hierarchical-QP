@@ -9,11 +9,12 @@
 #ifndef _HierarchicalQP_
 #define _HierarchicalQP_
 
-#include <vector>
 #include <tuple>
+#include <vector>
 #include <Eigen/Dense>
+#include "options.hpp"
 #include "task.hpp"
-// #include "options.hpp"
+#include "utils.hpp"
 
 namespace hqp {
 
@@ -36,6 +37,16 @@ class HierarchicalQP {
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
+#if DEBUG
+    Logger logger{std::string(LOGFILE)};                  ///< Logger for debugging and monitoring.
+#endif
+    /**
+     * @brief Outputs the active set details to the console.
+     *
+     * Provides a comprehensive summary of active constraints at each task level.
+     */
+    std::string print_active_set();
+
   public:
     double tolerance = 1e-9;                 ///< Tolerance for convergence and numerical stability.
     TaskContainer sot;                       ///< Container for all task pointers.
@@ -57,13 +68,6 @@ class HierarchicalQP {
      * @return The computed primal solution vector.
      */
     Eigen::VectorXd get_primal();
-
-    /**
-     * @brief Outputs the active set details to the console.
-     *
-     * Provides a comprehensive summary of active constraints at each task level.
-     */
-    void print_active_set();
 };
 
 }  // namespace hqp
