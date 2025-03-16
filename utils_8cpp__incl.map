@@ -1,7 +1,14 @@
 <map id="src/utils.cpp" name="src/utils.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="103,5,203,31"/>
-<area shape="rect" id="node2" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="114,79,193,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,152,83,177"/>
-<area shape="rect" id="node4" title=" " alt="" coords="107,152,199,177"/>
-<area shape="rect" id="node5" title=" " alt="" coords="223,152,326,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="267,5,367,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,79,72,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="96,79,155,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="179,79,253,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="277,79,357,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="331,152,389,177"/>
+<area shape="rect" id="node7" title=" " alt="" coords="414,152,477,177"/>
+<area shape="rect" id="node8" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="507,79,586,104"/>
+<area shape="rect" id="node9" title=" " alt="" coords="744,152,821,177"/>
+<area shape="rect" id="node10" title=" " alt="" coords="845,152,909,177"/>
+<area shape="rect" id="node11" title=" " alt="" coords="501,152,593,177"/>
+<area shape="rect" id="node12" title=" " alt="" coords="617,152,719,177"/>
 </map>

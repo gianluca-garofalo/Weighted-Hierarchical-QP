@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../structCoordStruct.html#a183d7226fc5a8470ce9b9f04f9cb69bb',1,'CoordStruct']]]
+  ['weight_5f_0',['weight_',['../classhqp_1_1Task.html#a8f44fc95e8c02521f34e59e2213905e5',1,'hqp::Task']]],
+  ['workset_5f_1',['workSet_',['../classhqp_1_1Task.html#a07ee485f710ee924dcdafff3f54ec9d1',1,'hqp::Task']]]
 ];

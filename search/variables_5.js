@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['globalvalue_0',['globalValue',['../file_8h.html#a4a86bef4b6181cb3f53bd0461a9a511b',1,'file.h']]],
-  ['globvar_1',['globVar',['../autolink_8cpp.html#a88d0bae800d600a11d7bd60f0bc4b858',1,'autolink.cpp']]],
-  ['guess_5f_2',['guess_',['../classhqp_1_1HierarchicalQP.html#a96233fd5c1568f62a2a94fab1553ebbc',1,'hqp::HierarchicalQP']]]
+  ['filename_5f_0',['filename_',['../classhqp_1_1Logger.html#aa8d0315c0b28204bee935ccf23e461ff',1,'hqp::Logger']]]
 ];
