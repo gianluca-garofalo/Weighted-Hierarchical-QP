@@ -36,12 +36,10 @@ int main() {
     M << 10, 5, 5, 7;
     problem.set_metric(M);
     std::cout << "Updated Solution: " << problem.get_primal().transpose() << std::endl;
-    problem.print_active_set();
 
     std::swap(problem.sot[0], problem.sot[2]);
     task5->update();
     std::cout << "Final Solution: " << problem.get_primal().transpose() << std::endl;
-    problem.print_active_set();
 
     return 0;
 }
