@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['library_2ecpp_0',['library.cpp',['../library_8cpp.html',1,'']]],
-  ['library_2ehpp_1',['library.hpp',['../library_8hpp.html',1,'']]]
+  ['javadoc_2dbanner_2eh_0',['javadoc-banner.h',['../javadoc-banner_8h.html',1,'']]],
+  ['jdstyle_2ecpp_1',['jdstyle.cpp',['../jdstyle_8cpp.html',1,'']]]
 ];

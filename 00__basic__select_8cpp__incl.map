@@ -1,5 +1,5 @@
-<map id="tests/test0.cpp" name="tests/test0.cpp">
-<area shape="rect" id="node1" title="Test driver for validating the Hierarchical&#45;QP solver functionality." alt="" coords="105,5,223,31"/>
+<map id="tests/00_basic_select.cpp" name="tests/00_basic_select.cpp">
+<area shape="rect" id="node1" title=" " alt="" coords="70,5,258,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,79,85,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="122,299,225,324"/>
 <area shape="rect" id="node4" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="555,79,629,104"/>

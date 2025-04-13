@@ -1,20 +1,15 @@
 var searchData=
 [
-  ['e_0',['E',['../classE.html',1,'']]],
-  ['emplace_5fback_1',['emplace_back',['../classhqp_1_1SmartContainer.html#a535f6fa2534bccb4d47b52962e82a4ab',1,'hqp::SmartContainer']]],
-  ['enum_2eh_2',['enum.h',['../enum_8h.html',1,'']]],
-  ['enum_5ftest_3',['Enum_Test',['../classEnum__Test.html',1,'']]],
-  ['enumptr_4',['enumPtr',['../classJavadoc__Test.html#abcb36df9d8af3e69290c239ba483d6df',1,'Javadoc_Test::enumPtr()'],['../classQTstyle__Test.html#a973a4566c9a036f4eca508ba5fe80dcb',1,'QTstyle_Test::enumPtr()']]],
-  ['enumtype_5',['EnumType',['../classAfterdoc__Test.html#adab0cd7ad3b4875e245ca8f6238a388a',1,'Afterdoc_Test']]],
-  ['enumvar_6',['enumVar',['../classJavadoc__Test.html#afcc11e097968fb44080b82b75032e40b',1,'Javadoc_Test::enumVar()'],['../classQTstyle__Test.html#a241fb54f66dc0b3b03eece3a1a1bf18b',1,'QTstyle_Test::enumVar()']]],
-  ['equality_5fhqp_7',['equality_hqp',['../classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027',1,'hqp::HierarchicalQP']]],
-  ['equalityset_5f_8',['equalitySet_',['../classhqp_1_1Task.html#aa7761e65e5dabe87839768a6e68b4a7e',1,'hqp::Task']]],
-  ['errno_9',['errno',['../structcmd_8h.html#ad65a8842cc674e3ddf69355898c0ecbf',1,'structcmd.h']]],
-  ['etype_10',['EType',['../classAutolink__Test.html#aeb611627c332d067bded1806b1bb45c2',1,'Autolink_Test']]],
-  ['eval1_11',['EVal1',['../classAfterdoc__Test.html#adab0cd7ad3b4875e245ca8f6238a388aae054276790e35692ad0abe10c5b75da4',1,'Afterdoc_Test']]],
-  ['eval2_12',['EVal2',['../classAfterdoc__Test.html#adab0cd7ad3b4875e245ca8f6238a388aac849f37624d8d2d68ca72c4a8df9cf99',1,'Afterdoc_Test']]],
-  ['example_13',['example',['../classExample__Test.html#a22a62b12c65fd5e43b6eadaabb21ebb0',1,'Example_Test::example()'],['../classInclude__Test.html#aa286655e8f7f6a8ad203ef5fd8548b81',1,'Include_Test::example()'],['../classTag.html#acc641ffae34e2c4c03a6edf0a513be28',1,'Tag::example()']]],
-  ['example_2ecpp_14',['example.cpp',['../example_8cpp.html',1,'']]],
-  ['example_5ftest_15',['Example_Test',['../classExample__Test.html',1,'']]],
-  ['example_5ftest_2ecpp_16',['example_test.cpp',['../example__test_8cpp.html',1,'']]]
+  ['d_0',['D',['../classD.html',1,'']]],
+  ['debug_1',['DEBUG',['../options_8hpp.html#ad72dbcf6d0153db1b8d8a58001feed83',1,'options.hpp']]],
+  ['define_2eh_2',['define.h',['../define_8h.html',1,'']]],
+  ['diagrams_5fa_2eh_3',['diagrams_a.h',['../diagrams__a_8h.html',1,'']]],
+  ['diagrams_5fb_2eh_4',['diagrams_b.h',['../diagrams__b_8h.html',1,'']]],
+  ['diagrams_5fc_2eh_5',['diagrams_c.h',['../diagrams__c_8h.html',1,'']]],
+  ['diagrams_5fd_2eh_6',['diagrams_d.h',['../diagrams__d_8h.html',1,'']]],
+  ['diagrams_5fe_2eh_7',['diagrams_e.h',['../diagrams__e_8h.html',1,'']]],
+  ['doxygenbanner_8',['doxygenBanner',['../javadoc-banner_8h.html#a7acf20d2740fdb0d6086abf738c8688f',1,'javadoc-banner.h']]],
+  ['drawrect_9',['drawRect',['../classOverload__Test.html#a840305784a1944b4de9826a1f4204365',1,'Overload_Test::drawRect(int, int, int, int)'],['../classOverload__Test.html#a7a613f50092cbc0ef830a818d9f3409c',1,'Overload_Test::drawRect(const Rect &amp;r)']]],
+  ['dual_5f_10',['dual_',['../classhqp_1_1Task.html#a67660f2c3a08266d23dd90d216682373',1,'hqp::Task']]],
+  ['dual_5fupdate_11',['dual_update',['../classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9',1,'hqp::HierarchicalQP']]]
 ];

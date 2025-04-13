@@ -1,0 +1,12 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,159,60,185"/>
+<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01" title="Computes and retrieves the primal solution." alt="" coords="108,120,259,160"/>
+<area shape="rect" id="node10" href="$classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2" title="Sets the metric matrix used to define the quadratic cost." alt="" coords="108,184,259,224"/>
+<area shape="rect" id="node3" href="$classhqp_1_1HierarchicalQP.html#adac78a9cc96e9d4f311b9ef72acd7ebd" title="Solves the overall HQP by combining tasks." alt="" coords="307,120,457,160"/>
+<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="704,235,855,275"/>
+<area shape="rect" id="node5" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="939,127,1017,153"/>
+<area shape="rect" id="node7" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="505,177,656,217"/>
+<area shape="rect" id="node9" href="$classhqp_1_1HierarchicalQP.html#af25299ca77e16f5f9cb02cad264224a9" title="Outputs the active set details to the console." alt="" coords="505,5,656,45"/>
+<area shape="rect" id="node6" href="$classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" title="Retrieves task data." alt="" coords="903,263,1053,303"/>
+<area shape="rect" id="node8" href="$classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9" title="Updates dual variables." alt="" coords="704,120,855,160"/>
+</map>

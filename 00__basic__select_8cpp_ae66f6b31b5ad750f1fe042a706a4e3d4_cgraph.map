@@ -1,8 +1,7 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,127,60,153"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,95,60,121"/>
 <area shape="rect" id="node2" href="$classhqp_1_1SmartContainer.html#a535f6fa2534bccb4d47b52962e82a4ab" title=" " alt="" coords="108,56,264,96"/>
 <area shape="rect" id="node3" href="$classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01" title="Computes and retrieves the primal solution." alt="" coords="111,120,261,160"/>
-<area shape="rect" id="node11" href="$classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2" title="Sets the metric matrix used to define the quadratic cost." alt="" coords="111,184,261,224"/>
 <area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#adac78a9cc96e9d4f311b9ef72acd7ebd" title="Solves the overall HQP by combining tasks." alt="" coords="312,120,463,160"/>
 <area shape="rect" id="node5" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="709,235,860,275"/>
 <area shape="rect" id="node6" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="944,127,1023,153"/>

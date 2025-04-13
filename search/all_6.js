@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['genericptr_0',['GenericPtr',['../classhqp_1_1GenericPtr.html#a73b43ab1320e0242cb1f7ea47497c92e',1,'hqp::GenericPtr::GenericPtr()'],['../classhqp_1_1GenericPtr.html',1,'hqp::GenericPtr&lt; SmartPtr, T &gt;']]],
-  ['get_5fprimal_1',['get_primal',['../classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01',1,'hqp::HierarchicalQP']]],
-  ['get_5ftask_2',['get_task',['../classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997',1,'hqp::HierarchicalQP']]],
-  ['getcurrenttime_3',['getCurrentTime',['../classhqp_1_1Logger.html#ad7b0c8e5784f3b3312f01b611e87171d',1,'hqp::Logger']]],
-  ['glob_5ffunc_4',['glob_func',['../memgrp_8cpp.html#a36cb413747454fcdba9dd7b8f972fcf3',1,'memgrp.cpp']]],
-  ['globalvalue_5',['globalValue',['../file_8h.html#a4a86bef4b6181cb3f53bd0461a9a511b',1,'file.h']]],
-  ['globenum_6',['GlobEnum',['../autolink_8cpp.html#a656d63cf384d2a6f23c2c18523a7bc5e',1,'autolink.cpp']]],
-  ['globvar_7',['globVar',['../autolink_8cpp.html#a88d0bae800d600a11d7bd60f0bc4b858',1,'autolink.cpp']]],
-  ['group_2ecpp_8',['group.cpp',['../group_8cpp.html',1,'']]],
-  ['guess_5f_9',['guess_',['../classhqp_1_1HierarchicalQP.html#a96233fd5c1568f62a2a94fab1553ebbc',1,'hqp::HierarchicalQP']]],
-  ['gval1_10',['GVal1',['../autolink_8cpp.html#a656d63cf384d2a6f23c2c18523a7bc5ea0f016f49e4f3bcd072319b9d68bc927d',1,'autolink.cpp']]],
-  ['gval2_11',['GVal2',['../autolink_8cpp.html#a656d63cf384d2a6f23c2c18523a7bc5ea811876e2eea5c16ae0594a95d98fbd55',1,'autolink.cpp']]]
+  ['file_2eh_0',['file.h',['../file_8h.html',1,'']]],
+  ['filename_5f_1',['filename_',['../classhqp_1_1Logger.html#aa8d0315c0b28204bee935ccf23e461ff',1,'hqp::Logger']]],
+  ['find_2',['find',['../namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb',1,'hqp']]],
+  ['fn_5ftest_3',['Fn_Test',['../classFn__Test.html',1,'']]],
+  ['func_4',['func',['../group__group1.html#ga24f647174760cac13d2624b5ad74b00c',1,'group.cpp']]],
+  ['func_2eh_5',['func.h',['../func_8h.html',1,'']]],
+  ['func1ingroup1_6',['func1InGroup1',['../classMemgrp__Test.html#a5052066c03efb51395b5334da4255cd2',1,'Memgrp_Test']]],
+  ['func1ingroup2_7',['func1InGroup2',['../classMemgrp__Test.html#ab0e6553ddc36ac3cef0ac229c5dd4cdb',1,'Memgrp_Test']]],
+  ['func2_8',['func2',['../group__group1.html#ga053929c0809a5f56f7548fd7d9968f31',1,'group.cpp']]],
+  ['func2ingroup1_9',['func2InGroup1',['../classMemgrp__Test.html#a8296fa2c355e84ecf25522d54807548c',1,'Memgrp_Test']]],
+  ['func2ingroup2_10',['func2InGroup2',['../classMemgrp__Test.html#a9ce862049bb543596343e81ad3ddddff',1,'Memgrp_Test']]],
+  ['func3_11',['func3',['../group__group1.html#gadbf675591ff057ec48ce35b0d5cdf755',1,'group.cpp']]]
 ];

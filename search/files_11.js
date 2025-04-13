@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['utils_2ecpp_0',['utils.cpp',['../utils_8cpp.html',1,'']]],
-  ['utils_2ehpp_1',['utils.hpp',['../utils_8hpp.html',1,'']]]
+  ['tag_2ecpp_0',['tag.cpp',['../tag_8cpp.html',1,'']]],
+  ['task_2ecpp_1',['task.cpp',['../task_8cpp.html',1,'']]],
+  ['task_2ehpp_2',['task.hpp',['../task_8hpp.html',1,'']]],
+  ['templ_2ecpp_3',['templ.cpp',['../templ_8cpp.html',1,'']]]
 ];

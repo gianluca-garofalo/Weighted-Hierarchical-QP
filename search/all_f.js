@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['pag_5fexample_0',['pag_example',['../pag_example.html',1,'']]],
-  ['par_2ecpp_1',['par.cpp',['../par_8cpp.html',1,'']]],
-  ['par_5ftest_2',['Par_Test',['../classPar__Test.html',1,'']]],
-  ['primal_5f_3',['primal_',['../classhqp_1_1HierarchicalQP.html#a495f67f3a60f9b637ea81ec742116819',1,'hqp::HierarchicalQP']]],
-  ['print_5factive_5fset_4',['print_active_set',['../classhqp_1_1HierarchicalQP.html#af25299ca77e16f5f9cb02cad264224a9',1,'hqp::HierarchicalQP']]],
-  ['publicvar_5',['publicVar',['../classJavadoc__Test.html#a44a516fbc3a4865e2dcae34649c9df6a',1,'Javadoc_Test::publicVar()'],['../classQTstyle__Test.html#aabf7b2e9ed83ea44aca4d213baae06d3',1,'QTstyle_Test::publicVar()']]]
+  ['object_0',['Object',['../structObject.html',1,'Object'],['../manual_8c.html#ab1287b6141419421dc5c14b9f7756b0a',1,'Object():&#160;manual.c']]],
+  ['objref_1',['objRef',['../structObject.html#a71225073d06a793b9a6ea9263ed37b12',1,'Object']]],
+  ['objunref_2',['objUnref',['../structObject.html#a924ee0cecc906d148022b3f0d6325cfb',1,'Object']]],
+  ['open_3',['open',['../structcmd_8h.html#a2c4414339f388561554c2deab11a1a07',1,'structcmd.h']]],
+  ['options_2ehpp_4',['options.hpp',['../options_8hpp.html',1,'']]],
+  ['overload_2ecpp_5',['overload.cpp',['../overload_8cpp.html',1,'']]],
+  ['overload_5ftest_6',['Overload_Test',['../classOverload__Test.html',1,'']]]
 ];
