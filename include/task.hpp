@@ -62,10 +62,12 @@ class Task {
     void select_variables(const Eigen::VectorXi& indices);
 };
 
+
 template<typename T>
 using SmartPtr      = GenericPtr<std::shared_ptr, T>;
 using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
 using TaskContainer = SmartContainer<std::vector, GenericPtr, std::shared_ptr, Task>;
+
 
 template<typename... Args>
 class TaskInterface : public Task {
@@ -106,7 +108,9 @@ class TaskInterface : public Task {
 
     void compute() override {
         std::apply(
-          [this](auto &&...args) {run(unwrap(std::forward<decltype(args)>(args))...);},
+          [this](auto&&... args) {
+            run(unwrap(std::forward<decltype(args)>(args))...);
+          },
           *args_);
 
         assert(matrix_.rows() == vector_.rows());
@@ -148,6 +152,7 @@ class TaskInterface : public Task {
         isComputed_ = false;
     }
 };
+
 
 // Composite task that aggregates multiple subtasks.
 class SubTasks : public Task {
