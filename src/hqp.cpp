@@ -101,7 +101,7 @@ Eigen::VectorXd HierarchicalQP::get_primal() {
     while (k < k_ && sot[k]->is_computed()) {
         k++;
     }
-    if (k <= k_) {
+    if (k < k_ || k_ == 0) {
         solve();
     }
     return primal_;
