@@ -12,169 +12,175 @@
 <g id="node1" class="node">
 <title>Node1</title>
 <g id="a_node1"><a xlink:title="Declares common utility functions used throughout the HQP solver.">
-<polygon fill="#999999" stroke="#666666" points="286.5,-184 189.5,-184 189.5,-165 286.5,-165 286.5,-184"/>
-<text text-anchor="middle" x="238" y="-172" font-family="Helvetica,sans-Serif" font-size="10.00">include/utils.hpp</text>
+<polygon fill="#999999" stroke="#666666" points="257.5,-184 160.5,-184 160.5,-165 257.5,-165 257.5,-184"/>
+<text text-anchor="middle" x="209" y="-172" font-family="Helvetica,sans-Serif" font-size="10.00">include/utils.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="task_8hpp.html" target="_top" xlink:title="Declares the abstract Task interface and its derivatives used in the HQP solver.">
-<polygon fill="white" stroke="#666666" points="286.5,-129 189.5,-129 189.5,-110 286.5,-110 286.5,-129"/>
-<text text-anchor="middle" x="238" y="-117" font-family="Helvetica,sans-Serif" font-size="10.00">include/task.hpp</text>
+<g id="a_node2"><a xlink:href="hqp_8hpp.html" target="_top" xlink:title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver.">
+<polygon fill="white" stroke="#666666" points="219,-74 125,-74 125,-55 219,-55 219,-74"/>
+<text text-anchor="middle" x="172" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">include/hqp.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge">
 <title>Node1&#45;&gt;Node2</title>
-<path fill="none" stroke="#63b8ff" d="M238,-154.66C238,-145.93 238,-135.99 238,-129.09"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="234.5,-154.75 238,-164.75 241.5,-154.75 234.5,-154.75"/>
+<path fill="none" stroke="#63b8ff" d="M201.19,-155.3C197.87,-147.3 194.07,-137.75 191,-129 184.22,-109.67 177.68,-86.52 174.33,-74.21"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="198.06,-156.88 205.17,-164.73 204.5,-154.15 198.06,-156.88"/>
 </g>
-<!-- Node4 -->
-<g id="node4" class="node">
-<title>Node4</title>
-<g id="a_node4"><a xlink:href="hqp_8cpp.html" target="_top" xlink:title=" ">
+<!-- Node3 -->
+<g id="node3" class="node">
+<title>Node3</title>
+<g id="a_node3"><a xlink:href="hqp_8cpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="72,-19 0,-19 0,0 72,0 72,-19"/>
 <text text-anchor="middle" x="36" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">src/hqp.cpp</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node4 -->
-<g id="edge13" class="edge">
-<title>Node1&#45;&gt;Node4</title>
-<path fill="none" stroke="#63b8ff" d="M218.07,-158.48C206.82,-149.93 192.54,-138.97 180,-129 129.31,-88.71 69.93,-39.05 46.38,-19.25"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="216.27,-161.5 226.36,-164.75 220.5,-155.92 216.27,-161.5"/>
+<!-- Node1&#45;&gt;Node3 -->
+<g id="edge14" class="edge">
+<title>Node1&#45;&gt;Node3</title>
+<path fill="none" stroke="#63b8ff" d="M192,-157.49C156.03,-123.59 73.22,-45.57 45.35,-19.31"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="190.02,-160.43 199.7,-164.74 194.82,-155.33 190.02,-160.43"/>
+</g>
+<!-- Node7 -->
+<g id="node7" class="node">
+<title>Node7</title>
+<g id="a_node7"><a xlink:href="task_8hpp.html" target="_top" xlink:title="Declares the abstract Task interface and its derivatives used in the HQP solver.">
+<polygon fill="white" stroke="#666666" points="296.5,-129 199.5,-129 199.5,-110 296.5,-110 296.5,-129"/>
+<text text-anchor="middle" x="248" y="-117" font-family="Helvetica,sans-Serif" font-size="10.00">include/task.hpp</text>
+</a>
+</g>
+</g>
+<!-- Node1&#45;&gt;Node7 -->
+<g id="edge6" class="edge">
+<title>Node1&#45;&gt;Node7</title>
+<path fill="none" stroke="#63b8ff" d="M221.38,-156.67C228.14,-147.5 236.21,-136.52 241.68,-129.09"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="218.55,-154.62 215.44,-164.75 224.19,-158.77 218.55,-154.62"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node">
 <title>Node11</title>
 <g id="a_node11"><a xlink:href="utils_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="379.5,-129 304.5,-129 304.5,-110 379.5,-110 379.5,-129"/>
-<text text-anchor="middle" x="342" y="-117" font-family="Helvetica,sans-Serif" font-size="10.00">src/utils.cpp</text>
+<polygon fill="white" stroke="#666666" points="389.5,-129 314.5,-129 314.5,-110 389.5,-110 389.5,-129"/>
+<text text-anchor="middle" x="352" y="-117" font-family="Helvetica,sans-Serif" font-size="10.00">src/utils.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node11 -->
-<g id="edge14" class="edge">
+<g id="edge15" class="edge">
 <title>Node1&#45;&gt;Node11</title>
-<path fill="none" stroke="#63b8ff" d="M263.77,-160.37C282.87,-150.63 308.37,-137.64 324.99,-129.17"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="262.03,-157.33 254.71,-164.98 265.21,-163.56 262.03,-157.33"/>
-</g>
-<!-- Node3 -->
-<g id="node3" class="node">
-<title>Node3</title>
-<g id="a_node3"><a xlink:href="hqp_8hpp.html" target="_top" xlink:title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver.">
-<polygon fill="white" stroke="#666666" points="388,-74 294,-74 294,-55 388,-55 388,-74"/>
-<text text-anchor="middle" x="341" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">include/hqp.hpp</text>
-</a>
-</g>
+<path fill="none" stroke="#63b8ff" d="M241.59,-161.42C268.12,-151.59 304.93,-137.95 328.61,-129.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="240.14,-158.23 231.98,-164.98 242.57,-164.79 240.14,-158.23"/>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge2" class="edge">
 <title>Node2&#45;&gt;Node3</title>
-<path fill="none" stroke="#63b8ff" d="M263.52,-105.37C282.44,-95.63 307.7,-82.64 324.15,-74.17"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="261.84,-102.3 254.55,-109.98 265.04,-108.52 261.84,-102.3"/>
+<path fill="none" stroke="#63b8ff" d="M140.67,-51.29C115.46,-41.47 80.67,-27.91 58.25,-19.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="139.56,-54.61 150.15,-54.98 142.1,-48.09 139.56,-54.61"/>
 </g>
-<!-- Node7 -->
-<g id="node7" class="node">
-<title>Node7</title>
-<g id="a_node7"><a xlink:href="02__compare__solvers_8cpp.html" target="_top" xlink:title=" ">
+<!-- Node4 -->
+<g id="node4" class="node">
+<title>Node4</title>
+<g id="a_node4"><a xlink:href="00__basic__select_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="413.5,-19 272.5,-19 272.5,0 413.5,0 413.5,-19"/>
+<text text-anchor="middle" x="343" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">tests/00_basic_select.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node2&#45;&gt;Node4 -->
+<g id="edge3" class="edge">
+<title>Node2&#45;&gt;Node4</title>
+<path fill="none" stroke="#63b8ff" d="M209.34,-51.93C241.28,-42.03 286.52,-28.01 315.31,-19.08"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="207.99,-48.68 199.47,-54.98 210.06,-55.37 207.99,-48.68"/>
+</g>
+<!-- Node5 -->
+<g id="node5" class="node">
+<title>Node5</title>
+<g id="a_node5"><a xlink:href="01__metric__swap_8cpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="574.5,-19 431.5,-19 431.5,0 574.5,0 574.5,-19"/>
+<text text-anchor="middle" x="503" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">tests/01_metric_swap.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node2&#45;&gt;Node5 -->
+<g id="edge4" class="edge">
+<title>Node2&#45;&gt;Node5</title>
+<path fill="none" stroke="#63b8ff" d="M229.08,-54.36C291.08,-44.43 389.35,-28.7 449.79,-19.02"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="228.39,-50.93 219.07,-55.96 229.5,-57.84 228.39,-50.93"/>
+</g>
+<!-- Node6 -->
+<g id="node6" class="node">
+<title>Node6</title>
+<g id="a_node6"><a xlink:href="02__compare__solvers_8cpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="254,-19 90,-19 90,0 254,0 254,-19"/>
 <text text-anchor="middle" x="172" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">tests/02_compare_solvers.cpp</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node7 -->
-<g id="edge8" class="edge">
-<title>Node2&#45;&gt;Node7</title>
-<path fill="none" stroke="#63b8ff" d="M217.79,-103.47C208.46,-95.61 197.94,-85.28 191,-74 180.14,-56.36 175.16,-32.13 173.16,-19.3"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="215.89,-106.44 225.88,-109.95 220.26,-100.97 215.89,-106.44"/>
+<!-- Node2&#45;&gt;Node6 -->
+<g id="edge5" class="edge">
+<title>Node2&#45;&gt;Node6</title>
+<path fill="none" stroke="#63b8ff" d="M172,-44.66C172,-35.93 172,-25.99 172,-19.09"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="168.5,-44.75 172,-54.75 175.5,-44.75 168.5,-44.75"/>
+</g>
+<!-- Node7&#45;&gt;Node2 -->
+<g id="edge7" class="edge">
+<title>Node7&#45;&gt;Node2</title>
+<path fill="none" stroke="#63b8ff" d="M227.42,-104.15C213.69,-94.57 196.07,-82.29 184.43,-74.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="225.58,-107.14 235.79,-109.98 229.59,-101.39 225.58,-107.14"/>
+</g>
+<!-- Node7&#45;&gt;Node6 -->
+<g id="edge9" class="edge">
+<title>Node7&#45;&gt;Node6</title>
+<path fill="none" stroke="#63b8ff" d="M245.18,-100.04C242.45,-86.63 237.31,-68.54 228,-55 217.38,-39.55 199.8,-26.84 187.17,-19.02"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="241.75,-100.76 246.94,-110 248.64,-99.54 241.75,-100.76"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
 <g id="a_node8"><a xlink:href="task_8cpp.html" target="_top" xlink:title="Implements the methods declared in task.hpp.">
-<polygon fill="white" stroke="#666666" points="275.5,-74 200.5,-74 200.5,-55 275.5,-55 275.5,-74"/>
-<text text-anchor="middle" x="238" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">src/task.cpp</text>
+<polygon fill="white" stroke="#666666" points="350.5,-74 275.5,-74 275.5,-55 350.5,-55 350.5,-74"/>
+<text text-anchor="middle" x="313" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">src/task.cpp</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node8 -->
-<g id="edge7" class="edge">
-<title>Node2&#45;&gt;Node8</title>
-<path fill="none" stroke="#63b8ff" d="M238,-99.66C238,-90.93 238,-80.99 238,-74.09"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="234.5,-99.75 238,-109.75 241.5,-99.75 234.5,-99.75"/>
+<!-- Node7&#45;&gt;Node8 -->
+<g id="edge8" class="edge">
+<title>Node7&#45;&gt;Node8</title>
+<path fill="none" stroke="#63b8ff" d="M266.27,-103.6C277.92,-94.11 292.6,-82.13 302.37,-74.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="263.98,-100.95 258.44,-109.98 268.41,-106.38 263.98,-100.95"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node">
 <title>Node9</title>
 <g id="a_node9"><a xlink:href="library_8hpp.html" target="_top" xlink:title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver.">
-<polygon fill="white" stroke="#666666" points="526.5,-74 431.5,-74 431.5,-55 526.5,-55 526.5,-74"/>
-<text text-anchor="middle" x="479" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">tests/library.hpp</text>
+<polygon fill="white" stroke="#666666" points="506.5,-74 411.5,-74 411.5,-55 506.5,-55 506.5,-74"/>
+<text text-anchor="middle" x="459" y="-62" font-family="Helvetica,sans-Serif" font-size="10.00">tests/library.hpp</text>
 </a>
 </g>
 </g>
-<!-- Node2&#45;&gt;Node9 -->
-<g id="edge9" class="edge">
-<title>Node2&#45;&gt;Node9</title>
-<path fill="none" stroke="#63b8ff" d="M286.58,-107.82C331.75,-97.88 398.17,-83.28 439.98,-74.08"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="285.74,-104.42 276.72,-109.98 287.24,-111.26 285.74,-104.42"/>
+<!-- Node7&#45;&gt;Node9 -->
+<g id="edge10" class="edge">
+<title>Node7&#45;&gt;Node9</title>
+<path fill="none" stroke="#63b8ff" d="M291.79,-107.5C331.3,-97.58 388.62,-83.18 424.83,-74.08"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="290.75,-104.15 281.9,-109.98 292.45,-110.94 290.75,-104.15"/>
 </g>
-<!-- Node3&#45;&gt;Node4 -->
-<g id="edge3" class="edge">
-<title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="#63b8ff" d="M283.83,-54C231.11,-45.18 150.72,-31.55 81,-19 78.18,-18.49 75.27,-17.96 72.34,-17.42"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="283.55,-57.51 293.99,-55.7 284.7,-50.6 283.55,-57.51"/>
-</g>
-<!-- Node5 -->
-<g id="node5" class="node">
-<title>Node5</title>
-<g id="a_node5"><a xlink:href="00__basic__select_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="574.5,-19 433.5,-19 433.5,0 574.5,0 574.5,-19"/>
-<text text-anchor="middle" x="504" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">tests/00_basic_select.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node5 -->
-<g id="edge4" class="edge">
-<title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="#63b8ff" d="M376.99,-51.8C407.41,-41.91 450.28,-27.97 477.61,-19.08"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="375.62,-48.56 367.19,-54.98 377.78,-55.22 375.62,-48.56"/>
-</g>
-<!-- Node6 -->
-<g id="node6" class="node">
-<title>Node6</title>
-<g id="a_node6"><a xlink:href="01__metric__swap_8cpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="415.5,-19 272.5,-19 272.5,0 415.5,0 415.5,-19"/>
-<text text-anchor="middle" x="344" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">tests/01_metric_swap.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node6 -->
-<g id="edge5" class="edge">
-<title>Node3&#45;&gt;Node6</title>
-<path fill="none" stroke="#63b8ff" d="M342.07,-44.66C342.56,-35.93 343.12,-25.99 343.51,-19.09"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="338.57,-44.57 341.5,-54.75 345.56,-44.96 338.57,-44.57"/>
-</g>
-<!-- Node3&#45;&gt;Node7 -->
-<g id="edge6" class="edge">
-<title>Node3&#45;&gt;Node7</title>
-<path fill="none" stroke="#63b8ff" d="M304.1,-51.93C272.53,-42.03 227.82,-28.01 199.37,-19.08"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="303.26,-55.33 313.85,-54.98 305.35,-48.65 303.26,-55.33"/>
+<!-- Node9&#45;&gt;Node4 -->
+<g id="edge11" class="edge">
+<title>Node9&#45;&gt;Node4</title>
+<path fill="none" stroke="#63b8ff" d="M431.13,-50.77C409.73,-40.99 380.76,-27.75 361.98,-19.17"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="429.81,-54.01 440.36,-54.98 432.72,-47.65 429.81,-54.01"/>
 </g>
 <!-- Node9&#45;&gt;Node5 -->
-<g id="edge10" class="edge">
+<g id="edge12" class="edge">
 <title>Node9&#45;&gt;Node5</title>
-<path fill="none" stroke="#63b8ff" d="M487.48,-45.53C491.69,-36.6 496.59,-26.22 499.95,-19.09"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="484.23,-44.21 483.13,-54.75 490.56,-47.2 484.23,-44.21"/>
-</g>
-<!-- Node9&#45;&gt;Node6 -->
-<g id="edge11" class="edge">
-<title>Node9&#45;&gt;Node6</title>
-<path fill="none" stroke="#63b8ff" d="M447.9,-51.29C422.88,-41.47 388.34,-27.91 366.08,-19.17"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="446.72,-54.59 457.31,-54.98 449.28,-48.07 446.72,-54.59"/>
+<path fill="none" stroke="#63b8ff" d="M472.73,-46.96C480.4,-37.72 489.63,-26.6 495.87,-19.09"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="469.96,-44.82 466.27,-54.75 475.35,-49.29 469.96,-44.82"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node">
@@ -186,10 +192,10 @@
 </g>
 </g>
 <!-- Node9&#45;&gt;Node10 -->
-<g id="edge12" class="edge">
+<g id="edge13" class="edge">
 <title>Node9&#45;&gt;Node10</title>
-<path fill="none" stroke="#63b8ff" d="M514.55,-51.8C544.59,-41.91 586.94,-27.97 613.93,-19.08"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="513.27,-48.53 504.87,-54.98 515.46,-55.18 513.27,-48.53"/>
+<path fill="none" stroke="#63b8ff" d="M498.08,-52.06C531.91,-42.15 580.08,-28.04 610.69,-19.08"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="496.69,-48.82 488.08,-54.98 498.66,-55.53 496.69,-48.82"/>
 </g>
 </g>
 </svg>
