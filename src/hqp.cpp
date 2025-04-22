@@ -33,12 +33,6 @@ void HierarchicalQP::solve() {
     // Shift problem back
     primal_ += guess_;
     guess_   = primal_;
-
-    // Deactivate unused tasks for next guess
-    for (uint k = k_; k < sot.size(); ++k) {
-        auto rows = find(!sot[k]->equalitySet_);
-        sot[k]->activeSet_(rows).setZero();
-    }
 }
 
 
@@ -61,10 +55,9 @@ void HierarchicalQP::equality_hqp() {
             auto leftDof = dof - rank;
             if (leftDof > 0) {
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
-                nullSpace_.leftCols(leftDof) = codRight_.rightCols(leftDof);
+                nullSpace_.leftCols(leftDof) = codRight_.middleCols(rank, leftDof);
             } else {
-                // In this case matrixZ() is the identity, so Eigen does not compute it explicitly and matrixZ() returns
-                // garbage
+                // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             }
             Eigen::MatrixXd codLeft_ = cod.householderQ();
@@ -84,6 +77,12 @@ void HierarchicalQP::equality_hqp() {
             sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft_.leftCols(rank);
         }
         k_++;
+    }
+
+    // Deactivate unused tasks for next guess
+    for (uint k = k_; k < sot.size(); ++k) {
+        auto rows = find(!sot[k]->equalitySet_);
+        sot[k]->activeSet_(rows).setZero();
     }
 }
 
@@ -135,24 +134,22 @@ void HierarchicalQP::inequality_hqp() {
             sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
         }
 
-        if (sot[h]->workSet_.any()) {
-            auto rows             = find(sot[h]->workSet_);
-            auto [matrix, vector] = get_task(sot[h], rows);
+        auto rows             = find(sot[h]->activeSet_);
+        auto [matrix, vector] = get_task(sot[h], rows);
 
-            if (h >= k_) {
-                sot[h]->slack_(rows) = matrix * primal_ - vector;
-            }
-            sot[h]->dual_(rows) = sot[h]->slack_(rows);
-            dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
+        if (h >= k_) {
+            sot[h]->slack_(rows) = matrix * primal_ - vector;
+        }
+        sot[h]->dual_(rows) = sot[h]->slack_(rows);
+        dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
-            for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
-                if (sot[k]->workSet_.any()) {
-                    auto rows                = find(sot[k]->workSet_);
-                    auto test                = (sot[k]->dual_(rows)).array() > tolerance;
-                    sot[k]->activeSet_(rows) = !test;
-                    sot[k]->lockedSet_(rows) = test;
-                    isActiveSetNew           = k < k_ && test.any();
-                }
+        for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
+            if (sot[k]->workSet_.any()) {
+                auto rows                = find(sot[k]->workSet_);
+                auto test                = (sot[k]->dual_(rows)).array() > tolerance;
+                sot[k]->activeSet_(rows) = !test;
+                sot[k]->lockedSet_(rows) = test;
+                isActiveSetNew           = k < k_ && test.any();
             }
         }
 
