@@ -61,10 +61,9 @@ void HierarchicalQP::equality_hqp() {
             auto leftDof = dof - rank;
             if (leftDof > 0) {
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
-                nullSpace_.leftCols(leftDof) = codRight_.rightCols(leftDof);
+                nullSpace_.leftCols(leftDof) = codRight_.middleCols(rank, leftDof);
             } else {
-                // In this case matrixZ() is the identity, so Eigen does not compute it explicitly and matrixZ() returns
-                // garbage
+                // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             }
             Eigen::MatrixXd codLeft_ = cod.householderQ();
@@ -136,7 +135,7 @@ void HierarchicalQP::inequality_hqp() {
         }
 
         if (sot[h]->workSet_.any()) {
-            auto rows             = find(sot[h]->workSet_);
+            auto rows             = find(sot[h]->activeSet_);
             auto [matrix, vector] = get_task(sot[h], rows);
 
             if (h >= k_) {
