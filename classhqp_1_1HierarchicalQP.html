@@ -102,6 +102,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afd188fe690d31e139bdb9ed95b8acf01"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01">get_primal</a> ()</td></tr>
 <tr class="memdesc:afd188fe690d31e139bdb9ed95b8acf01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes and retrieves the primal solution.  <br /></td></tr>
 <tr class="separator:afd188fe690d31e139bdb9ed95b8acf01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5aaeddac67302f310f34bfa3eb66c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#aae5aaeddac67302f310f34bfa3eb66c4">print_active_set</a> ()</td></tr>
+<tr class="memdesc:aae5aaeddac67302f310f34bfa3eb66c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs the active set details to the console.  <br /></td></tr>
+<tr class="separator:aae5aaeddac67302f310f34bfa3eb66c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -129,9 +132,6 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a69f7398b0f10bcc38452b0acf12f9997"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997">get_task</a> (<a class="el" href="namespacehqp.html#ad50f242da3c84a6a11c08193f886baf7">TaskPtr</a> task, const Eigen::VectorXi &amp;row)</td></tr>
 <tr class="memdesc:a69f7398b0f10bcc38452b0acf12f9997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves task data.  <br /></td></tr>
 <tr class="separator:a69f7398b0f10bcc38452b0acf12f9997"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af25299ca77e16f5f9cb02cad264224a9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#af25299ca77e16f5f9cb02cad264224a9">print_active_set</a> ()</td></tr>
-<tr class="memdesc:af25299ca77e16f5f9cb02cad264224a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs the active set details to the console.  <br /></td></tr>
-<tr class="separator:af25299ca77e16f5f9cb02cad264224a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -300,7 +300,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01_cgraph.svg" width="956" height="308"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_afd188fe690d31e139bdb9ed95b8acf01_cgraph.svg" width="956" height="216"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <div class="dynheader">
@@ -395,27 +395,19 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="af25299ca77e16f5f9cb02cad264224a9" name="af25299ca77e16f5f9cb02cad264224a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af25299ca77e16f5f9cb02cad264224a9">&#9670;&#160;</a></span>print_active_set()</h2>
+<a id="aae5aaeddac67302f310f34bfa3eb66c4" name="aae5aaeddac67302f310f34bfa3eb66c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5aaeddac67302f310f34bfa3eb66c4">&#9670;&#160;</a></span>print_active_set()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string hqp::HierarchicalQP::print_active_set </td>
+          <td class="memname">void hqp::HierarchicalQP::print_active_set </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Outputs the active set details to the console. </p>
@@ -423,13 +415,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_af25299ca77e16f5f9cb02cad264224a9_cgraph.svg" width="288" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_af25299ca77e16f5f9cb02cad264224a9_icgraph.svg" width="662" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_aae5aaeddac67302f310f34bfa3eb66c4_cgraph.svg" width="288" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
@@ -494,7 +480,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd_cgraph.svg" width="758" height="308"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_adac78a9cc96e9d4f311b9ef72acd7ebd_cgraph.svg" width="758" height="216"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <div class="dynheader">

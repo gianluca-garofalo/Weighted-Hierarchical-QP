@@ -1,9 +1,8 @@
 <map id="hqp::HierarchicalQP::solve" name="hqp::HierarchicalQP::solve">
-<area shape="rect" id="node1" title="Solves the overall HQP by combining tasks." alt="" coords="5,120,156,160"/>
-<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="403,235,553,275"/>
-<area shape="rect" id="node3" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="637,127,716,153"/>
-<area shape="rect" id="node5" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="204,177,355,217"/>
-<area shape="rect" id="node7" href="$classhqp_1_1HierarchicalQP.html#af25299ca77e16f5f9cb02cad264224a9" title="Outputs the active set details to the console." alt="" coords="204,5,355,45"/>
-<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" title="Retrieves task data." alt="" coords="601,263,752,303"/>
-<area shape="rect" id="node6" href="$classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9" title="Updates dual variables." alt="" coords="403,120,553,160"/>
+<area shape="rect" id="node1" title="Solves the overall HQP by combining tasks." alt="" coords="5,35,156,75"/>
+<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="403,5,553,45"/>
+<area shape="rect" id="node5" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="204,63,355,103"/>
+<area shape="rect" id="node3" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="637,121,716,146"/>
+<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" title="Retrieves task data." alt="" coords="601,31,752,71"/>
+<area shape="rect" id="node6" href="$classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9" title="Updates dual variables." alt="" coords="403,171,553,211"/>
 </map>

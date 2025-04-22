@@ -1,10 +1,11 @@
 <map id="include/task.hpp" name="include/task.hpp">
-<area shape="rect" id="node1" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="353,5,482,31"/>
-<area shape="rect" id="node2" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="188,79,313,104"/>
-<area shape="rect" id="node6" href="$task_8cpp.html" title="Implements the methods declared in task.hpp." alt="" coords="505,79,605,104"/>
-<area shape="rect" id="node7" href="$library_8hpp.html" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="354,79,481,104"/>
-<area shape="rect" id="node3" href="$hqp_8cpp.html" title=" " alt="" coords="5,152,101,177"/>
-<area shape="rect" id="node4" href="$00__basic__select_8cpp.html" title=" " alt="" coords="126,152,314,177"/>
-<area shape="rect" id="node5" href="$01__metric__swap_8cpp.html" title=" " alt="" coords="338,152,529,177"/>
-<area shape="rect" id="node8" href="$library_8cpp.html" title="Implements the run() functions for various test tasks." alt="" coords="553,152,679,177"/>
+<area shape="rect" id="node1" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="326,5,455,31"/>
+<area shape="rect" id="node2" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="260,79,385,104"/>
+<area shape="rect" id="node6" href="$02__compare__solvers_8cpp.html" title=" " alt="" coords="5,152,224,177"/>
+<area shape="rect" id="node7" href="$task_8cpp.html" title="Implements the methods declared in task.hpp." alt="" coords="410,79,510,104"/>
+<area shape="rect" id="node8" href="$library_8hpp.html" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="587,79,714,104"/>
+<area shape="rect" id="node3" href="$hqp_8cpp.html" title=" " alt="" coords="248,152,344,177"/>
+<area shape="rect" id="node4" href="$00__basic__select_8cpp.html" title=" " alt="" coords="583,152,771,177"/>
+<area shape="rect" id="node5" href="$01__metric__swap_8cpp.html" title=" " alt="" coords="369,152,559,177"/>
+<area shape="rect" id="node9" href="$library_8cpp.html" title="Implements the run() functions for various test tasks." alt="" coords="796,152,921,177"/>
 </map>

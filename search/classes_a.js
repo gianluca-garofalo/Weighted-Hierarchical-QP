@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logger_0',['Logger',['../classhqp_1_1Logger.html',1,'hqp']]]
+  ['memgrp_5ftest_0',['Memgrp_Test',['../classMemgrp__Test.html',1,'']]]
 ];

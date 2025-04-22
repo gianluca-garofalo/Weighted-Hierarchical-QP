@@ -4,13 +4,10 @@
 <area shape="rect" id="node3" title=" " alt="" coords="63,299,166,324"/>
 <area shape="rect" id="node4" href="$task_8hpp.html" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="233,152,311,177"/>
 <area shape="rect" id="node5" title=" " alt="" coords="22,225,77,251"/>
-<area shape="rect" id="node6" title=" " alt="" coords="508,299,585,324"/>
+<area shape="rect" id="node6" title=" " alt="" coords="547,299,624,324"/>
 <area shape="rect" id="node7" title=" " alt="" coords="153,225,213,251"/>
-<area shape="rect" id="node8" title=" " alt="" coords="610,299,702,324"/>
+<area shape="rect" id="node8" title=" " alt="" coords="407,299,499,324"/>
 <area shape="rect" id="node9" title=" " alt="" coords="237,225,307,251"/>
 <area shape="rect" id="node10" title=" " alt="" coords="331,225,405,251"/>
-<area shape="rect" id="node11" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="430,225,509,251"/>
-<area shape="rect" id="node12" title=" " alt="" coords="249,299,313,324"/>
-<area shape="rect" id="node13" title=" " alt="" coords="337,299,396,324"/>
-<area shape="rect" id="node14" title=" " alt="" coords="421,299,483,324"/>
+<area shape="rect" id="node11" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="481,225,559,251"/>
 </map>
