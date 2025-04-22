@@ -1,3 +1,18 @@
+include(FetchContent)
+
+FetchContent_Declare(daqp
+    GIT_REPOSITORY "https://github.com/gianluca-garofalo/daqp.git"
+    GIT_TAG "origin/hierarchical"
+)
+FetchContent_MakeAvailable(daqp)
+
+FetchContent_Declare(lexls
+    GIT_REPOSITORY "https://github.com/jrl-umi3218/lexls"
+    GIT_TAG "origin/master"
+)
+FetchContent_MakeAvailable(lexls)
+
+
 project(HQP_tests)
 message(PROJECT_NAME="${PROJECT_NAME}")
 message(CMAKE_CURRENT_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
@@ -6,6 +21,7 @@ find_package (Eigen3 3.4.0 REQUIRED NO_MODULE)
 
 add_executable(00_basic_select 00_basic_select.cpp library.cpp)
 add_executable(01_metric_swap 01_metric_swap.cpp library.cpp)
+add_executable(02_compare_solvers 02_compare_solvers.cpp library.cpp ${daqp_SOURCE_DIR}/interfaces/daqp-eigen/daqp.cpp)
 
 set(TARGETS 
     00_basic_select
@@ -22,3 +38,14 @@ foreach(TARGET ${TARGETS})
 	
 	add_test(NAME test_${TARGET} COMMAND ${TARGET})
 endforeach()
+
+target_link_libraries(02_compare_solvers Eigen3::Eigen HQP::HQP daqp lexls)
+target_include_directories(
+	02_compare_solvers
+	PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}
+		${daqp_SOURCE_DIR}/include
+		${daqp_SOURCE_DIR}/interfaces/daqp-eigen
+)
+
+add_test(NAME test_02_compare_solvers COMMAND 02_compare_solvers)
