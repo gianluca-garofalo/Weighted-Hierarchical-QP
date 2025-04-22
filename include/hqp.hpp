@@ -13,7 +13,7 @@
 #include <tuple>
 #include <Eigen/Dense>
 #include "task.hpp"
-// #include "options.hpp"
+#include "utils.hpp"
 
 namespace hqp {
 
