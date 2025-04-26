@@ -19,7 +19,7 @@ namespace hqp {
 
 class HierarchicalQP {
   private:
-    uint col_;                                             ///< Number of variables in the problem.
+    unsigned int col_;                                     ///< Number of variables in the problem.
     Eigen::VectorXd primal_;                               ///< The current solution vector.
     Eigen::VectorXd task_;                                 ///< Intermediate task solution vector.
     Eigen::VectorXd guess_;                                ///< Previous solution used as a warm start.
@@ -27,12 +27,12 @@ class HierarchicalQP {
     Eigen::MatrixXd nullSpace_;                            ///< Basis for the nullspace.
     Eigen::MatrixXd codRight_;                             ///< Matrix used for decomposition adjustments.
     Eigen::MatrixXd cholMetric_;                           ///< Cholesky metric used for stability.
-    uint k_ = 0;                                           ///< Index tracking the active task level.
+    unsigned int k_ = 0;                                   ///< Index tracking the active task level.
 
-    void solve();                                          ///< Solves the overall HQP by combining tasks.
-    void equality_hqp();                                   ///< Handles equality constraint resolution.
-    void inequality_hqp();                                 ///< Handles inequality constrained tasks.
-    void dual_update(uint h, const Eigen::VectorXd& tau);  ///< Updates dual variables.
+    void solve();                                                  ///< Solves the overall HQP by combining tasks.
+    void equality_hqp();                                           ///< Handles equality constraint resolution.
+    void inequality_hqp();                                         ///< Handles inequality constrained tasks.
+    void dual_update(unsigned int h, const Eigen::VectorXd& tau);  ///< Updates dual variables.
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
@@ -44,7 +44,7 @@ class HierarchicalQP {
      * @brief Constructs the HierarchicalQP solver.
      * @param n Number of degrees of freedom (columns) in the problem.
      */
-    HierarchicalQP(uint n);
+    HierarchicalQP(unsigned int n);
 
     /**
      * @brief Sets the metric matrix used to define the quadratic cost.
