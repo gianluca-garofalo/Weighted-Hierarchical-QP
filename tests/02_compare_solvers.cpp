@@ -118,8 +118,8 @@ int main() {
     std::vector<LexLS::ObjectiveType> types_of_objectives;
     std::vector<Eigen::MatrixXd> objectives;
 
-    uint start = 0;
-    for (uint k = 0; k < break_points.size(); ++k) {
+    unsigned int start = 0;
+    for (unsigned int k = 0; k < break_points.size(); ++k) {
         auto n_constraints = break_points(k) - start;
         Eigen::MatrixXd objective(n_constraints, A.cols() + 2);
         objective << A.middleRows(start, n_constraints), bl.segment(start, n_constraints), bu.segment(start, n_constraints);

@@ -4,7 +4,7 @@
 
 namespace hqp {
 
-HierarchicalQP::HierarchicalQP(uint n)
+HierarchicalQP::HierarchicalQP(unsigned int n)
   : col_{n}
   , primal_{Eigen::VectorXd::Zero(n)}
   , task_{Eigen::VectorXd::Zero(n)}
@@ -35,7 +35,7 @@ void HierarchicalQP::solve() {
     guess_   = primal_;
 
     // Deactivate unused tasks for next guess
-    for (uint k = k_; k < sot.size(); ++k) {
+    for (unsigned int k = k_; k < sot.size(); ++k) {
         auto rows = find(!sot[k]->equalitySet_);
         sot[k]->activeSet_(rows).setZero();
     }
@@ -96,7 +96,7 @@ void HierarchicalQP::set_metric(const Eigen::MatrixXd& metric) {
 
 
 Eigen::VectorXd HierarchicalQP::get_primal() {
-    uint k = 0;
+    unsigned int k = 0;
     while (k < k_ && sot[k]->is_computed()) {
         k++;
     }
@@ -112,7 +112,7 @@ void HierarchicalQP::inequality_hqp() {
         task->lockedSet_.setZero();
         task->dual_.setZero();
     }
-    uint h              = 0;
+    unsigned int h      = 0;
     bool isActiveSetNew = true;
 
     while (h < sot.size()) {
@@ -121,7 +121,7 @@ void HierarchicalQP::inequality_hqp() {
 
             // Add tasks to the active set.
             isActiveSetNew = false;
-            for (uint k = 0; k < k_ && !isActiveSetNew; ++k) {
+            for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
                 auto rows                = find(!sot[k]->activeSet_);
                 auto [matrix, vector]    = get_task(sot[k], rows);
                 sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
@@ -139,7 +139,7 @@ void HierarchicalQP::inequality_hqp() {
         sot[h]->dual_(rows) = sot[h]->slack_(rows);
         dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
-        for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
+        for (unsigned int k = 0; k <= h && !isActiveSetNew; ++k) {
             sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
             if (sot[k]->workSet_.any()) {
                 auto rows                = find(sot[k]->workSet_);
@@ -157,11 +157,11 @@ void HierarchicalQP::inequality_hqp() {
 }
 
 
-void HierarchicalQP::dual_update(uint h, const Eigen::VectorXd& tau) {
+void HierarchicalQP::dual_update(unsigned int h, const Eigen::VectorXd& tau) {
     auto dof = col_;
     for (unsigned int k = 0; k < h; ++k) {
         if (dof > 0 && sot[k]->activeSet_.any()) {
-            uint leftDof = dof - sot[k]->rank_;
+            auto leftDof = dof - sot[k]->rank_;
             auto rows    = find(sot[k]->activeSet_);
             if (rows.any()) {
                 Eigen::VectorXd f = inverse_.middleCols(col_ - dof, sot[k]->rank_).transpose() * tau;
@@ -202,7 +202,7 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
 // TODO: upgrade to a logger keeping track of the active set
 void HierarchicalQP::print_active_set() {
     std::cout << "Active set:\n";
-    for (uint k = 0; const auto& task : sot) {
+    for (unsigned int k = 0; const auto& task : sot) {
         if (k < k_ && task->activeSet_.any()) {
             std::cout << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
         }
