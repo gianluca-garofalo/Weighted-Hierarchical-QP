@@ -33,6 +33,7 @@ class HierarchicalQP {
     void dual_update(unsigned int h, const Eigen::VectorXd& tau);  ///< Updates dual variables.
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
+    bool update_active_set(unsigned int level, unsigned int row);
 
   public:
     double tolerance = 1e-9;                 ///< Tolerance for convergence and numerical stability.
