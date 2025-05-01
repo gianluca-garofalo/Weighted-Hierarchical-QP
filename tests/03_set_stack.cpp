@@ -2,7 +2,6 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <hqp.hpp>
-#include "task.hpp"
 
 int main() {
     // Task 0: -1 <= x <= 1
@@ -39,8 +38,8 @@ int main() {
     Eigen::VectorXd solution{hqp.get_primal()};
     auto t_end{std::chrono::high_resolution_clock::now()};
     std::chrono::duration<double> t_elapsed{t_end - t_start};
-    std::cout << "Solution DAQP: " << solution.transpose() << std::endl;
-    std::cout << "DAQP execution time: " << t_elapsed.count() << " seconds" << std::endl;
+    std::cout << "Solution HQP: " << solution.transpose() << std::endl;
+    std::cout << "HQP execution time: " << t_elapsed.count() << " seconds" << std::endl;
 
     return solution.isApprox((Eigen::VectorXd(3) << 1, 0.5, -1).finished()) ? 0 : 1;
 }

@@ -13,7 +13,5 @@ int main() {
     solver.sot.back().cast<hqp::Task1>()->update(8, v);
     std::cout << "Solution: " << solver.get_primal().transpose() << std::endl;
 
-    return solver.get_primal().isApprox((Eigen::VectorXd(2) << 0, 8).finished())
-           ? 0
-           : 1;
+    return solver.get_primal().isApprox((Eigen::VectorXd(2) << 0, 8).finished()) ? 0 : 1;
 }

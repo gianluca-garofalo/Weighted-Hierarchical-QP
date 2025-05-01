@@ -43,15 +43,16 @@ class GenericPtr : public SmartPtr<T> {
   public:
     using SmartPtr<T>::SmartPtr;  // Inherit constructors
 
-    template<typename Derived = T,
-             typename... Args,
-             // Only enable if there are arguments AND (either T is not abstract or Derived is not T)
-             typename = std::enable_if_t<(sizeof...(Args) > 0) && (!std::is_abstract_v<T> || !std::is_same_v<Derived, T>)>>
+    template<
+      typename Derived = T,
+      typename... Args,
+      // Only enable if there are arguments AND (either T is not abstract or Derived is not T)
+      typename = std::enable_if_t<(sizeof...(Args) > 0) && (!std::is_abstract_v<T> || !std::is_same_v<Derived, T>)>>
     GenericPtr(Args&&... args)
       : SmartPtr<T>(make_ptr<Derived>(std::forward<Args>(args)...)) {
     }
 
-    template <typename Derived>
+    template<typename Derived>
     Derived* cast() {
         return static_cast<Derived*>(SmartPtr<T>::get());
     }

@@ -5,7 +5,6 @@
 #include <daqp.hpp>
 #include <lexls/lexlsi.h>
 #include <hqp.hpp>
-#include "task.hpp"
 
 LexLS::internal::LexLSI lexls_from_stack(Eigen::MatrixXd const& A,
                                          Eigen::VectorXd const& bu,
@@ -82,12 +81,12 @@ int main() {
                 bl(start + row) = lower;
                 bu(start + row) = upper;
             }
-            
+
             // Normalization due to how DAQP handles the problem
-            auto norm = A.row(start + row).norm();
+            auto norm           = A.row(start + row).norm();
             A.row(start + row) /= norm;
-            bl(start + row) /= norm;
-            bu(start + row) /= norm;
+            bl(start + row)    /= norm;
+            bu(start + row)    /= norm;
         }
         start           += nrows;
         break_points[k]  = start;
