@@ -91,11 +91,11 @@ class Task {
  * @tparam T The type to point to.
  */
 template<typename T>
-using SmartPtr = GenericPtr<std::shared_ptr, T>;
+using SmartPtr      = GenericPtr<std::shared_ptr, T>;
 /**
  * @brief Smart pointer alias for Task.
  */
-using TaskPtr = GenericPtr<std::shared_ptr, Task>;
+using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
 /**
  * @brief Container for smart pointers to Task objects.
  */
@@ -146,7 +146,7 @@ class TaskInterface : public Task {
     void compute() override {
         std::apply(
           [this](auto&&... args) {
-            run(unwrap(std::forward<decltype(args)>(args))...);
+              run(unwrap(std::forward<decltype(args)>(args))...);
           },
           *args_);
 
