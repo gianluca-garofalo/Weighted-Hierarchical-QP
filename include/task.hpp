@@ -30,6 +30,7 @@ class Task {
     Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;    ///< Working set of constraints.
     Eigen::MatrixXd codMid_;                           ///< Stores middle factor in decompositions.
     Eigen::MatrixXd codLeft_;                          ///< Auxiliary matrix for decomposition.
+    Eigen::MatrixXd codRight_;                         ///< Auxiliary matrix for decomposition.
     friend class HierarchicalQP;
     friend class SubTasks;
 
