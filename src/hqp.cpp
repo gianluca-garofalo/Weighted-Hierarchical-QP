@@ -125,6 +125,11 @@ void HierarchicalQP::inequality_hqp() {
                 auto [matrix, vector]    = get_task(sot[k], rows);
                 sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
                 isActiveSetNew           = sot[k]->activeSet_(rows).any();
+
+                if (isActiveSetNew) {
+                    auto tmp_rows = find(sot[k]->activeSet_);
+                    update_active_set(k, tmp_rows(0));
+                }
             }
         }
 
@@ -195,6 +200,56 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
     Eigen::MatrixXd A             = Eigen::MatrixXd::Zero(rows.size(), col_);
     A(Eigen::all, task->indices_) = task->matrix_(rows, Eigen::all);
     return {A, task->vector_(rows)};
+}
+
+
+bool HierarchicalQP::update_active_set(unsigned int level, unsigned int row) {
+    auto dof = col_;
+    Eigen::MatrixXd codRight{Eigen::MatrixXd::Zero(col_, col_)};
+    Eigen::MatrixXd nullSpace{cholMetric_};
+
+    bool hasConflict = false;
+    for (unsigned int k = 0; !hasConflict && dof > 0 && k < sot.size(); ++k) {
+        if (sot[k]->activeSet_.any()) {
+            if (k >= level) {
+                Eigen::CompleteOrthogonalDecomposition<Eigen::RowVectorXd> cod;
+                cod.setThreshold(sot[k]->tolerance);
+                cod.compute(sot[level]->matrix_.row(row) * nullSpace.leftCols(dof));
+                if (cod.rank() == 0) {
+                    return false;
+                }
+
+                if (dof > 1) {
+                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
+                } else {
+                    // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
+                    codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
+                }
+    
+                Eigen::VectorXi idx_active = find(sot[k]->activeSet_);
+                Eigen::MatrixXd matrix = sot[k]->matrix_(idx_active, Eigen::all) * codRight.middleCols(1, dof - 1);
+                // auto debug = find(!matrix.rowwise().any().array());
+                auto debug = (matrix.rowwise().any().array() == false);
+                Eigen::VectorXi conflict_row = Eigen::VectorXi::Ones(0); // idx_active(find(!matrix.rowwise().any().array()));
+                hasConflict = conflict_row.size() >= 1;
+                if (hasConflict) {
+                    sot[k]->matrix_.row(conflict_row(0)).swap(sot[level]->matrix_.row(row));
+                    auto tmp = sot[k]->vector_(conflict_row(0));
+                    sot[k]->vector_(conflict_row(0)) = sot[level]->vector_(row);
+                    sot[level]->vector_(row) = tmp;
+                    // levels_[k].values_(conflict_row(0)).swap(levels_[level]->values_(row));
+                }
+            }
+
+            auto leftDof = dof - sot[k]->rank_;
+            if (leftDof > 0) {
+                nullSpace.leftCols(leftDof) = sot[k]->codRight_.middleCols(sot[k]->rank_, leftDof);
+            }
+            dof = leftDof;
+        }
+    }
+
+    return hasConflict;
 }
 
 
