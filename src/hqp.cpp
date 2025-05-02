@@ -112,24 +112,22 @@ void HierarchicalQP::inequality_hqp() {
         task->dual_.setZero();
     }
     unsigned int h      = 0;
-    bool isActiveSetNew = true;
+    bool isActiveSetNew = false;
 
     while (h < sot.size()) {
-        while (isActiveSetNew) {
-            equality_hqp();
-
-            // Add tasks to the active set.
-            isActiveSetNew = false;
-            for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
-                auto rows                = find(!sot[k]->activeSet_);
-                auto [matrix, vector]    = get_task(sot[k], rows);
-                sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
-                isActiveSetNew           = sot[k]->activeSet_(rows).any();
-
-                if (isActiveSetNew) {
-                    auto tmp_rows = find(sot[k]->activeSet_);
-                    update_active_set(k, tmp_rows(0));
-                }
+        equality_hqp();
+        for (unsigned int k = 0; k < k_ && !isActiveSetNew; ) {
+            auto rows                = find(!sot[k]->activeSet_);
+            auto [matrix, vector]    = get_task(sot[k], rows);
+            sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
+            isActiveSetNew           = sot[k]->activeSet_(rows).any();
+            
+            if (isActiveSetNew) {
+                auto tmp_rows = find(sot[k]->activeSet_(rows));
+                update_active_set(k, rows(tmp_rows(0)));
+                k = 0;
+            } else {
+                k++;
             }
         }
 
@@ -221,7 +219,7 @@ bool HierarchicalQP::update_active_set(unsigned int level, unsigned int row) {
     for (unsigned int k = 0; !hasConflict && dof > 0 && k < sot.size(); ++k) {
         if (sot[k]->activeSet_.any()) {
             if (k >= level) {
-                Eigen::CompleteOrthogonalDecomposition<Eigen::RowVectorXd> cod;
+                Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
                 cod.setThreshold(sot[k]->tolerance);
                 cod.compute(sot[level]->matrix_.row(row) * nullSpace.leftCols(dof));
                 if (cod.rank() == 0) {
@@ -235,17 +233,13 @@ bool HierarchicalQP::update_active_set(unsigned int level, unsigned int row) {
                     codRight.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
                 }
     
-                Eigen::VectorXi idx_active = find(sot[k]->activeSet_);
+                Eigen::VectorXi idx_active = find(sot[k]->activeSet_&& !sot[k]->equalitySet_);
                 Eigen::MatrixXd matrix = sot[k]->matrix_(idx_active, Eigen::all) * codRight.middleCols(1, dof - 1);
-                // auto debug = find(!matrix.rowwise().any().array());
-                auto debug = (matrix.rowwise().any().array() == false);
-                Eigen::VectorXi conflict_row = Eigen::VectorXi::Ones(0); // idx_active(find(!matrix.rowwise().any().array()));
+                Eigen::VectorXi conflict_row = idx_active(find(matrix.rowwise().any().array() == false));
                 hasConflict = conflict_row.size() >= 1;
                 if (hasConflict) {
                     sot[k]->matrix_.row(conflict_row(0)).swap(sot[level]->matrix_.row(row));
-                    auto tmp = sot[k]->vector_(conflict_row(0));
-                    sot[k]->vector_(conflict_row(0)) = sot[level]->vector_(row);
-                    sot[level]->vector_(row) = tmp;
+                    sot[k]->vector_.row(conflict_row(0)).swap(sot[level]->vector_.row(row));
                     // levels_[k].values_(conflict_row(0)).swap(levels_[level]->values_(row));
                 }
             }
