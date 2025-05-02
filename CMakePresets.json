@@ -54,11 +54,11 @@
             "configurePreset": "release"
         },
         {
-            "name": "test-release",
+            "name": "release",
             "configurePreset": "release"
         },
         {
-            "name": "test-debug",
+            "name": "debug",
             "configurePreset": "debug"
         }
     ]
