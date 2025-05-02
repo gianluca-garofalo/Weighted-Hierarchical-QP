@@ -2,7 +2,7 @@ include(FetchContent)
 
 FetchContent_Declare(daqp
     GIT_REPOSITORY "https://github.com/gianluca-garofalo/daqp.git"
-    GIT_TAG "origin/hierarchical"
+    GIT_TAG "origin/master"
 )
 FetchContent_MakeAvailable(daqp)
 
