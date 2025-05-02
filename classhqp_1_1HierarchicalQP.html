@@ -93,9 +93,9 @@ Collaboration diagram for hqp::HierarchicalQP:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a82ae4d2d83d1068020069ba0a7264a5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a82ae4d2d83d1068020069ba0a7264a5c">HierarchicalQP</a> (uint n)</td></tr>
-<tr class="memdesc:a82ae4d2d83d1068020069ba0a7264a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="classhqp_1_1HierarchicalQP.html">HierarchicalQP</a> solver.  <br /></td></tr>
-<tr class="separator:a82ae4d2d83d1068020069ba0a7264a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61cf78c4b0368afd91ba272b928a86f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a61cf78c4b0368afd91ba272b928a86f1">HierarchicalQP</a> (unsigned int n)</td></tr>
+<tr class="memdesc:a61cf78c4b0368afd91ba272b928a86f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="classhqp_1_1HierarchicalQP.html">HierarchicalQP</a> solver.  <br /></td></tr>
+<tr class="separator:a61cf78c4b0368afd91ba272b928a86f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2">set_metric</a> (const Eigen::MatrixXd &amp;metric)</td></tr>
 <tr class="memdesc:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the metric matrix used to define the quadratic cost.  <br /></td></tr>
 <tr class="separator:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,18 +126,18 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:aaf6df9e4aa247e25e1ff253bd6501028"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028">inequality_hqp</a> ()</td></tr>
 <tr class="memdesc:aaf6df9e4aa247e25e1ff253bd6501028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles inequality constrained tasks.  <br /></td></tr>
 <tr class="separator:aaf6df9e4aa247e25e1ff253bd6501028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9">dual_update</a> (uint h, const Eigen::VectorXd &amp;tau)</td></tr>
-<tr class="memdesc:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates dual variables.  <br /></td></tr>
-<tr class="separator:a292d98f5d69d3666a895d6a95e5dc6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7234e6ffbcaa28f908a0d728e4506ca3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a7234e6ffbcaa28f908a0d728e4506ca3">dual_update</a> (unsigned int h, const Eigen::VectorXd &amp;tau)</td></tr>
+<tr class="memdesc:a7234e6ffbcaa28f908a0d728e4506ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates dual variables.  <br /></td></tr>
+<tr class="separator:a7234e6ffbcaa28f908a0d728e4506ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69f7398b0f10bcc38452b0acf12f9997"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997">get_task</a> (<a class="el" href="namespacehqp.html#ad50f242da3c84a6a11c08193f886baf7">TaskPtr</a> task, const Eigen::VectorXi &amp;row)</td></tr>
 <tr class="memdesc:a69f7398b0f10bcc38452b0acf12f9997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves task data.  <br /></td></tr>
 <tr class="separator:a69f7398b0f10bcc38452b0acf12f9997"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a25c0c3a20b18c290bf8d1c384e61df68"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a25c0c3a20b18c290bf8d1c384e61df68">col_</a></td></tr>
-<tr class="memdesc:a25c0c3a20b18c290bf8d1c384e61df68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of variables in the problem.  <br /></td></tr>
-<tr class="separator:a25c0c3a20b18c290bf8d1c384e61df68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2ba7879adb8b29c2256df3274b0c71b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#aa2ba7879adb8b29c2256df3274b0c71b">col_</a></td></tr>
+<tr class="memdesc:aa2ba7879adb8b29c2256df3274b0c71b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of variables in the problem.  <br /></td></tr>
+<tr class="separator:aa2ba7879adb8b29c2256df3274b0c71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a495f67f3a60f9b637ea81ec742116819"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a495f67f3a60f9b637ea81ec742116819">primal_</a></td></tr>
 <tr class="memdesc:a495f67f3a60f9b637ea81ec742116819"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current solution vector.  <br /></td></tr>
 <tr class="separator:a495f67f3a60f9b637ea81ec742116819"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -159,13 +159,13 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:abbf5394d2dd09f7716f64741455003be"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#abbf5394d2dd09f7716f64741455003be">cholMetric_</a></td></tr>
 <tr class="memdesc:abbf5394d2dd09f7716f64741455003be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cholesky metric used for stability.  <br /></td></tr>
 <tr class="separator:abbf5394d2dd09f7716f64741455003be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a645a8ebcecc4ae10505368f4bf8757d1"><td class="memItemLeft" align="right" valign="top">uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a645a8ebcecc4ae10505368f4bf8757d1">k_</a> = 0</td></tr>
-<tr class="memdesc:a645a8ebcecc4ae10505368f4bf8757d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index tracking the active task level.  <br /></td></tr>
-<tr class="separator:a645a8ebcecc4ae10505368f4bf8757d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3f6da744e9e070b50b469659623aec0"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#af3f6da744e9e070b50b469659623aec0">k_</a> = 0</td></tr>
+<tr class="memdesc:af3f6da744e9e070b50b469659623aec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index tracking the active task level.  <br /></td></tr>
+<tr class="separator:af3f6da744e9e070b50b469659623aec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a82ae4d2d83d1068020069ba0a7264a5c" name="a82ae4d2d83d1068020069ba0a7264a5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82ae4d2d83d1068020069ba0a7264a5c">&#9670;&#160;</a></span>HierarchicalQP()</h2>
+<a id="a61cf78c4b0368afd91ba272b928a86f1" name="a61cf78c4b0368afd91ba272b928a86f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61cf78c4b0368afd91ba272b928a86f1">&#9670;&#160;</a></span>HierarchicalQP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +173,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">hqp::HierarchicalQP::HierarchicalQP </td>
           <td>(</td>
-          <td class="paramtype">uint&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
           <td></td>
         </tr>
@@ -191,8 +191,8 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a292d98f5d69d3666a895d6a95e5dc6b9" name="a292d98f5d69d3666a895d6a95e5dc6b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a292d98f5d69d3666a895d6a95e5dc6b9">&#9670;&#160;</a></span>dual_update()</h2>
+<a id="a7234e6ffbcaa28f908a0d728e4506ca3" name="a7234e6ffbcaa28f908a0d728e4506ca3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7234e6ffbcaa28f908a0d728e4506ca3">&#9670;&#160;</a></span>dual_update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td class="memname">void hqp::HierarchicalQP::dual_update </td>
           <td>(</td>
-          <td class="paramtype">uint&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>h</em>, </td>
         </tr>
         <tr>
@@ -229,13 +229,13 @@ Private Attributes</h2></td></tr>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9_cgraph.svg" width="288" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a7234e6ffbcaa28f908a0d728e4506ca3_cgraph.svg" width="288" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a292d98f5d69d3666a895d6a95e5dc6b9_icgraph.svg" width="860" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a7234e6ffbcaa28f908a0d728e4506ca3_icgraph.svg" width="860" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
@@ -541,8 +541,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a25c0c3a20b18c290bf8d1c384e61df68" name="a25c0c3a20b18c290bf8d1c384e61df68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25c0c3a20b18c290bf8d1c384e61df68">&#9670;&#160;</a></span>col_</h2>
+<a id="aa2ba7879adb8b29c2256df3274b0c71b" name="aa2ba7879adb8b29c2256df3274b0c71b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2ba7879adb8b29c2256df3274b0c71b">&#9670;&#160;</a></span>col_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -551,7 +551,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint hqp::HierarchicalQP::col_</td>
+          <td class="memname">unsigned int hqp::HierarchicalQP::col_</td>
         </tr>
       </table>
   </td>
@@ -613,8 +613,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a645a8ebcecc4ae10505368f4bf8757d1" name="a645a8ebcecc4ae10505368f4bf8757d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a645a8ebcecc4ae10505368f4bf8757d1">&#9670;&#160;</a></span>k_</h2>
+<a id="af3f6da744e9e070b50b469659623aec0" name="af3f6da744e9e070b50b469659623aec0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3f6da744e9e070b50b469659623aec0">&#9670;&#160;</a></span>k_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -623,7 +623,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint hqp::HierarchicalQP::k_ = 0</td>
+          <td class="memname">unsigned int hqp::HierarchicalQP::k_ = 0</td>
         </tr>
       </table>
   </td>

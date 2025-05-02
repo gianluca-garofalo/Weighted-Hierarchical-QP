@@ -118,7 +118,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9" target="_top" xlink:title="Updates dual variables.">
+<g id="a_node7"><a xlink:href="classhqp_1_1HierarchicalQP.html#a7234e6ffbcaa28f908a0d728e4506ca3" target="_top" xlink:title="Updates dual variables.">
 <polygon fill="white" stroke="#666666" points="560,-30 447,-30 447,0 560,0 560,-30"/>
 <text text-anchor="start" x="455" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">hqp::HierarchicalQP</text>
 <text text-anchor="middle" x="503.5" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">::dual_update</text>

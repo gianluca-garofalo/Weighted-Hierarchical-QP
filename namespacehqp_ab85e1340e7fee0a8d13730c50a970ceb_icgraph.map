@@ -1,6 +1,6 @@
 <map id="hqp::find" name="hqp::find">
 <area shape="rect" id="node1" title=" " alt="" coords="903,99,981,125"/>
-<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#a292d98f5d69d3666a895d6a95e5dc6b9" title="Updates dual variables." alt="" coords="704,5,855,45"/>
+<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#a7234e6ffbcaa28f908a0d728e4506ca3" title="Updates dual variables." alt="" coords="704,5,855,45"/>
 <area shape="rect" id="node3" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="505,63,656,103"/>
 <area shape="rect" id="node7" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="704,120,855,160"/>
 <area shape="rect" id="node8" href="$classhqp_1_1HierarchicalQP.html#aae5aaeddac67302f310f34bfa3eb66c4" title="Outputs the active set details to the console." alt="" coords="704,184,855,224"/>
