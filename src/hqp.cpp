@@ -121,7 +121,7 @@ void HierarchicalQP::inequality_hqp() {
 
             // Add tasks to the active set.
             isActiveSetNew = false;
-            for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
+            for (unsigned int k = 0; k < k_; ++k) {
                 auto rows                = find(!sot[k]->activeSet_);
                 auto [matrix, vector]    = get_task(sot[k], rows);
                 sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
