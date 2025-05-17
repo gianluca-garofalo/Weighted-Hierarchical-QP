@@ -130,10 +130,6 @@ void HierarchicalQP::inequality_hqp() {
         }
 
         // Remove tasks from the active set.
-        for (unsigned int k = 0; k <= h; ++k) {
-            sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
-        }
-
         auto rows             = find(sot[h]->activeSet_);
         auto [matrix, vector] = get_task(sot[h], rows);
 
@@ -144,6 +140,7 @@ void HierarchicalQP::inequality_hqp() {
         dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
         for (unsigned int k = 0; k <= h && !isActiveSetNew; ++k) {
+            sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
             if (sot[k]->workSet_.any()) {
                 auto rows                = find(sot[k]->workSet_);
                 auto test                = (sot[k]->dual_(rows)).array() > tolerance;
