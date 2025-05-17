@@ -8,7 +8,7 @@
         {
             "name": "default",
             "hidden": true,
-            "generator": "Ninja",
+            "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
@@ -36,30 +36,36 @@
         {
             "name": "default",
             "hidden": true,
-            "configurePreset": "release"
+            "configurePreset": "release",
+            "configuration": "Release"
         },
         {
             "name": "debug",
-            "configurePreset": "debug"
+            "configurePreset": "debug",
+            "configuration": "Debug"
         },
         {
             "name": "release",
-            "configurePreset": "release"
+            "configurePreset": "release",
+            "configuration": "Release"
         }
     ],
     "testPresets": [
         {
             "name": "default",
             "hidden": true,
-            "configurePreset": "release"
+            "configurePreset": "release",
+            "configuration": "Release"
         },
         {
             "name": "release",
-            "configurePreset": "release"
+            "configurePreset": "release",
+            "configuration": "Release"
         },
         {
             "name": "debug",
-            "configurePreset": "debug"
+            "configurePreset": "debug",
+            "configuration": "Debug"
         }
     ]
 }
