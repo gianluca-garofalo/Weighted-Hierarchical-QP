@@ -117,15 +117,22 @@ void HierarchicalQP::inequality_hqp() {
 
     while (h < sot.size()) {
         while (isActiveSetNew) {
+            Eigen::VectorXd primal = primal_;
             equality_hqp();
 
             // Add tasks to the active set.
             isActiveSetNew = false;
+            double tau = 1.0;
             for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
                 auto rows                = find(!sot[k]->activeSet_);
                 auto [matrix, vector]    = get_task(sot[k], rows);
-                sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
-                isActiveSetNew           = sot[k]->activeSet_(rows).any();
+                Eigen::VectorXd v_new{matrix * primal_};
+                sot[k]->activeSet_(rows) = (vector - v_new).array() > tolerance;
+                if (sot[k]->activeSet_(rows).any() && (primal_ - primal).array().any()) {
+                    Eigen::VectorXd v_old{matrix * primal};
+                    tau = ((v_old - vector).array() / (v_old - v_new).array()).minCoeff();
+                    primal_ = primal + tau * (primal_ - primal);
+                }
             }
         }
 
