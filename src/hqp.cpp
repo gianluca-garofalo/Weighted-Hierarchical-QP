@@ -66,11 +66,11 @@ void HierarchicalQP::equality_hqp() {
                 // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             }
-            Eigen::MatrixXd codLeft_ = cod.householderQ();
+            Eigen::MatrixXd codLeft = cod.householderQ();
 
             inverse_.middleCols(col_ - dof, rank) = codRight_.leftCols(rank);
-            task_.segment(col_ - dof, rank)       = codLeft_.leftCols(rank).transpose() * vector;
-            sot[k_]->slack_(rows)                 = codLeft_.leftCols(rank) * task_.segment(col_ - dof, rank) - vector;
+            task_.segment(col_ - dof, rank)       = codLeft.leftCols(rank).transpose() * vector;
+            sot[k_]->slack_(rows)                 = codLeft.leftCols(rank) * task_.segment(col_ - dof, rank) - vector;
             cod.matrixT()
               .topLeftCorner(rank, rank)
               .triangularView<Eigen::Upper>()
@@ -80,7 +80,7 @@ void HierarchicalQP::equality_hqp() {
             dof                                           = leftDof;
             sot[k_]->rank_                                = rank;
             sot[k_]->codMid_.topLeftCorner(rank, rank)    = cod.matrixT().topLeftCorner(rank, rank);
-            sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft_.leftCols(rank);
+            sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
         }
         k_++;
     }
