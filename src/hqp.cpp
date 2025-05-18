@@ -130,28 +130,23 @@ void HierarchicalQP::inequality_hqp() {
         }
 
         // Remove tasks from the active set.
-        for (uint k = 0; k <= h; ++k) {
-            sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
+        auto rows             = find(sot[h]->activeSet_);
+        auto [matrix, vector] = get_task(sot[h], rows);
+
+        if (h >= k_) {
+            sot[h]->slack_(rows) = matrix * primal_ - vector;
         }
+        sot[h]->dual_(rows) = sot[h]->slack_(rows);
+        dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
-        if (sot[h]->workSet_.any()) {
-            auto rows             = find(sot[h]->activeSet_);
-            auto [matrix, vector] = get_task(sot[h], rows);
-
-            if (h >= k_) {
-                sot[h]->slack_(rows) = matrix * primal_ - vector;
-            }
-            sot[h]->dual_(rows) = sot[h]->slack_(rows);
-            dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
-
-            for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
-                if (sot[k]->workSet_.any()) {
-                    auto rows                = find(sot[k]->workSet_);
-                    auto test                = (sot[k]->dual_(rows)).array() > tolerance;
-                    sot[k]->activeSet_(rows) = !test;
-                    sot[k]->lockedSet_(rows) = test;
-                    isActiveSetNew           = k < k_ && test.any();
-                }
+        for (uint k = 0; k <= h && !isActiveSetNew; ++k) {
+            sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
+            if (sot[k]->workSet_.any()) {
+                auto rows                = find(sot[k]->workSet_);
+                auto test                = (sot[k]->dual_(rows)).array() > tolerance;
+                sot[k]->activeSet_(rows) = !test;
+                sot[k]->lockedSet_(rows) = (sot[k]->dual_(rows)).array() < 0;
+                isActiveSetNew           = k < k_ && test.any();
             }
         }
 
