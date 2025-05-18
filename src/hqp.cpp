@@ -163,16 +163,13 @@ void HierarchicalQP::inequality_hqp() {
 
 
 void HierarchicalQP::dual_update(uint h, const Eigen::VectorXd& tau) {
-    uint k      = 0;
-    auto dof    = col_;
-    auto oldDof = col_;
-
-    while (k < h && dof > 0) {
-        if (sot[k]->activeSet_.any()) {
+    auto dof = col_;
+    for (unsigned int k = 0; k < h; ++k) {
+        if (dof > 0 && sot[k]->activeSet_.any()) {
             uint leftDof = dof - sot[k]->rank_;
-            auto rows    = find(sot[k]->activeSet_ && sot[k]->workSet_);
+            auto rows    = find(sot[k]->activeSet_);
             if (rows.any()) {
-                Eigen::VectorXd f = inverse_.block(0, col_ - dof, oldDof, sot[k]->rank_).transpose() * tau.head(oldDof);
+                Eigen::VectorXd f = inverse_.middleCols(col_ - dof, sot[k]->rank_).transpose() * tau;
                 sot[k]
                   ->codMid_.topLeftCorner(sot[k]->rank_, sot[k]->rank_)
                   .triangularView<Eigen::Upper>()
@@ -181,16 +178,10 @@ void HierarchicalQP::dual_update(uint h, const Eigen::VectorXd& tau) {
                 sot[k]->dual_(rows) = -sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
             }
 
-            oldDof = dof;
-            dof    = leftDof;
+            dof = leftDof;
+        } else {
+            sot[k]->dual_.setZero();
         }
-        k++;
-    }
-
-    while (k < h) {
-        auto rows = find(sot[k]->workSet_);
-        sot[k]->dual_(rows).setZero();
-        k++;
     }
 }
 
