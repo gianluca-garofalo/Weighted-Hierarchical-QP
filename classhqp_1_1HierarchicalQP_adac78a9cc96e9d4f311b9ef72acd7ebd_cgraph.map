@@ -1,8 +1,8 @@
 <map id="hqp::HierarchicalQP::solve" name="hqp::HierarchicalQP::solve">
-<area shape="rect" id="node1" title="Solves the overall HQP by combining tasks." alt="" coords="5,35,156,75"/>
-<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="403,5,553,45"/>
-<area shape="rect" id="node5" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="204,63,355,103"/>
-<area shape="rect" id="node3" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="637,121,716,146"/>
-<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" title="Retrieves task data." alt="" coords="601,31,752,71"/>
-<area shape="rect" id="node6" href="$classhqp_1_1HierarchicalQP.html#a7234e6ffbcaa28f908a0d728e4506ca3" title="Updates dual variables." alt="" coords="403,171,553,211"/>
+<area shape="rect" id="node1" title="Solves the overall HQP by combining tasks." alt="" coords="5,86,156,126"/>
+<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027" title="Handles equality constraint resolution." alt="" coords="403,143,553,183"/>
+<area shape="rect" id="node3" href="$namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb" title=" " alt="" coords="637,65,716,90"/>
+<area shape="rect" id="node5" href="$classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028" title="Handles inequality constrained tasks." alt="" coords="204,86,355,126"/>
+<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#a69f7398b0f10bcc38452b0acf12f9997" title="Retrieves task data." alt="" coords="601,171,752,211"/>
+<area shape="rect" id="node6" href="$classhqp_1_1HierarchicalQP.html#a7234e6ffbcaa28f908a0d728e4506ca3" title="Updates dual variables." alt="" coords="403,28,553,68"/>
 </map>
