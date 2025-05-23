@@ -47,6 +47,24 @@ class HierarchicalQP {
     HierarchicalQP(unsigned int n);
 
     /**
+     * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
+     *
+     * @param A           Constraint matrix (rows = total constraints, cols = variables)
+     * @param bu          Upper bounds vector (size = total constraints)
+     * @param bl          Lower bounds vector (size = total constraints)
+     * @param break_points Vector of indices marking the end of each task in the stack
+     * @return TaskContainer with each task as a GenericTask
+     *
+     * Requirements:
+     *   - A.rows() == bu.size() == bl.size()
+     *   - break_points must be increasing and the last element equal to A.rows()
+     */
+    void set_stack(Eigen::MatrixXd const& A,
+                   Eigen::VectorXd const& bu,
+                   Eigen::VectorXd const& bl,
+                   Eigen::VectorXi const& break_points);
+
+    /**
      * @brief Sets the metric matrix used to define the quadratic cost.
      * @param metric The metric matrix that influences the solver's behavior.
      */
