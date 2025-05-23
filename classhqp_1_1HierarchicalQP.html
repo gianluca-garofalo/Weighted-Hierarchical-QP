@@ -96,6 +96,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a61cf78c4b0368afd91ba272b928a86f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a61cf78c4b0368afd91ba272b928a86f1">HierarchicalQP</a> (unsigned int n)</td></tr>
 <tr class="memdesc:a61cf78c4b0368afd91ba272b928a86f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the <a class="el" href="classhqp_1_1HierarchicalQP.html">HierarchicalQP</a> solver.  <br /></td></tr>
 <tr class="separator:a61cf78c4b0368afd91ba272b928a86f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac420f3e0f18c54980c5d9c9cd7ef8446"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#ac420f3e0f18c54980c5d9c9cd7ef8446">set_stack</a> (Eigen::MatrixXd const &amp;<a class="el" href="classA.html">A</a>, Eigen::VectorXd const &amp;bu, Eigen::VectorXd const &amp;bl, Eigen::VectorXi const &amp;break_points)</td></tr>
+<tr class="memdesc:ac420f3e0f18c54980c5d9c9cd7ef8446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stacks multiple tasks into a TaskContainer for hierarchical QP.  <br /></td></tr>
+<tr class="separator:ac420f3e0f18c54980c5d9c9cd7ef8446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2">set_metric</a> (const Eigen::MatrixXd &amp;metric)</td></tr>
 <tr class="memdesc:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the metric matrix used to define the quadratic cost.  <br /></td></tr>
 <tr class="separator:a126f16766c7f830ac0b5778a9ea4b7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -448,6 +451,68 @@ Here is the call graph for this function:</div>
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_a126f16766c7f830ac0b5778a9ea4b7c2_icgraph.svg" width="264" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
+<a id="ac420f3e0f18c54980c5d9c9cd7ef8446" name="ac420f3e0f18c54980c5d9c9cd7ef8446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac420f3e0f18c54980c5d9c9cd7ef8446">&#9670;&#160;</a></span>set_stack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hqp::HierarchicalQP::set_stack </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::MatrixXd const &amp;&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
+          <td class="paramname"><em>bu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::VectorXd const &amp;&#160;</td>
+          <td class="paramname"><em>bl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::VectorXi const &amp;&#160;</td>
+          <td class="paramname"><em>break_points</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stacks multiple tasks into a TaskContainer for hierarchical QP. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="classA.html">A</a></td><td>Constraint matrix (rows = total constraints, cols = variables) </td></tr>
+    <tr><td class="paramname">bu</td><td>Upper bounds vector (size = total constraints) </td></tr>
+    <tr><td class="paramname">bl</td><td>Lower bounds vector (size = total constraints) </td></tr>
+    <tr><td class="paramname">break_points</td><td>Vector of indices marking the end of each task in the stack </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>TaskContainer with each task as a GenericTask</dd></dl>
+<p>Requirements:</p><ul>
+<li>A.rows() == bu.size() == bl.size()</li>
+<li>break_points must be increasing and the last element equal to A.rows() </li>
+</ul>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP_ac420f3e0f18c54980c5d9c9cd7ef8446_cgraph.svg" width="366" height="51"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 

@@ -1,4 +1,5 @@
 <map id="hqp::SmartContainer::emplace_back" name="hqp::SmartContainer::emplace_back">
-<area shape="rect" id="node1" title=" " alt="" coords="108,5,264,45"/>
-<area shape="rect" id="node2" href="$00__basic__select_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,60,38"/>
+<area shape="rect" id="node1" title=" " alt="" coords="204,27,360,67"/>
+<area shape="rect" id="node2" href="$00__basic__select_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="53,5,108,31"/>
+<area shape="rect" id="node3" href="$classhqp_1_1HierarchicalQP.html#ac420f3e0f18c54980c5d9c9cd7ef8446" title="Stacks multiple tasks into a TaskContainer for hierarchical QP." alt="" coords="5,55,156,95"/>
 </map>

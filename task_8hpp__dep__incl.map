@@ -1,11 +1,13 @@
 <map id="include/task.hpp" name="include/task.hpp">
-<area shape="rect" id="node1" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="326,5,455,31"/>
-<area shape="rect" id="node2" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="260,79,385,104"/>
-<area shape="rect" id="node6" href="$02__compare__solvers_8cpp.html" title=" " alt="" coords="5,152,224,177"/>
-<area shape="rect" id="node7" href="$task_8cpp.html" title="Implements the methods declared in task.hpp." alt="" coords="410,79,510,104"/>
-<area shape="rect" id="node8" href="$library_8hpp.html" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="587,79,714,104"/>
-<area shape="rect" id="node3" href="$hqp_8cpp.html" title=" " alt="" coords="248,152,344,177"/>
-<area shape="rect" id="node4" href="$00__basic__select_8cpp.html" title=" " alt="" coords="583,152,771,177"/>
-<area shape="rect" id="node5" href="$01__metric__swap_8cpp.html" title=" " alt="" coords="369,152,559,177"/>
-<area shape="rect" id="node9" href="$library_8cpp.html" title="Implements the run() functions for various test tasks." alt="" coords="796,152,921,177"/>
+<area shape="rect" id="node1" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="822,5,951,31"/>
+<area shape="rect" id="node2" href="$hqp_8hpp.html" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="699,79,824,104"/>
+<area shape="rect" id="node6" href="$02__compare__solvers_8cpp.html" title=" " alt="" coords="703,152,921,177"/>
+<area shape="rect" id="node7" href="$03__set__stack_8cpp.html" title=" " alt="" coords="945,152,1116,177"/>
+<area shape="rect" id="node8" href="$04__random__problem_8cpp.html" title=" " alt="" coords="1140,152,1359,177"/>
+<area shape="rect" id="node9" href="$task_8cpp.html" title="Implements the methods declared in task.hpp." alt="" coords="1001,79,1101,104"/>
+<area shape="rect" id="node10" href="$library_8hpp.html" title="Defines test task classes for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="294,79,421,104"/>
+<area shape="rect" id="node3" href="$hqp_8cpp.html" title=" " alt="" coords="583,152,679,177"/>
+<area shape="rect" id="node4" href="$00__basic__select_8cpp.html" title=" " alt="" coords="370,152,558,177"/>
+<area shape="rect" id="node5" href="$01__metric__swap_8cpp.html" title=" " alt="" coords="155,152,346,177"/>
+<area shape="rect" id="node11" href="$library_8cpp.html" title="Implements the run() functions for various test tasks." alt="" coords="5,152,131,177"/>
 </map>

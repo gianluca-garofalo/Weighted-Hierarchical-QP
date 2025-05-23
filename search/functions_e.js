@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['select_5fvariables_0',['select_variables',['../classhqp_1_1Task.html#ac247b5a10cc505d841a0449923d8ad9f',1,'hqp::Task']]],
-  ['set_5fmetric_1',['set_metric',['../classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2',1,'hqp::HierarchicalQP']]],
-  ['set_5fweight_2',['set_weight',['../classhqp_1_1SubTasks.html#a4d97606db3df832515c56fe7baea94d8',1,'hqp::SubTasks']]],
-  ['solve_3',['solve',['../classhqp_1_1HierarchicalQP.html#adac78a9cc96e9d4f311b9ef72acd7ebd',1,'hqp::HierarchicalQP']]],
-  ['strcmp_4',['strcmp',['../relates_8cpp.html#a7ceb7d379a52f7e26418e7a446b4a41a',1,'relates.cpp']]],
-  ['stringdebug_5',['stringDebug',['../classString.html#a5c07384b505d25ae6f61fc7abf0b0e61',1,'String']]],
-  ['subtasks_6',['SubTasks',['../classhqp_1_1SubTasks.html#a9f480533d44d102d2f86c7d62493a307',1,'hqp::SubTasks']]]
+  ['read_0',['read',['../structcmd_8h.html#a9c7b76d5266903891c803132d51ccb90',1,'structcmd.h']]],
+  ['run_1',['run',['../classhqp_1_1TaskInterface.html#adf438bcb5931d58002bd23db6857d567',1,'hqp::TaskInterface::run()'],['../classTask0.html#a4d9b8a7486521aab41be732ba23cfb36',1,'Task0::run()'],['../classTask1.html#afe23dbce7a710b378dbd6533ecc6cfd7',1,'Task1::run()'],['../classTask2.html#a0bd8fd167e865e9db1e7031fb68b86a5',1,'Task2::run()'],['../classTask3.html#a4c3f5c2628dc6730bc220882989a0d2c',1,'Task3::run()'],['../classhqp_1_1Task0.html#a4d9b8a7486521aab41be732ba23cfb36',1,'hqp::Task0::run()'],['../classhqp_1_1Task1.html#a97f6766549b3904a3b6ebdcf9ea42074',1,'hqp::Task1::run()'],['../classhqp_1_1Task2.html#a0bd8fd167e865e9db1e7031fb68b86a5',1,'hqp::Task2::run()'],['../classhqp_1_1Task3.html#a4c3f5c2628dc6730bc220882989a0d2c',1,'hqp::Task3::run()'],['../classhqp_1_1Task5.html#a6106f7a79f5d3322004efdd1f3af63d0',1,'hqp::Task5::run()'],['../classhqp_1_1Task6.html#a80dc9c044e143fc25dfa691b52ffb148',1,'hqp::Task6::run()']]]
 ];

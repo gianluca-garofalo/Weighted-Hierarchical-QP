@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['main_0',['main',['../example__test_8cpp.html#acdef7a1fd863a6d3770c1268cb06add3',1,'main():&#160;example_test.cpp'],['../include__test_8cpp.html#acdef7a1fd863a6d3770c1268cb06add3',1,'main():&#160;include_test.cpp'],['../manual_8c.html#a840291bc02cba5474a4cb46a9b9566fe',1,'main(void):&#160;manual.c'],['../00__basic__select_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;00_basic_select.cpp'],['../01__metric__swap_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;01_metric_swap.cpp'],['../02__compare__solvers_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;02_compare_solvers.cpp']]],
-  ['make_5fptr_1',['make_ptr',['../classhqp_1_1GenericPtr.html#a79f25d9f2edd3ada82205601eea2d776',1,'hqp::GenericPtr']]],
-  ['member_2',['member',['../classAfterdoc__Test.html#a57ba94e9039ee90a1b191ae0009a05dd',1,'Afterdoc_Test::member()'],['../classAutolink__Test.html#a393ea281f235a2f603d98daf72b0d411',1,'Autolink_Test::member(int)'],['../classAutolink__Test.html#acf783a43c2b4b6cc9dd2361784eca2e1',1,'Autolink_Test::member(int, int)'],['../classFn__Test.html#a823b5c9726bb8f6ece50e57ac8e3092c',1,'Fn_Test::member()']]]
+  ['lexls_5ffrom_5fstack_0',['lexls_from_stack',['../04__random__problem_8cpp.html#abbfac764a8ef8631a7b19819cca07bbe',1,'04_random_problem.cpp']]]
 ];
