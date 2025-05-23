@@ -95,6 +95,67 @@ void HierarchicalQP::set_metric(const Eigen::MatrixXd& metric) {
 }
 
 
+void HierarchicalQP::set_stack(Eigen::MatrixXd const& A,
+                               Eigen::VectorXd const& bu,
+                               Eigen::VectorXd const& bl,
+                               Eigen::VectorXi const& break_points) {
+    assert(A.rows() == bu.size() && bu.size() == bl.size() && "A, bu, bl must have the same number of rows");
+    assert(break_points.size() > 0 && "break_points must not be empty");
+    int prev = 0;
+    for (auto k = 0; k < break_points.size(); ++k) {
+        assert(break_points[k] >= prev && "break_points must be increasing");
+        prev = break_points[k];
+    }
+    assert(break_points(Eigen::last) == A.rows() && "The last break_point must be equal to A.rows()");
+
+    class GenericTask : public hqp::TaskInterface<Eigen::MatrixXd, Eigen::VectorXd> {
+      private:
+        void run(Eigen::MatrixXd matrix, Eigen::VectorXd vector) override {
+            matrix_ = std::move(matrix);
+            vector_ = std::move(vector);
+        }
+
+      public:
+        GenericTask(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
+          : TaskInterface(set) {
+        }
+    };
+
+    sot.reserve(break_points.size());
+    for (int start = 0; int const& stop : break_points) {
+        Eigen::Array<bool, Eigen::Dynamic, 1> inequality =
+          bu.segment(start, stop - start).array() != bl.segment(start, stop - start).array();
+
+        int rows = stop - start + inequality.cast<int>().sum();
+        Eigen::Array<bool, Eigen::Dynamic, 1> set(rows);
+        Eigen::MatrixXd matrix(rows, A.cols());
+        Eigen::VectorXd vector(rows);
+
+        for (auto k = 0, i = 0; i < inequality.size(); ++i) {
+            if (inequality(i)) {
+                set(k)        = false;
+                matrix.row(k) = A.row(start + i);
+                vector(k)     = bl(start + i);
+                ++k;
+                set(k)        = false;
+                matrix.row(k) = -A.row(start + i);
+                vector(k)     = -bu(start + i);
+                ++k;
+            } else {
+                set(k)        = true;
+                matrix.row(k) = A.row(start + i);
+                vector(k)     = bu(start + i);
+                ++k;
+            }
+        }
+        sot.emplace_back<GenericTask>(set);
+        sot.back().cast<GenericTask>()->update(matrix, vector);
+        sot.back()->compute();
+        start = stop;
+    }
+}
+
+
 Eigen::VectorXd HierarchicalQP::get_primal() {
     unsigned int k = 0;
     while (k < k_ && sot[k]->is_computed()) {

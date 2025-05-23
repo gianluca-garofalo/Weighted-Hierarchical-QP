@@ -1,5 +1,7 @@
 include(FetchContent)
 
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+
 FetchContent_Declare(daqp
     GIT_REPOSITORY "https://github.com/gianluca-garofalo/daqp.git"
     GIT_TAG "origin/master"
@@ -22,10 +24,13 @@ find_package (Eigen3 3.4.0 REQUIRED NO_MODULE)
 add_executable(00_basic_select 00_basic_select.cpp library.cpp)
 add_executable(01_metric_swap 01_metric_swap.cpp library.cpp)
 add_executable(02_compare_solvers 02_compare_solvers.cpp library.cpp ${daqp_SOURCE_DIR}/interfaces/daqp-eigen/daqp.cpp)
+add_executable(03_set_stack 03_set_stack.cpp)
+add_executable(04_random_problem 04_random_problem.cpp)
 
 set(TARGETS 
     00_basic_select
     01_metric_swap
+	03_set_stack
 )
 
 foreach(TARGET ${TARGETS})
@@ -39,13 +44,20 @@ foreach(TARGET ${TARGETS})
 	add_test(NAME test_${TARGET} COMMAND ${TARGET})
 endforeach()
 
-target_link_libraries(02_compare_solvers Eigen3::Eigen HQP::HQP daqp lexls)
-target_include_directories(
-	02_compare_solvers
-	PRIVATE
-		${CMAKE_CURRENT_SOURCE_DIR}
-		${daqp_SOURCE_DIR}/include
-		${daqp_SOURCE_DIR}/interfaces/daqp-eigen
+set(TARGETS 
+    02_compare_solvers
+    04_random_problem
 )
 
-add_test(NAME test_02_compare_solvers COMMAND 02_compare_solvers)
+foreach(TARGET ${TARGETS})
+	target_link_libraries(${TARGET} Eigen3::Eigen HQP::HQP daqp_eigen lexls)
+	target_include_directories(
+		${TARGET}
+		PRIVATE
+			${CMAKE_CURRENT_SOURCE_DIR}
+			${daqp_SOURCE_DIR}/include
+			${daqp_SOURCE_DIR}/interfaces/daqp-eigen
+	)
+
+	add_test(NAME test_${TARGET} COMMAND ${TARGET})
+endforeach()
