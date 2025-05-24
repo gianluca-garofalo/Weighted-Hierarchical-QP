@@ -19,15 +19,24 @@ namespace hqp {
 
 class HierarchicalQP {
   private:
-    unsigned int col_;                                     ///< Number of variables in the problem.
-    Eigen::VectorXd primal_;                               ///< The current solution vector.
-    Eigen::VectorXd task_;                                 ///< Intermediate task solution vector.
-    Eigen::VectorXd guess_;                                ///< Previous solution used as a warm start.
-    Eigen::MatrixXd inverse_;                              ///< Stores pseudo-inverse data.
-    Eigen::MatrixXd nullSpace_;                            ///< Basis for the nullspace.
-    Eigen::MatrixXd codRight_;                             ///< Matrix used for decomposition adjustments.
-    Eigen::MatrixXd cholMetric_;                           ///< Cholesky metric used for stability.
-    unsigned int k_ = 0;                                   ///< Index tracking the active task level.
+    /** Number of variables in the problem. */
+    unsigned int col_;
+    /** The current solution vector. */
+    Eigen::VectorXd primal_;
+    /** Intermediate task solution vector. */
+    Eigen::VectorXd task_;
+    /** Previous solution used as a warm start. */
+    Eigen::VectorXd guess_;
+    /** Stores pseudo-inverse data. */
+    Eigen::MatrixXd inverse_;
+    /** Basis for the nullspace. */
+    Eigen::MatrixXd nullSpace_;
+    /** Matrix used for decomposition adjustments. */
+    Eigen::MatrixXd codRight_;
+    /** Cholesky metric used for stability. */
+    Eigen::MatrixXd cholMetric_;
+    /** Index tracking the active task level. */
+    unsigned int k_ = 0;
 
     void solve();                                                  ///< Solves the overall HQP by combining tasks.
     void equality_hqp();                                           ///< Handles equality constraint resolution.
@@ -37,8 +46,10 @@ class HierarchicalQP {
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
   public:
-    double tolerance = 1e-9;                 ///< Tolerance for convergence and numerical stability.
-    TaskContainer sot;                       ///< Container for all task pointers.
+    /** Tolerance for convergence and numerical stability. */
+    double tolerance = 1e-9;
+    /** Container for all task pointers. */
+    TaskContainer sot;
 
     /**
      * @brief Constructs the HierarchicalQP solver.

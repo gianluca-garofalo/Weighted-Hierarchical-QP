@@ -3,7 +3,8 @@
 PROJECT_NAME           = "Weighted-Hierarchical-QP"
 PROJECT_NUMBER         = "0.0.1"
 OUTPUT_DIRECTORY       = docs
-INPUT                  = ../include ../src ../tests .        # Include current directory for mainpage.dox
+INPUT                  = include doc/mainpage.dox
+EXCLUDE                = ../build
 FILE_PATTERNS          = *.h *.hpp *.c *.cpp *.md *.dox
 RECURSIVE              = YES
 GENERATE_HTML          = YES
@@ -20,3 +21,6 @@ JAVADOC_AUTOBRIEF      = YES                 # Auto-extract the brief descriptio
 WARN_AS_ERROR          = NO
 QUIET                  = NO
 USE_MDFILE_AS_MAINPAGE = mainpage.dox        # Ensure mainpage.dox is used as the main page
+EXAMPLE_PATH           =
+EXAMPLE_PATTERNS       =
+EXCLUDE_PATTERNS       = */example* */examples*

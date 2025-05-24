@@ -14,6 +14,14 @@
 
 namespace hqp {
 
+/**
+ * @brief Identifies and returns the indices of all true elements in a given boolean array.
+ *
+ * Iterates over the array and collects indices where the condition evaluates to true.
+ *
+ * @param in Boolean array to be scanned.
+ * @return VectorXi containing the positions of true values.
+ */
 Eigen::VectorXi find(const Eigen::Array<bool, Eigen::Dynamic, 1>&);
 
 // GenericPtr wrapper around std::shared_ptr or std::unique_ptr
