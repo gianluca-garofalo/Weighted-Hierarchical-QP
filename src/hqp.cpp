@@ -197,11 +197,11 @@ void HierarchicalQP::inequality_hqp() {
         if (h >= k_) {
             sot[h]->slack_(rows) = matrix * primal_ - vector;
         }
+        sot[h]->workSet_    = sot[h]->activeSet_ && !sot[h]->equalitySet_ && !sot[h]->lockedSet_;
         sot[h]->dual_(rows) = sot[h]->slack_(rows);
         dual_update(h, matrix.transpose() * sot[h]->dual_(rows));
 
         for (unsigned int k = 0; k <= h && !isActiveSetNew; ++k) {
-            sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
             if (sot[k]->workSet_.any()) {
                 auto rows                = find(sot[k]->workSet_);
                 auto test                = (sot[k]->dual_(rows)).array() > tolerance;
@@ -221,6 +221,7 @@ void HierarchicalQP::inequality_hqp() {
 void HierarchicalQP::dual_update(unsigned int h, const Eigen::VectorXd& tau) {
     auto dof = col_;
     for (unsigned int k = 0; k < h; ++k) {
+        sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
         if (dof > 0 && sot[k]->activeSet_.any()) {
             auto leftDof = dof - sot[k]->rank_;
             auto rows    = find(sot[k]->activeSet_);
@@ -235,8 +236,10 @@ void HierarchicalQP::dual_update(unsigned int h, const Eigen::VectorXd& tau) {
             }
 
             dof = leftDof;
-        } else {
-            sot[k]->dual_.setZero();
+        } else if (sot[k]->workSet_.any()) {
+            auto rows             = find(sot[k]->workSet_);
+            auto [matrix, vector] = get_task(sot[k], rows);
+            sot[k]->dual_(rows)   = matrix * primal_ - vector;
         }
     }
 }
