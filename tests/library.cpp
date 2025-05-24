@@ -1,10 +1,3 @@
-/**
- * @file library.cpp
- * @brief Implements the run() functions for various test tasks.
- *
- * Each task computes a specific matrix and vector to simulate different scenarios
- * for the hierarchical quadratic programming solver.
- */
 #include "library.hpp"
 
 namespace hqp {

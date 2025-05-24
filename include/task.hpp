@@ -22,53 +22,90 @@ namespace hqp {
 
 class Task {
   private:
-    unsigned int rank_;                                ///< Rank of the task computed during solve.
-    Eigen::VectorXd slack_;                            ///< Slack variables for constraint satisfaction.
-    Eigen::VectorXd dual_;                             ///< Dual variables for inequality handling.
-    Eigen::Array<bool, Eigen::Dynamic, 1> activeSet_;  ///< Current active constraints.
-    Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;  ///< Constraints temporarily locked.
-    Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;    ///< Working set of constraints.
-    Eigen::MatrixXd codMid_;                           ///< Stores middle factor in decompositions.
-    Eigen::MatrixXd codLeft_;                          ///< Auxiliary matrix for decomposition.
+    /** Rank of the task computed during solve. */
+    unsigned int rank_;
+    /** Slack variables for constraint satisfaction. */
+    Eigen::VectorXd slack_;
+    /** Dual variables for inequality handling. */
+    Eigen::VectorXd dual_;
+    /** Current active constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeSet_;
+    /** Constraints temporarily locked. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
+    /** Working set of constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
+    /** Stores middle factor in decompositions. */
+    Eigen::MatrixXd codMid_;
+    /** Auxiliary matrix for decomposition. */
+    Eigen::MatrixXd codLeft_;
     friend class HierarchicalQP;
     friend class SubTasks;
 
   protected:
-    Eigen::MatrixXd matrix_;                             ///< Constraint matrix computed by the task.
-    Eigen::VectorXd vector_;                             ///< Right-hand side vector.
-    Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;  ///< Initial equality constraints.
-    Eigen::VectorXi indices_;                            ///< Indices of active variables.
-    bool isComputed_ = false;                            ///< Flag indicating if task computation is up-to-date.
-    Eigen::LLT<Eigen::MatrixXd> weight_;                 ///< Weight based on Cholesky decomposition.
+    /** Constraint matrix computed by the task. */
+    Eigen::MatrixXd matrix_;
+    /** Right-hand side vector. */
+    Eigen::VectorXd vector_;
+    /** Initial equality constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
+    /** Indices of active variables. */
+    Eigen::VectorXi indices_;
+    /** Flag indicating if task computation is up-to-date. */
+    bool isComputed_ = false;
+    /** Weight based on Cholesky decomposition. */
+    Eigen::LLT<Eigen::MatrixXd> weight_;
 
-    /// @brief Pure virtual function to compute task-specific output.
+    /**
+     * @brief Pure virtual function to compute task-specific output.
+     */
     virtual void compute() = 0;
     virtual bool is_computed();
 
   public:
-    double tolerance = 1e-9;  ///< Tolerance value for computation accuracy.
+    /** Tolerance value for computation accuracy. */
+    double tolerance = 1e-9;
 
     /**
-     * @brief Constructs a Task by initializing constraint sets.
-     * @param set Boolean array indicating equality constraints.
+     * @brief Initializes a Task instance with a given set of equality constraints.
+     *
+     * Sets up the equality, locked, and work sets; and initializes slack and dual variables.
+     *
+     * @param set Boolean array specifying which constraints are treated as equality constraints.
      */
     Task(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
     virtual ~Task() = default;
 
     /**
-     * @brief Sets the indices of variables that are selected for this task.
-     * @param indices Vector of selected variable indices.
+     * @brief Assigns the indices of variables involved in this task.
+     *
+     * Helps keep track of which columns in the matrix correspond to active problem variables.
+     *
+     * @param indices Vector specifying the positions of selected variables.
      */
     void select_variables(const Eigen::VectorXi& indices);
 };
 
 
+/**
+ * @brief Smart pointer alias for generic pointer types.
+ * @tparam T The type to point to.
+ */
 template<typename T>
-using SmartPtr      = GenericPtr<std::shared_ptr, T>;
-using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
+using SmartPtr = GenericPtr<std::shared_ptr, T>;
+/**
+ * @brief Smart pointer alias for Task.
+ */
+using TaskPtr = GenericPtr<std::shared_ptr, Task>;
+/**
+ * @brief Container for smart pointers to Task objects.
+ */
 using TaskContainer = SmartContainer<std::vector, GenericPtr, std::shared_ptr, Task>;
 
 
+/**
+ * @brief Templated interface for tasks with arbitrary arguments.
+ * @tparam Args Types of arguments required by the task.
+ */
 template<typename... Args>
 class TaskInterface : public Task {
   private:
@@ -160,18 +197,33 @@ class SubTasks : public Task {
     bool is_computed() override;
 
   public:
-    /// @brief Container holding smart pointers to subtasks.
+    /**
+     * @brief Container holding smart pointers to subtasks.
+     */
     TaskContainer sot;
 
-    /// @brief Constructs a SubTasks instance with a given equality constraint set.
-    /// @param set Boolean array indicating equality constraints.
+    /**
+     * @brief Constructs a SubTasks instance with a given equality constraint set.
+     * @param set Boolean array indicating equality constraints.
+     */
     SubTasks(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
 
-    /// @brief Computes the aggregated result from all subtasks.
+    /**
+     * @brief Aggregates the results from all subtasks to form a composite solution.
+     *
+     * The method computes each subtask and concatenates their matrices and vectors,
+     * ensuring consistency in dimensions and variable indices.
+     */
     void compute() override;
 
-    /// @brief Applies a weight matrix to adjust the combined outputs of the subtasks.
-    /// @param weight The metric matrix used for scaling.
+    /**
+     * @brief Applies a weight matrix to adjust the subtasks' outputs.
+     *
+     * Uses a Cholesky decomposition to modify the task's matrix and vector,
+     * enhancing numerical stability during the solution process.
+     *
+     * @param weight The metric matrix applied to the subtasks.
+     */
     void set_weight(const Eigen::MatrixXd& weight);
 };
 
