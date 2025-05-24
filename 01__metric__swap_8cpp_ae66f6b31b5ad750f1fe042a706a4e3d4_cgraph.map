@@ -1,5 +1,0 @@
-<map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,45,60,70"/>
-<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01" title="Computes and retrieves the primal solution." alt="" coords="108,5,259,45"/>
-<area shape="rect" id="node3" href="$classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2" title="Sets the metric matrix used to define the quadratic cost." alt="" coords="108,69,259,109"/>
-</map>

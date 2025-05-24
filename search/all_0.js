@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['00_5fbasic_5fselect_2ecpp_0',['00_basic_select.cpp',['../00__basic__select_8cpp.html',1,'']]],
-  ['01_5fmetric_5fswap_2ecpp_1',['01_metric_swap.cpp',['../01__metric__swap_8cpp.html',1,'']]],
-  ['02_5fcompare_5fsolvers_2ecpp_2',['02_compare_solvers.cpp',['../02__compare__solvers_8cpp.html',1,'']]],
-  ['03_5fset_5fstack_2ecpp_3',['03_set_stack.cpp',['../03__set__stack_8cpp.html',1,'']]],
-  ['04_5frandom_5fproblem_2ecpp_4',['04_random_problem.cpp',['../04__random__problem_8cpp.html',1,'']]]
+  ['activeset_5f_0',['activeSet_',['../classhqp_1_1Task.html#a739be79690107fa0d9f0808e32735516',1,'hqp::Task']]],
+  ['args_5f_1',['args_',['../classhqp_1_1TaskInterface.html#a14240bd78f680d81b34290723a4db2ee',1,'hqp::TaskInterface']]],
+  ['argstorage_2',['ArgStorage',['../classhqp_1_1TaskInterface.html#a74a30e3959ddfa76fa5791927461f6f2',1,'hqp::TaskInterface']]]
 ];

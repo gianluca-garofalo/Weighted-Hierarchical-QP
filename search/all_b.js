@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['lexls_5ffrom_5fstack_0',['lexls_from_stack',['../04__random__problem_8cpp.html#abbfac764a8ef8631a7b19819cca07bbe',1,'04_random_problem.cpp']]],
-  ['library_2ecpp_1',['library.cpp',['../library_8cpp.html',1,'']]],
-  ['library_2ehpp_2',['library.hpp',['../library_8hpp.html',1,'']]],
-  ['lockedset_5f_3',['lockedSet_',['../classhqp_1_1Task.html#a718e61480fb09ff3e500184444771dee',1,'hqp::Task']]]
+  ['mainpage_2edox_0',['mainpage.dox',['../mainpage_8dox.html',1,'']]],
+  ['make_5fptr_1',['make_ptr',['../classhqp_1_1GenericPtr.html#a79f25d9f2edd3ada82205601eea2d776',1,'hqp::GenericPtr']]],
+  ['matrix_5f_2',['matrix_',['../classhqp_1_1Task.html#ac50347ebfb913039837e2de3025e5ce6',1,'hqp::Task']]]
 ];

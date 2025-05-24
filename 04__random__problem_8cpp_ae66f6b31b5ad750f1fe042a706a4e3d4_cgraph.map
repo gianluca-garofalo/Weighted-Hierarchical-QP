@@ -1,6 +1,0 @@
-<map id="main" name="main">
-<area shape="rect" id="node1" title=" " alt="" coords="5,70,60,95"/>
-<area shape="rect" id="node2" href="$classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01" title="Computes and retrieves the primal solution." alt="" coords="108,5,259,45"/>
-<area shape="rect" id="node3" href="$04__random__problem_8cpp.html#abbfac764a8ef8631a7b19819cca07bbe" title=" " alt="" coords="117,70,250,95"/>
-<area shape="rect" id="node4" href="$classhqp_1_1HierarchicalQP.html#ac420f3e0f18c54980c5d9c9cd7ef8446" title="Stacks multiple tasks into a TaskContainer for hierarchical QP." alt="" coords="108,120,259,160"/>
-</map>

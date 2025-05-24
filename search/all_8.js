@@ -1,6 +1,10 @@
 var searchData=
 [
-  ['hierarchicalqp_0',['HierarchicalQP',['../classhqp_1_1Task.html#a43d9ee60ca0f92442608d6c054fc5662',1,'hqp::Task::HierarchicalQP()'],['../classhqp_1_1HierarchicalQP.html#a61cf78c4b0368afd91ba272b928a86f1',1,'hqp::HierarchicalQP::HierarchicalQP()'],['../classhqp_1_1HierarchicalQP.html',1,'hqp::HierarchicalQP']]],
-  ['hqp_1',['hqp',['../namespacehqp.html',1,'']]],
-  ['hqp_2ehpp_2',['hqp.hpp',['../hqp_8hpp.html',1,'']]]
+  ['indices_5f_0',['indices_',['../classhqp_1_1Task.html#a7f7c96cfb63bafebd91d4c5819a80934',1,'hqp::Task']]],
+  ['inequality_5fhqp_1',['inequality_hqp',['../classhqp_1_1HierarchicalQP.html#aaf6df9e4aa247e25e1ff253bd6501028',1,'hqp::HierarchicalQP']]],
+  ['inverse_5f_2',['inverse_',['../classhqp_1_1HierarchicalQP.html#a6e4ed057e29c424d81be332b37ad3a01',1,'hqp::HierarchicalQP']]],
+  ['is_5fcomputed_3',['is_computed',['../classhqp_1_1Task.html#a9212affa67773daccd4192daac74d37b',1,'hqp::Task::is_computed()'],['../classhqp_1_1SubTasks.html#a8011c872f9fd86a0271fd5dac419475a',1,'hqp::SubTasks::is_computed()']]],
+  ['is_5freference_5fwrapper_4',['is_reference_wrapper',['../structhqp_1_1TaskInterface_1_1is__reference__wrapper.html',1,'hqp::TaskInterface']]],
+  ['is_5freference_5fwrapper_3c_20std_3a_3areference_5fwrapper_3c_20u_20_3e_20_3e_5',['is_reference_wrapper&lt; std::reference_wrapper&lt; U &gt; &gt;',['../structhqp_1_1TaskInterface_1_1is__reference__wrapper_3_01std_1_1reference__wrapper_3_01U_01_4_01_4.html',1,'hqp::TaskInterface']]],
+  ['iscomputed_5f_6',['isComputed_',['../classhqp_1_1Task.html#ac535de879ea195bcdf317ad17d041d7a',1,'hqp::Task']]]
 ];
