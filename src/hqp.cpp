@@ -183,10 +183,15 @@ void HierarchicalQP::inequality_hqp() {
             // Add tasks to the active set.
             isActiveSetNew = false;
             for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
-                auto rows                = find(!sot[k]->activeSet_);
-                auto [matrix, vector]    = get_task(sot[k], rows);
-                sot[k]->activeSet_(rows) = (vector - matrix * primal_).array() > tolerance;
-                isActiveSetNew           = sot[k]->activeSet_(rows).any();
+                if ((!sot[k]->activeSet_).any()) {
+                    auto rows                = find(!sot[k]->activeSet_);
+                    auto [matrix, vector]    = get_task(sot[k], rows);
+                    auto slack               = (vector - matrix * primal_).array();
+                    auto mask                = slack > tolerance;
+                    auto max_violation       = mask.select(slack.abs(), -1).maxCoeff();
+                    sot[k]->activeSet_(rows) = mask && (slack.abs() == max_violation);
+                    isActiveSetNew           = sot[k]->activeSet_(rows).any();
+                }
             }
         }
 
