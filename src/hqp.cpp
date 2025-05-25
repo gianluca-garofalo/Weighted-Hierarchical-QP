@@ -230,7 +230,7 @@ void HierarchicalQP::dual_update(unsigned int h, const Eigen::VectorXd& tau) {
         if (dof > 0 && sot[k]->activeSet_.any()) {
             auto leftDof = dof - sot[k]->rank_;
             auto rows    = find(sot[k]->activeSet_);
-            if (rows.any()) {
+            if (sot[k]->activeSet_.any()) {
                 Eigen::VectorXd f = inverse_.middleCols(col_ - dof, sot[k]->rank_).transpose() * tau;
                 sot[k]
                   ->codMid_.topLeftCorner(sot[k]->rank_, sot[k]->rank_)
