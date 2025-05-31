@@ -13,13 +13,13 @@ void Task1::run(double b0, Eigen::VectorXd const& vec) {
 }
 
 void Task2::run() {
-    matrix_ = (Eigen::MatrixXd(2, 2) << -0.1, 1, -1, 1).finished();
-    vector_ = (Eigen::VectorXd(2) << 0.55, -1.5).finished();
+    matrix_ = (Eigen::MatrixXd(2, 2) << 0.1, -1, 1, -1).finished();
+    vector_ = (Eigen::VectorXd(2) << -0.55, 1.5).finished();
 }
 
 void Task3::run() {
-    matrix_ = (Eigen::MatrixXd(2, 2) << 1, 0, 1, 1).finished();
-    vector_ = (Eigen::VectorXd(2) << 2.5, 2.5).finished();
+    matrix_ = (Eigen::MatrixXd(2, 2) << -1, 0, -1, -1).finished();
+    vector_ = (Eigen::VectorXd(2) << -2.5, 2).finished();
 }
 
 void Task5::run() {

@@ -11,7 +11,7 @@ class Task0 : public hqp::TaskInterface<> {
     void run() override {
         matrix_ =
           (Eigen::MatrixXd(6, 3) << Eigen::MatrixXd::Identity(3, 3), -Eigen::MatrixXd::Identity(3, 3)).finished();
-        vector_ = (Eigen::VectorXd(6) << -Eigen::VectorXd::Ones(3), -Eigen::VectorXd::Ones(3)).finished();
+        vector_ = (Eigen::VectorXd(6) << Eigen::VectorXd::Ones(3), Eigen::VectorXd::Ones(3)).finished();
     }
 
   public:
@@ -23,8 +23,8 @@ class Task0 : public hqp::TaskInterface<> {
 class Task1 : public hqp::TaskInterface<> {
   private:
     void run() override {
-        matrix_ = (Eigen::MatrixXd(1, 3) << -1, -1, -1).finished();
-        vector_ = -Eigen::VectorXd::Ones(1);
+        matrix_ = (Eigen::MatrixXd(1, 3) << 1, 1, 1).finished();
+        vector_ = Eigen::VectorXd::Ones(1);
     }
 
   public:
@@ -50,7 +50,7 @@ class Task3 : public hqp::TaskInterface<> {
   private:
     void run() override {
         matrix_ = (Eigen::MatrixXd(2, 3) << 3, 1, -1, -3, -1, 1).finished();
-        vector_ = (Eigen::VectorXd(2) << 10, -20).finished();
+        vector_ = (Eigen::VectorXd(2) << 20, -10).finished();
     }
 
   public:

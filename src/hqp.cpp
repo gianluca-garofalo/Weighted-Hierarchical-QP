@@ -35,9 +35,10 @@ void HierarchicalQP::solve() {
     guess_   = primal_;
 
     // Deactivate unused tasks for next guess
-    for (unsigned int k = k_; k < sot.size(); ++k) {
+    for (auto k = k_; k < sot.size(); ++k) {
         auto rows = find(!sot[k]->equalitySet_);
         sot[k]->activeSet_(rows).setZero();
+        // TODO: it means equality constraints need to be added in ihqp.
     }
 }
 
@@ -45,9 +46,9 @@ void HierarchicalQP::solve() {
 void HierarchicalQP::equality_hqp() {
     primal_.setZero();
     auto dof   = col_;
-    k_         = 0;
     nullSpace_ = cholMetric_;
-    while (k_ < sot.size() && dof > 0) {
+    k_         = 0;
+    for (; k_ < sot.size() && dof > 0; ++k_) {
         if (sot[k_]->activeSet_.any()) {
             auto rows              = find(sot[k_]->activeSet_);
             auto [matrix, vector]  = get_task(sot[k_], rows);
@@ -82,7 +83,6 @@ void HierarchicalQP::equality_hqp() {
             sot[k_]->codMid_.topLeftCorner(rank, rank)    = cod.matrixT().topLeftCorner(rank, rank);
             sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
         }
-        k_++;
     }
 }
 
@@ -135,11 +135,11 @@ void HierarchicalQP::set_stack(Eigen::MatrixXd const& A,
             if (inequality(i)) {
                 set(k)        = false;
                 matrix.row(k) = A.row(start + i);
-                vector(k)     = bl(start + i);
+                vector(k)     = bu(start + i);
                 ++k;
                 set(k)        = false;
                 matrix.row(k) = -A.row(start + i);
-                vector(k)     = -bu(start + i);
+                vector(k)     = -bl(start + i);
                 ++k;
             } else {
                 set(k)        = true;
@@ -171,46 +171,65 @@ Eigen::VectorXd HierarchicalQP::get_primal() {
 void HierarchicalQP::inequality_hqp() {
     for (auto& task : sot) {
         task->lockedSet_.setZero();
-        task->dual_.setZero();
     }
-    unsigned int h      = 0;
-    bool isActiveSetNew = true;
+    Eigen::Index idx;
+    unsigned int level, row;
+    double slack, dual, mValue;
 
-    while (h < sot.size()) {
-        while (isActiveSetNew) {
+    unsigned int maxIter = 500;
+    for (auto iter = 0, h = 0; iter < maxIter && h < sot.size(); ++h) {
+        slack = 1;
+        dual  = -1;
+        while ((slack > 0 || dual < 0) && iter < maxIter) {
             equality_hqp();
 
             // Add tasks to the active set.
-            isActiveSetNew = false;
-            for (unsigned int k = 0; k < k_ && !isActiveSetNew; ++k) {
+            slack = -1;
+            for (auto k = 0; k < sot.size(); ++k) {
                 if ((!sot[k]->activeSet_).any()) {
-                    auto rows                = find(!sot[k]->activeSet_);
-                    auto [matrix, vector]    = get_task(sot[k], rows);
-                    auto slack               = (vector - matrix * primal_).array();
-                    auto mask                = slack > tolerance;
-                    auto max_violation       = mask.select(slack.abs(), -1).maxCoeff();
-                    sot[k]->activeSet_(rows) = mask && (slack.abs() == max_violation);
-                    isActiveSetNew           = sot[k]->activeSet_(rows).any();
+                    auto rows             = find(!sot[k]->activeSet_);
+                    auto [matrix, vector] = get_task(sot[k], rows);
+                    mValue                = (matrix * primal_ - vector).maxCoeff(&idx);
+                    if (mValue > tolerance && mValue > slack) {
+                        slack = mValue;
+                        level = k;
+                        row   = rows(idx);
+                    }
                 }
             }
-        }
+            if (slack > tolerance) {
+                sot[level]->activeSet_(row) = true;
+                continue;
+            }
 
-        // Remove tasks from the active set.
+            // Remove tasks from the active set.
             dual_update(h);
 
-
-        for (unsigned int k = 0; k <= h && !isActiveSetNew; ++k) {
-            if (sot[k]->workSet_.any()) {
-                auto rows                = find(sot[k]->workSet_);
-                auto test                = (sot[k]->dual_(rows)).array() > tolerance;
-                sot[k]->activeSet_(rows) = !test;
-                sot[k]->lockedSet_(rows) = (sot[k]->dual_(rows)).array() < 0;
-                isActiveSetNew           = k < k_ && test.any();
+            dual = 1;
+            for (auto k = 0; k <= h; ++k) {
+                if (sot[k]->workSet_.any()) {
+                    auto rows = find(sot[k]->workSet_);
+                    mValue    = (sot[k]->dual_(rows)).minCoeff(&idx);
+                    if (mValue < -tolerance && mValue < dual) {
+                        dual  = mValue;
+                        level = k;
+                        row   = rows(idx);
+                    }
+                }
             }
-        }
 
-        if (!isActiveSetNew) {
-            h++;
+            if (dual < -tolerance) {
+                sot[level]->activeSet_(row) = false;
+                continue;
+            }
+
+            for (auto k = 0; k <= h; ++k) {
+                if (sot[k]->workSet_.any()) {
+                    auto rows                = find(sot[k]->workSet_);
+                    sot[k]->lockedSet_(rows) = (sot[k]->dual_(rows)).array() > tolerance;
+                }
+            }
+            ++iter;
         }
     }
 }
@@ -296,7 +315,7 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
 // TODO: upgrade to a logger keeping track of the active set
 void HierarchicalQP::print_active_set() {
     std::cout << "Active set:\n";
-    for (unsigned int k = 0; const auto& task : sot) {
+    for (auto k = 0; const auto& task : sot) {
         if (k < k_ && task->activeSet_.any()) {
             std::cout << "\tLevel " << k << " -> constraints " << find(task->activeSet_).transpose() << "\n";
         }
