@@ -41,7 +41,7 @@ class HierarchicalQP {
     void solve();                                                  ///< Solves the overall HQP by combining tasks.
     void equality_hqp();                                           ///< Handles equality constraint resolution.
     void inequality_hqp();                                         ///< Handles inequality constrained tasks.
-    void dual_update(unsigned int h, const Eigen::VectorXd& tau);  ///< Updates dual variables.
+    void dual_update(unsigned int h);                              ///< Updates dual variables.
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
