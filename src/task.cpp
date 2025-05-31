@@ -29,7 +29,7 @@ void SubTasks::compute() {
     matrix_.resize(rows, cols);
     vector_.resize(rows);
     indices_ = sot[0]->indices_;
-    for (unsigned int start = 0; const auto& task : sot) {
+    for (int start = 0; const auto& task : sot) {
         task->compute();
         assert(cols == task->matrix_.cols());
         assert(indices_ == task->indices_);

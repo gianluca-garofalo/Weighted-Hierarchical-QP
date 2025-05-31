@@ -4,7 +4,7 @@
 
 namespace hqp {
 
-HierarchicalQP::HierarchicalQP(unsigned int n)
+HierarchicalQP::HierarchicalQP(int n)
   : col_{n}
   , primal_{Eigen::VectorXd::Zero(n)}
   , task_{Eigen::VectorXd::Zero(n)}
@@ -157,7 +157,7 @@ void HierarchicalQP::set_stack(Eigen::MatrixXd const& A,
 
 
 Eigen::VectorXd HierarchicalQP::get_primal() {
-    unsigned int k = 0;
+    int k = 0;
     while (k < k_ && sot[k]->is_computed()) {
         k++;
     }
@@ -173,10 +173,11 @@ void HierarchicalQP::inequality_hqp() {
         task->lockedSet_.setZero();
     }
     Eigen::Index idx;
-    unsigned int level, row;
+    int level, row;
     double slack, dual, mValue;
 
-    unsigned int maxIter = 500;
+    // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
+    int maxIter = 500;
     for (auto iter = 0, h = 0; iter < maxIter && h < sot.size(); ++h) {
         slack = 1;
         dual  = -1;
@@ -235,7 +236,7 @@ void HierarchicalQP::inequality_hqp() {
 }
 
 
-void HierarchicalQP::dual_update(unsigned int h) {
+void HierarchicalQP::dual_update(int h) {
     auto rows             = find(sot[h]->activeSet_);
     auto [matrix, vector] = get_task(sot[h], rows);
 

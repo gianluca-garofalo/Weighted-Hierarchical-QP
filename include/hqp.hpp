@@ -20,7 +20,7 @@ namespace hqp {
 class HierarchicalQP {
   private:
     /** Number of variables in the problem. */
-    unsigned int col_;
+    int col_;
     /** The current solution vector. */
     Eigen::VectorXd primal_;
     /** Intermediate task solution vector. */
@@ -36,12 +36,12 @@ class HierarchicalQP {
     /** Cholesky metric used for stability. */
     Eigen::MatrixXd cholMetric_;
     /** Index tracking the active task level. */
-    unsigned int k_ = 0;
+    int k_ = 0;
 
-    void solve();                                                  ///< Solves the overall HQP by combining tasks.
-    void equality_hqp();                                           ///< Handles equality constraint resolution.
-    void inequality_hqp();                                         ///< Handles inequality constrained tasks.
-    void dual_update(unsigned int h);                              ///< Updates dual variables.
+    void solve();             ///< Solves the overall HQP by combining tasks.
+    void equality_hqp();      ///< Handles equality constraint resolution.
+    void inequality_hqp();    ///< Handles inequality constrained tasks.
+    void dual_update(int h);  ///< Updates dual variables.
     std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
                                                           const Eigen::VectorXi& row);  ///< Retrieves task data.
 
@@ -55,7 +55,7 @@ class HierarchicalQP {
      * @brief Constructs the HierarchicalQP solver.
      * @param n Number of degrees of freedom (columns) in the problem.
      */
-    HierarchicalQP(unsigned int n);
+    HierarchicalQP(int n);
 
     /**
      * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.

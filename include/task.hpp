@@ -23,7 +23,7 @@ namespace hqp {
 class Task {
   private:
     /** Rank of the task computed during solve. */
-    unsigned int rank_;
+    int rank_;
     /** Slack variables for constraint satisfaction. */
     Eigen::VectorXd slack_;
     /** Dual variables for inequality handling. */

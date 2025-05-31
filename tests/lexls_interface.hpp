@@ -9,7 +9,7 @@ LexLS::internal::LexLSI lexls_from_stack(Eigen::MatrixXd const& A,
     std::vector<LexLS::ObjectiveType> types_of_objectives(n_tasks);
     std::vector<Eigen::MatrixXd> objectives(n_tasks);
 
-    for (unsigned int start = 0, k = 0; k < n_tasks; ++k) {
+    for (auto start = 0, k = 0; k < n_tasks; ++k) {
         auto n_constraints = break_points(k) - start;
         Eigen::MatrixXd objective(n_constraints, A.cols() + 2);
         objective << A.middleRows(start, n_constraints), bl.segment(start, n_constraints),
@@ -25,7 +25,7 @@ LexLS::internal::LexLSI lexls_from_stack(Eigen::MatrixXd const& A,
     // parameters.output_file_name = "lexls_log.txt";
     lexls.setParameters(parameters);
 
-    for (unsigned int i = 0; i < n_tasks; ++i) {
+    for (auto i = 0; i < n_tasks; ++i) {
         lexls.setData(i, objectives[i]);
     }
     return lexls;
