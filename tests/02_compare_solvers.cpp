@@ -3,7 +3,7 @@
 #include <daqp.hpp>
 #include <hqp.hpp>
 #include <iostream>
-#include <lexls/lexlsi.h>
+#include "lexls_interface.hpp"
 
 
 class Task0 : public hqp::TaskInterface<> {
@@ -115,30 +115,7 @@ int main() {
     std::cout << "DAQP execution time: " << t_elapsed.count() << " seconds" << std::endl;
 
     // LexLS
-    std::vector<LexLS::Index> number_of_constraints;
-    std::vector<LexLS::ObjectiveType> types_of_objectives;
-    std::vector<Eigen::MatrixXd> objectives;
-
-    unsigned int start = 0;
-    for (unsigned int k = 0; k < break_points.size(); ++k) {
-        auto n_constraints = break_points(k) - start;
-        Eigen::MatrixXd objective(n_constraints, A.cols() + 2);
-        objective << A.middleRows(start, n_constraints), bl.segment(start, n_constraints),
-          bu.segment(start, n_constraints);
-        number_of_constraints.push_back(n_constraints);
-        types_of_objectives.push_back(LexLS::ObjectiveType::GENERAL_OBJECTIVE);
-        objectives.push_back(objective);
-        start = break_points(k);
-    }
-
-    LexLS::internal::LexLSI lexls(A.cols(), break_points.size(), &number_of_constraints[0], &types_of_objectives[0]);
-    LexLS::ParametersLexLSI parameters;
-    lexls.setParameters(parameters);
-
-    for (unsigned int i = 0; i < break_points.size(); ++i) {
-        lexls.setData(i, objectives[i]);
-    }
-
+    auto lexls  = lexls_from_stack(A, bu, bl, break_points);
     t_start     = std::chrono::high_resolution_clock::now();
     auto status = lexls.solve();
     solution    = lexls.get_x();
