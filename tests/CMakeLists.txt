@@ -26,6 +26,7 @@ add_executable(01_metric_swap 01_metric_swap.cpp library.cpp)
 add_executable(02_compare_solvers 02_compare_solvers.cpp library.cpp ${daqp_SOURCE_DIR}/interfaces/daqp-eigen/daqp.cpp)
 add_executable(03_set_stack 03_set_stack.cpp)
 add_executable(04_random_problem 04_random_problem.cpp)
+add_executable(05_lex_slacks 05_lex_slacks.cpp)
 
 set(TARGETS 
     00_basic_select
@@ -47,6 +48,7 @@ endforeach()
 set(TARGETS 
     02_compare_solvers
     04_random_problem
+	05_lex_slacks
 )
 
 foreach(TARGET ${TARGETS})
