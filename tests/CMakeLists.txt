@@ -55,8 +55,6 @@ foreach(TARGET ${TARGETS})
 		${TARGET}
 		PRIVATE
 			${CMAKE_CURRENT_SOURCE_DIR}
-			${daqp_SOURCE_DIR}/include
-			${daqp_SOURCE_DIR}/interfaces/daqp-eigen
 	)
 
 	add_test(NAME test_${TARGET} COMMAND ${TARGET})
