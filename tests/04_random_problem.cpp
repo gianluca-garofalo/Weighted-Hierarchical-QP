@@ -97,6 +97,32 @@ int main() {
     std::cout << "LexLS execution time: " << std::chrono::duration<double>(t_stop - t_start).count() << " seconds"
               << std::endl;
 
-    double precision = 1e-5;
-    return daqp.isApprox(hqp, precision) && daqp.isApprox(lexls, precision) ? 0 : 1;
+    std::stringstream sA, sbl, sbu, sbk;
+    sA << "A << ";
+    sbl << "bl << ";
+    sbu << "bu << ";
+    sbk << "break_points << ";
+    int row, col;
+    for (row = 0; row < A.rows() - 1; ++row) {
+        for (col = 0; col < A.cols(); ++col) {
+            sA << A(row, col) << ", ";
+        }
+        sbl << bl(row) << ", ";
+        sbu << bu(row) << ", ";
+    }
+    for (col = 0; col < A.cols() - 1; ++col) {
+        sA << A(row, col) << ", ";
+    }
+    sA << A(row, col) << ";" << std::endl;
+    sbl << bl(row) << ";" << std::endl;
+    sbu << bu(row) << ";" << std::endl;
+
+    for (row = 0; row < break_points.rows() - 1; ++row) {
+        sbk << break_points(row) << ", ";
+    }
+    sbk << break_points(row) << ";" << std::endl;
+
+    std::cout << '\n' << sA.str() << sbl.str() << sbu.str() << sbk.str();
+
+    return hqp.isApprox(lexls) ? 0 : 1;
 }
