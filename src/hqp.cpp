@@ -206,6 +206,7 @@ void HierarchicalQP::inequality_hqp() {
 
             dual = -1;
             for (auto k = 0; k <= h; ++k) {
+                sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
                 if (sot[k]->workSet_.any()) {
                     auto rows = find(sot[k]->workSet_);
                     mValue    = (sot[k]->dual_(rows)).maxCoeff(&idx);
@@ -240,14 +241,12 @@ void HierarchicalQP::dual_update(int h) {
 
     if (h >= k_) {
         sot[h]->slack_(rows) = matrix * primal_ - vector;
-        sot[h]->rank_ = 0;
+        sot[h]->rank_        = 0;
     }
-    sot[h]->workSet_    = sot[h]->activeSet_ && !sot[h]->equalitySet_ && !sot[h]->lockedSet_;
     sot[h]->dual_(rows) = -sot[h]->slack_(rows);
     Eigen::VectorXd tau = matrix.transpose() * sot[h]->slack_(rows);
 
     for (auto dof = sot[h]->rank_, k = h - 1; k >= 0; --k) {
-        sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
         if (sot[k]->activeSet_.any()) {
             auto rows = find(sot[k]->activeSet_);
             if (sot[k]->rank_ && k < k_) {
