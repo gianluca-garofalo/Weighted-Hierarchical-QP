@@ -38,12 +38,11 @@ class HierarchicalQP {
     /** Index tracking the active task level. */
     int k_ = 0;
 
-    void solve();             ///< Solves the overall HQP by combining tasks.
-    void equality_hqp();      ///< Handles equality constraint resolution.
-    void inequality_hqp();    ///< Handles inequality constrained tasks.
-    void dual_update(int h);  ///< Updates dual variables.
-    std::tuple<Eigen::MatrixXd, Eigen::VectorXd> get_task(TaskPtr task,
-                                                          const Eigen::VectorXi& row);  ///< Retrieves task data.
+    void solve();                     ///< Solves the overall HQP by combining tasks.
+    void equality_hqp();              ///< Handles equality constraint resolution.
+    void inequality_hqp();            ///< Handles inequality constrained tasks.
+    void dual_update(int h);          ///< Updates dual variables.
+    void prepare_task(TaskPtr task);  ///< Prepares task data.
 
   public:
     /** Tolerance for convergence and numerical stability. */

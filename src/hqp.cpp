@@ -51,9 +51,12 @@ void HierarchicalQP::equality_hqp() {
     k_ = 0;
     for (; k_ < sot.size() && dof > 0; ++k_) {
         if (sot[k_]->activeSet_.any()) {
-            auto rows              = find(sot[k_]->activeSet_);
-            auto [matrix, vector]  = get_task(sot[k_], rows);
-            vector                -= matrix * primal_;
+            auto rows = find(sot[k_]->activeSet_);
+            prepare_task(sot[k_]);
+            Eigen::MatrixXd matrix                 = Eigen::MatrixXd::Zero(rows.size(), col_);
+            matrix(Eigen::all, sot[k_]->indices_)  = sot[k_]->matrix_(rows, Eigen::all);
+            Eigen::VectorXd vector                 = sot[k_]->vector_(rows);
+            vector                                -= matrix * primal_;
 
             Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
             // TODO: dynamically update tolerances to avoid tasks oscillations
@@ -186,9 +189,12 @@ void HierarchicalQP::inequality_hqp() {
             slack = -1;
             for (auto k = 0; k < sot.size(); ++k) {
                 if ((!sot[k]->activeSet_).any()) {
-                    auto rows             = find(!sot[k]->activeSet_);
-                    auto [matrix, vector] = get_task(sot[k], rows);
-                    mValue                = (matrix * primal_ - vector).maxCoeff(&idx);
+                    auto rows = find(!sot[k]->activeSet_);
+                    prepare_task(sot[k]);
+                    Eigen::MatrixXd matrix               = Eigen::MatrixXd::Zero(rows.size(), col_);
+                    matrix(Eigen::all, sot[k]->indices_) = sot[k]->matrix_(rows, Eigen::all);
+                    Eigen::VectorXd vector               = sot[k]->vector_(rows);
+                    mValue                               = (matrix * primal_ - vector).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack = mValue;
                         level = k;
@@ -236,8 +242,11 @@ void HierarchicalQP::inequality_hqp() {
 
 
 void HierarchicalQP::dual_update(int h) {
-    auto rows             = find(sot[h]->activeSet_);
-    auto [matrix, vector] = get_task(sot[h], rows);
+    auto rows = find(sot[h]->activeSet_);
+    prepare_task(sot[h]);
+    Eigen::MatrixXd matrix               = Eigen::MatrixXd::Zero(rows.size(), col_);
+    matrix(Eigen::all, sot[h]->indices_) = sot[h]->matrix_(rows, Eigen::all);
+    Eigen::VectorXd vector               = sot[h]->vector_(rows);
 
     if (h >= k_) {
         sot[h]->slack_(rows) = matrix * primal_ - vector;
@@ -257,9 +266,12 @@ void HierarchicalQP::dual_update(int h) {
                   .triangularView<Eigen::Upper>()
                   .transpose()
                   .solveInPlace<Eigen::OnTheLeft>(f);
-                sot[k]->dual_(rows)    = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
-                auto [matrix, vector]  = get_task(sot[k], rows);
-                tau                   -= matrix.transpose() * sot[k]->dual_(rows);
+                sot[k]->dual_(rows) = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
+                prepare_task(sot[k]);
+                Eigen::MatrixXd matrix                = Eigen::MatrixXd::Zero(rows.size(), col_);
+                matrix(Eigen::all, sot[k]->indices_)  = sot[k]->matrix_(rows, Eigen::all);
+                Eigen::VectorXd vector                = sot[k]->vector_(rows);
+                tau                                  -= matrix.transpose() * sot[k]->dual_(rows);
             } else {
                 sot[k]->dual_(rows).setZero();
             }
@@ -268,7 +280,7 @@ void HierarchicalQP::dual_update(int h) {
 }
 
 
-std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr task, const Eigen::VectorXi& rows) {
+void HierarchicalQP::prepare_task(TaskPtr task) {
     if (!task->is_computed()) {
         task->compute();
         assert(task->indices_.maxCoeff() < col_);
@@ -280,9 +292,6 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd> HierarchicalQP::get_task(TaskPtr ta
         // Shift problem to the origin
         task->vector_ -= task->matrix_ * guess_(task->indices_);
     }
-    Eigen::MatrixXd A             = Eigen::MatrixXd::Zero(rows.size(), col_);
-    A(Eigen::all, task->indices_) = task->matrix_(rows, Eigen::all);
-    return {A, task->vector_(rows)};
 }
 
 
