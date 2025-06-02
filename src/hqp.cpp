@@ -178,9 +178,8 @@ void HierarchicalQP::inequality_hqp() {
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
     for (auto iter = 0, h = 0; iter < maxIter && h < sot.size(); ++h) {
-        slack = 1;
-        dual  = -1;
-        while ((slack > 0 || dual < 0) && iter < maxIter) {
+        slack = dual = 1;
+        while ((slack > 0 || dual > 0) && iter < maxIter) {
             equality_hqp();
 
             // Add tasks to the active set.
@@ -205,19 +204,19 @@ void HierarchicalQP::inequality_hqp() {
             // Remove tasks from the active set.
             dual_update(h);
 
-            dual = 1;
+            dual = -1;
             for (auto k = 0; k <= h; ++k) {
                 if (sot[k]->workSet_.any()) {
                     auto rows = find(sot[k]->workSet_);
-                    mValue    = (sot[k]->dual_(rows)).minCoeff(&idx);
-                    if (mValue < -tolerance && mValue < dual) {
+                    mValue    = (sot[k]->dual_(rows)).maxCoeff(&idx);
+                    if (mValue > tolerance && mValue > dual) {
                         dual  = mValue;
                         level = k;
                         row   = rows(idx);
                     }
                 }
             }
-            if (dual < -tolerance) {
+            if (dual > tolerance) {
                 sot[level]->activeSet_(row) = false;
                 continue;
             }
@@ -225,7 +224,7 @@ void HierarchicalQP::inequality_hqp() {
             for (auto k = 0; k <= h; ++k) {
                 if (sot[k]->workSet_.any()) {
                     auto rows                = find(sot[k]->workSet_);
-                    sot[k]->lockedSet_(rows) = (sot[k]->dual_(rows)).array() > tolerance;
+                    sot[k]->lockedSet_(rows) = (sot[k]->dual_(rows)).array() < -tolerance;
                 }
             }
 
@@ -244,8 +243,8 @@ void HierarchicalQP::dual_update(int h) {
         sot[h]->rank_ = 0;
     }
     sot[h]->workSet_    = sot[h]->activeSet_ && !sot[h]->equalitySet_ && !sot[h]->lockedSet_;
-    sot[h]->dual_(rows) = sot[h]->slack_(rows);
-    Eigen::VectorXd tau = matrix.transpose() * sot[h]->dual_(rows);
+    sot[h]->dual_(rows) = -sot[h]->slack_(rows);
+    Eigen::VectorXd tau = matrix.transpose() * sot[h]->slack_(rows);
 
     for (auto dof = sot[h]->rank_, k = h - 1; k >= 0; --k) {
         sot[k]->workSet_ = sot[k]->activeSet_ && !sot[k]->equalitySet_ && !sot[k]->lockedSet_;
@@ -259,9 +258,9 @@ void HierarchicalQP::dual_update(int h) {
                   .triangularView<Eigen::Upper>()
                   .transpose()
                   .solveInPlace<Eigen::OnTheLeft>(f);
-                sot[k]->dual_(rows)    = -sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
+                sot[k]->dual_(rows)    = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
                 auto [matrix, vector]  = get_task(sot[k], rows);
-                tau                   += matrix.transpose() * sot[k]->dual_(rows);
+                tau                   -= matrix.transpose() * sot[k]->dual_(rows);
             } else {
                 sot[k]->dual_(rows).setZero();
             }
