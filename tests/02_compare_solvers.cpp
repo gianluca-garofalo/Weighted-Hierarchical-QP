@@ -9,9 +9,9 @@
 class Task0 : public hqp::TaskInterface<> {
   private:
     void run() override {
-        matrix_ =
-          (Eigen::MatrixXd(6, 3) << Eigen::MatrixXd::Identity(3, 3), -Eigen::MatrixXd::Identity(3, 3)).finished();
-        vector_ = (Eigen::VectorXd(6) << Eigen::VectorXd::Ones(3), Eigen::VectorXd::Ones(3)).finished();
+        matrix_ = Eigen::MatrixXd::Identity(3, 3);
+        lower_ = -Eigen::VectorXd::Ones(3);
+        upper_ = Eigen::VectorXd::Ones(3);
     }
 
   public:
@@ -24,7 +24,8 @@ class Task1 : public hqp::TaskInterface<> {
   private:
     void run() override {
         matrix_ = (Eigen::MatrixXd(1, 3) << 1, 1, 1).finished();
-        vector_ = Eigen::VectorXd::Ones(1);
+        lower_ = -1e9 * Eigen::VectorXd::Ones(1);
+        upper_ = Eigen::VectorXd::Ones(1);
     }
 
   public:
@@ -37,7 +38,7 @@ class Task2 : public hqp::TaskInterface<> {
   private:
     void run() override {
         matrix_ = (Eigen::MatrixXd(1, 3) << 1, -1, 0).finished();
-        vector_ = 0.5 * Eigen::VectorXd::Ones(1);
+        lower_ = upper_ = 0.5 * Eigen::VectorXd::Ones(1);
     }
 
   public:
@@ -49,8 +50,9 @@ class Task2 : public hqp::TaskInterface<> {
 class Task3 : public hqp::TaskInterface<> {
   private:
     void run() override {
-        matrix_ = (Eigen::MatrixXd(2, 3) << 3, 1, -1, -3, -1, 1).finished();
-        vector_ = (Eigen::VectorXd(2) << 20, -10).finished();
+        matrix_ = (Eigen::MatrixXd(1, 3) << 3, 1, -1).finished();
+        lower_ = 10 * Eigen::VectorXd::Ones(1);
+        upper_ = 20 * Eigen::VectorXd::Ones(1);
     }
 
   public:
@@ -64,10 +66,10 @@ int main() {
     // HQP
     hqp::HierarchicalQP hqp(3);
     hqp.sot.reserve(4);
-    hqp.sot.emplace_back<Task0>(Eigen::VectorXi::Zero(6).cast<bool>());
+    hqp.sot.emplace_back<Task0>(Eigen::VectorXi::Zero(3).cast<bool>());
     hqp.sot.emplace_back<Task1>(Eigen::VectorXi::Zero(1).cast<bool>());
     hqp.sot.emplace_back<Task2>(Eigen::VectorXi::Ones(1).cast<bool>());
-    hqp.sot.emplace_back<Task3>(Eigen::VectorXi::Zero(2).cast<bool>());
+    hqp.sot.emplace_back<Task3>(Eigen::VectorXi::Zero(1).cast<bool>());
     auto t_start  = std::chrono::high_resolution_clock::now();
     auto solution = hqp.get_primal();
     auto t_end    = std::chrono::high_resolution_clock::now();

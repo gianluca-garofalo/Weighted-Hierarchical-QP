@@ -65,6 +65,33 @@ int main() {
     bl.tail(ncols)       = Eigen::VectorXd::Zero(ncols);
     break_points(ntasks) = total_rows + ncols;
 
+    std::stringstream sA, sbl, sbu, sbk;
+    sA << "A << ";
+    sbl << "bl << ";
+    sbu << "bu << ";
+    sbk << "break_points << ";
+    int row, col;
+    for (row = 0; row < A.rows() - 1; ++row) {
+        for (col = 0; col < A.cols(); ++col) {
+            sA << A(row, col) << ", ";
+        }
+        sbl << bl(row) << ", ";
+        sbu << bu(row) << ", ";
+    }
+    for (col = 0; col < A.cols() - 1; ++col) {
+        sA << A(row, col) << ", ";
+    }
+    sA << A(row, col) << ";" << std::endl;
+    sbl << bl(row) << ";" << std::endl;
+    sbu << bu(row) << ";" << std::endl;
+
+    for (row = 0; row < break_points.rows() - 1; ++row) {
+        sbk << break_points(row) << ", ";
+    }
+    sbk << break_points(row) << ";" << std::endl;
+
+    std::cout << '\n' << sA.str() << sbl.str() << sbu.str() << sbk.str();
+
     auto t_start = std::chrono::high_resolution_clock::now();
     auto t_stop  = t_start;
 
@@ -96,33 +123,6 @@ int main() {
     std::cout << "Solution LexLS: " << lexls.transpose() << std::endl;
     std::cout << "LexLS execution time: " << std::chrono::duration<double>(t_stop - t_start).count() << " seconds"
               << std::endl;
-
-    std::stringstream sA, sbl, sbu, sbk;
-    sA << "A << ";
-    sbl << "bl << ";
-    sbu << "bu << ";
-    sbk << "break_points << ";
-    int row, col;
-    for (row = 0; row < A.rows() - 1; ++row) {
-        for (col = 0; col < A.cols(); ++col) {
-            sA << A(row, col) << ", ";
-        }
-        sbl << bl(row) << ", ";
-        sbu << bu(row) << ", ";
-    }
-    for (col = 0; col < A.cols() - 1; ++col) {
-        sA << A(row, col) << ", ";
-    }
-    sA << A(row, col) << ";" << std::endl;
-    sbl << bl(row) << ";" << std::endl;
-    sbu << bu(row) << ";" << std::endl;
-
-    for (row = 0; row < break_points.rows() - 1; ++row) {
-        sbk << break_points(row) << ", ";
-    }
-    sbk << break_points(row) << ";" << std::endl;
-
-    std::cout << '\n' << sA.str() << sbl.str() << sbu.str() << sbk.str();
 
     return hqp.isApprox(lexls) ? 0 : 1;
 }

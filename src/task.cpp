@@ -27,15 +27,17 @@ void SubTasks::compute() {
     auto cols = sot[0]->matrix_.cols();
     auto rows = equalitySet_.size();
     matrix_.resize(rows, cols);
-    vector_.resize(rows);
+    lower_.resize(rows);
+    upper_.resize(rows);
     indices_ = sot[0]->indices_;
     for (int start = 0; const auto& task : sot) {
         task->compute();
         assert(cols == task->matrix_.cols());
         assert(indices_ == task->indices_);
-        auto m                        = task->vector_.rows();
+        auto m                        = task->lower_.rows();
         matrix_.middleRows(start, m)  = task->matrix_;
-        vector_.segment(start, m)     = task->vector_;
+        lower_.segment(start, m)      = task->lower_;
+        upper_.segment(start, m)      = task->upper_;
         start                        += m;
     }
     isComputed_ = true;
@@ -47,9 +49,11 @@ void SubTasks::set_weight(const Eigen::MatrixXd& weight) {
 
     if (is_computed()) {
         weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(matrix_);
-        weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(vector_);
+        weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(lower_);
+        weight_.matrixU().solveInPlace<Eigen::OnTheLeft>(upper_);
         matrix_ = lltOf.matrixU() * matrix_;
-        vector_ = lltOf.matrixU() * vector_;
+        lower_  = lltOf.matrixU() * lower_;
+        upper_  = lltOf.matrixU() * upper_;
     }
 
     weight_ = lltOf;

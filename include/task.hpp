@@ -29,7 +29,8 @@ class Task {
     /** Dual variables for inequality handling. */
     Eigen::VectorXd dual_;
     /** Current active constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> activeSet_;
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeLowSet_;
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeUpSet_;
     /** Constraints temporarily locked. */
     Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
     /** Working set of constraints. */
@@ -45,7 +46,8 @@ class Task {
     /** Constraint matrix computed by the task. */
     Eigen::MatrixXd matrix_;
     /** Right-hand side vector. */
-    Eigen::VectorXd vector_;
+    Eigen::VectorXd lower_;
+    Eigen::VectorXd upper_;
     /** Initial equality constraints. */
     Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
     /** Indices of active variables. */
@@ -150,8 +152,9 @@ class TaskInterface : public Task {
           },
           *args_);
 
-        assert(matrix_.rows() == vector_.rows());
-        assert(equalitySet_.size() == vector_.rows());
+        assert(matrix_.rows() == upper_.rows());
+        assert(lower_.rows() == upper_.rows());
+        assert(equalitySet_.size() == upper_.rows());
 
         if (!indices_.size()) {
             auto n   = matrix_.cols();
