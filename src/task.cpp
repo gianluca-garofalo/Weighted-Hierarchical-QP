@@ -4,7 +4,7 @@ namespace hqp {
 
 Task::Task(int size) {
     equalitySet_ = lockedSet_ = workSet_ = Eigen::VectorXi::Zero(size).cast<bool>();
-    slack_ = dual_ = Eigen::VectorXd::Zero(size);
+    dual_ = Eigen::VectorXd::Zero(size);
     codMid_ = codLeft_ = Eigen::MatrixXd::Zero(size, size);
 }
 

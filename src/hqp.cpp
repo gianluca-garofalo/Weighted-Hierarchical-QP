@@ -75,7 +75,7 @@ void HierarchicalQP::equality_hqp() {
 
             inverse_.middleCols(col_ - dof, rank) = codRight_.leftCols(rank);
             task_.segment(col_ - dof, rank)       = codLeft.leftCols(rank).transpose() * vector;
-            sot[k_]->slack_(rows)                 = codLeft.leftCols(rank) * task_.segment(col_ - dof, rank) - vector;
+            sot[k_]->dual_(rows)                  = vector - codLeft.leftCols(rank) * task_.segment(col_ - dof, rank);
             cod.matrixT()
               .topLeftCorner(rank, rank)
               .triangularView<Eigen::Upper>()
@@ -244,18 +244,17 @@ void HierarchicalQP::dual_update(int h) {
     Eigen::VectorXd vector = sot[h]->activeUpSet_(rows).select(sot[h]->upper_(rows), sot[h]->lower_(rows));
 
     if (h >= k_) {
-        sot[h]->slack_(rows) = matrix * primal_ - vector;
-        sot[h]->rank_        = 0;
+        sot[h]->dual_(rows) = vector - matrix * primal_;
+        sot[h]->rank_       = 0;
     }
-    sot[h]->dual_(rows) = -sot[h]->slack_(rows);
-    Eigen::VectorXd tau = matrix.transpose() * sot[h]->slack_(rows);
+    Eigen::VectorXd tau = matrix.transpose() * sot[h]->dual_(rows);
 
     for (auto dof = sot[h]->rank_, k = h - 1; k >= 0; --k) {
         if ((sot[k]->activeLowSet_ || sot[k]->activeUpSet_).any()) {
             auto rows = find(sot[k]->activeLowSet_ || sot[k]->activeUpSet_);
             if (sot[k]->rank_ && k < k_) {
                 dof               += sot[k]->rank_;
-                Eigen::VectorXd f  = inverse_.middleCols(col_ - dof, sot[k]->rank_).transpose() * tau;
+                Eigen::VectorXd f  = -inverse_.middleCols(col_ - dof, sot[k]->rank_).transpose() * tau;
                 sot[k]
                   ->codMid_.topLeftCorner(sot[k]->rank_, sot[k]->rank_)
                   .triangularView<Eigen::Upper>()
@@ -263,7 +262,7 @@ void HierarchicalQP::dual_update(int h) {
                   .solveInPlace<Eigen::OnTheLeft>(f);
                 sot[k]->dual_(rows)     = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
                 Eigen::MatrixXd matrix  = sot[k]->matrix_(rows, Eigen::all);
-                tau                    -= matrix.transpose() * sot[k]->dual_(rows);
+                tau                    += matrix.transpose() * sot[k]->dual_(rows);
             } else {
                 sot[k]->dual_(rows).setZero();
             }

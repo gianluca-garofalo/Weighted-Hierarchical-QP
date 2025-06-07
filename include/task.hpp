@@ -24,8 +24,6 @@ class Task {
   private:
     /** Rank of the task computed during solve. */
     int rank_;
-    /** Slack variables for constraint satisfaction. */
-    Eigen::VectorXd slack_;
     /** Dual variables for inequality handling. */
     Eigen::VectorXd dual_;
     /** Current active constraints. */
