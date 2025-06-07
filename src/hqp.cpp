@@ -64,12 +64,12 @@ void HierarchicalQP::equality_hqp() {
             cod.compute(matrix * nullSpace_.leftCols(dof));
             auto rank    = cod.rank();
             auto leftDof = dof - rank;
+
+            codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             if (leftDof > 0) {
+                // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
                 codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
                 nullSpace_.leftCols(leftDof) = codRight_.middleCols(rank, leftDof);
-            } else {
-                // In this case matrixZ() is the identity, so Eigen does not compute it and matrixZ() returns garbage
-                codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
             }
             Eigen::MatrixXd codLeft = cod.householderQ();
 
