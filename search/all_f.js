@@ -10,5 +10,5 @@ var searchData=
   ['smartptr_7',['SmartPtr',['../namespacehqp.html#aeeaa1ccab8a2d282c2123626c86c014c',1,'hqp']]],
   ['solve_8',['solve',['../classhqp_1_1HierarchicalQP.html#adac78a9cc96e9d4f311b9ef72acd7ebd',1,'hqp::HierarchicalQP']]],
   ['sot_9',['sot',['../classhqp_1_1HierarchicalQP.html#a87f0e59878f2ef5b5f7ac6063ce73149',1,'hqp::HierarchicalQP::sot()'],['../classhqp_1_1SubTasks.html#ae14d520290b156215dcf7bc90c4df8d9',1,'hqp::SubTasks::sot()']]],
-  ['subtasks_10',['SubTasks',['../classhqp_1_1SubTasks.html',1,'hqp::SubTasks'],['../classhqp_1_1Task.html#a38cc77de13ac53fb9c5226b5d52889a3',1,'hqp::Task::SubTasks()'],['../classhqp_1_1SubTasks.html#a9f480533d44d102d2f86c7d62493a307',1,'hqp::SubTasks::SubTasks()']]]
+  ['subtasks_10',['SubTasks',['../classhqp_1_1SubTasks.html',1,'hqp::SubTasks'],['../classhqp_1_1Task.html#a38cc77de13ac53fb9c5226b5d52889a3',1,'hqp::Task::SubTasks()'],['../classhqp_1_1SubTasks.html#a4c8eb042f89be51ee1f82f97be8a7ccc',1,'hqp::SubTasks::SubTasks()']]]
 ];

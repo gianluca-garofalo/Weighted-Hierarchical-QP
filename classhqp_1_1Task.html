@@ -95,9 +95,9 @@ Inheritance diagram for hqp::Task:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a19c516e5a3e080e580c06ab3eef96fb0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a19c516e5a3e080e580c06ab3eef96fb0">Task</a> (const Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt; &amp;set)</td></tr>
-<tr class="memdesc:a19c516e5a3e080e580c06ab3eef96fb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="classhqp_1_1Task.html">Task</a> instance with a given set of equality constraints.  <br /></td></tr>
-<tr class="separator:a19c516e5a3e080e580c06ab3eef96fb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cefb8fa72a7159b4ae66fa02355781f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a5cefb8fa72a7159b4ae66fa02355781f">Task</a> (int size)</td></tr>
+<tr class="memdesc:a5cefb8fa72a7159b4ae66fa02355781f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="classhqp_1_1Task.html">Task</a> instance with a given set of equality constraints.  <br /></td></tr>
+<tr class="separator:a5cefb8fa72a7159b4ae66fa02355781f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe8e505e97a3e642a51e044c1bb99795"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#abe8e505e97a3e642a51e044c1bb99795">~Task</a> ()=default</td></tr>
 <tr class="separator:abe8e505e97a3e642a51e044c1bb99795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac247b5a10cc505d841a0449923d8ad9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac247b5a10cc505d841a0449923d8ad9f">select_variables</a> (const Eigen::VectorXi &amp;indices)</td></tr>
@@ -123,12 +123,16 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ac50347ebfb913039837e2de3025e5ce6"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac50347ebfb913039837e2de3025e5ce6">matrix_</a></td></tr>
 <tr class="memdesc:ac50347ebfb913039837e2de3025e5ce6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraint matrix computed by the task.  <br /></td></tr>
 <tr class="separator:ac50347ebfb913039837e2de3025e5ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29220dd8eac0fa182d7b43f415b3e05a"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a29220dd8eac0fa182d7b43f415b3e05a">vector_</a></td></tr>
-<tr class="memdesc:a29220dd8eac0fa182d7b43f415b3e05a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side vector.  <br /></td></tr>
-<tr class="separator:a29220dd8eac0fa182d7b43f415b3e05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7761e65e5dabe87839768a6e68b4a7e"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa7761e65e5dabe87839768a6e68b4a7e">equalitySet_</a></td></tr>
-<tr class="memdesc:aa7761e65e5dabe87839768a6e68b4a7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial equality constraints.  <br /></td></tr>
-<tr class="separator:aa7761e65e5dabe87839768a6e68b4a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15d99d1046b30dff7b324ba4543247d"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ab15d99d1046b30dff7b324ba4543247d">lower_</a></td></tr>
+<tr class="memdesc:ab15d99d1046b30dff7b324ba4543247d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side vector.  <br /></td></tr>
+<tr class="separator:ab15d99d1046b30dff7b324ba4543247d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f4c735caae03cc2e9eb197a417d70f"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa3f4c735caae03cc2e9eb197a417d70f">upper_</a></td></tr>
+<tr class="separator:aa3f4c735caae03cc2e9eb197a417d70f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3322aaafd697087cb29c56f4b37eb24"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa3322aaafd697087cb29c56f4b37eb24">activeLowSet_</a></td></tr>
+<tr class="memdesc:aa3322aaafd697087cb29c56f4b37eb24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current active constraints.  <br /></td></tr>
+<tr class="separator:aa3322aaafd697087cb29c56f4b37eb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20e3aa3306e13322ef79ce06b6605aac"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a20e3aa3306e13322ef79ce06b6605aac">activeUpSet_</a></td></tr>
+<tr class="separator:a20e3aa3306e13322ef79ce06b6605aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f7c96cfb63bafebd91d4c5819a80934"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXi&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a7f7c96cfb63bafebd91d4c5819a80934">indices_</a></td></tr>
 <tr class="memdesc:a7f7c96cfb63bafebd91d4c5819a80934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indices of active variables.  <br /></td></tr>
 <tr class="separator:a7f7c96cfb63bafebd91d4c5819a80934"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,18 +145,15 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a19b1cd55c719e352b326037d2195135d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a19b1cd55c719e352b326037d2195135d">rank_</a></td></tr>
-<tr class="memdesc:a19b1cd55c719e352b326037d2195135d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the task computed during solve.  <br /></td></tr>
-<tr class="separator:a19b1cd55c719e352b326037d2195135d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa81701fa61decfdf9defa3b5d4eee473"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa81701fa61decfdf9defa3b5d4eee473">rank_</a></td></tr>
+<tr class="memdesc:aa81701fa61decfdf9defa3b5d4eee473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the task computed during solve.  <br /></td></tr>
+<tr class="separator:aa81701fa61decfdf9defa3b5d4eee473"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71645bf15065c3537956055fb97676a1"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a71645bf15065c3537956055fb97676a1">slack_</a></td></tr>
 <tr class="memdesc:a71645bf15065c3537956055fb97676a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slack variables for constraint satisfaction.  <br /></td></tr>
 <tr class="separator:a71645bf15065c3537956055fb97676a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67660f2c3a08266d23dd90d216682373"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a67660f2c3a08266d23dd90d216682373">dual_</a></td></tr>
 <tr class="memdesc:a67660f2c3a08266d23dd90d216682373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dual variables for inequality handling.  <br /></td></tr>
 <tr class="separator:a67660f2c3a08266d23dd90d216682373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a739be79690107fa0d9f0808e32735516"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a739be79690107fa0d9f0808e32735516">activeSet_</a></td></tr>
-<tr class="memdesc:a739be79690107fa0d9f0808e32735516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current active constraints.  <br /></td></tr>
-<tr class="separator:a739be79690107fa0d9f0808e32735516"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a718e61480fb09ff3e500184444771dee"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a718e61480fb09ff3e500184444771dee">lockedSet_</a></td></tr>
 <tr class="memdesc:a718e61480fb09ff3e500184444771dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraints temporarily locked.  <br /></td></tr>
 <tr class="separator:a718e61480fb09ff3e500184444771dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,8 +175,8 @@ Friends</h2></td></tr>
 <tr class="separator:a38cc77de13ac53fb9c5226b5d52889a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a19c516e5a3e080e580c06ab3eef96fb0" name="a19c516e5a3e080e580c06ab3eef96fb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19c516e5a3e080e580c06ab3eef96fb0">&#9670;&#160;</a></span>Task()</h2>
+<a id="a5cefb8fa72a7159b4ae66fa02355781f" name="a5cefb8fa72a7159b4ae66fa02355781f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cefb8fa72a7159b4ae66fa02355781f">&#9670;&#160;</a></span>Task()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,8 +184,8 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">hqp::Task::Task </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt; &amp;&#160;</td>
-          <td class="paramname"><em>set</em></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -356,8 +357,8 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a739be79690107fa0d9f0808e32735516" name="a739be79690107fa0d9f0808e32735516"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a739be79690107fa0d9f0808e32735516">&#9670;&#160;</a></span>activeSet_</h2>
+<a id="aa3322aaafd697087cb29c56f4b37eb24" name="aa3322aaafd697087cb29c56f4b37eb24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3322aaafd697087cb29c56f4b37eb24">&#9670;&#160;</a></span>activeLowSet_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,17 +367,39 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Array&lt;bool, Eigen::Dynamic, 1&gt; hqp::Task::activeSet_</td>
+          <td class="memname">Eigen::Array&lt;bool, Eigen::Dynamic, 1&gt; hqp::Task::activeLowSet_</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Current active constraints. </p>
+
+</div>
+</div>
+<a id="a20e3aa3306e13322ef79ce06b6605aac" name="a20e3aa3306e13322ef79ce06b6605aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20e3aa3306e13322ef79ce06b6605aac">&#9670;&#160;</a></span>activeUpSet_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Array&lt;bool, Eigen::Dynamic, 1&gt; hqp::Task::activeUpSet_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -452,30 +475,6 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7761e65e5dabe87839768a6e68b4a7e" name="aa7761e65e5dabe87839768a6e68b4a7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7761e65e5dabe87839768a6e68b4a7e">&#9670;&#160;</a></span>equalitySet_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Array&lt;bool, Eigen::Dynamic, 1&gt; hqp::Task::equalitySet_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initial equality constraints. </p>
-
-</div>
-</div>
 <a id="a7f7c96cfb63bafebd91d4c5819a80934" name="a7f7c96cfb63bafebd91d4c5819a80934"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7f7c96cfb63bafebd91d4c5819a80934">&#9670;&#160;</a></span>indices_</h2>
 
@@ -548,6 +547,30 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="ab15d99d1046b30dff7b324ba4543247d" name="ab15d99d1046b30dff7b324ba4543247d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab15d99d1046b30dff7b324ba4543247d">&#9670;&#160;</a></span>lower_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd hqp::Task::lower_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Right-hand side vector. </p>
+
+</div>
+</div>
 <a id="ac50347ebfb913039837e2de3025e5ce6" name="ac50347ebfb913039837e2de3025e5ce6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac50347ebfb913039837e2de3025e5ce6">&#9670;&#160;</a></span>matrix_</h2>
 
@@ -572,8 +595,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a19b1cd55c719e352b326037d2195135d" name="a19b1cd55c719e352b326037d2195135d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19b1cd55c719e352b326037d2195135d">&#9670;&#160;</a></span>rank_</h2>
+<a id="aa81701fa61decfdf9defa3b5d4eee473" name="aa81701fa61decfdf9defa3b5d4eee473"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa81701fa61decfdf9defa3b5d4eee473">&#9670;&#160;</a></span>rank_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -582,7 +605,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int hqp::Task::rank_</td>
+          <td class="memname">int hqp::Task::rank_</td>
         </tr>
       </table>
   </td>
@@ -636,8 +659,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a29220dd8eac0fa182d7b43f415b3e05a" name="a29220dd8eac0fa182d7b43f415b3e05a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29220dd8eac0fa182d7b43f415b3e05a">&#9670;&#160;</a></span>vector_</h2>
+<a id="aa3f4c735caae03cc2e9eb197a417d70f" name="aa3f4c735caae03cc2e9eb197a417d70f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f4c735caae03cc2e9eb197a417d70f">&#9670;&#160;</a></span>upper_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -646,7 +669,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::VectorXd hqp::Task::vector_</td>
+          <td class="memname">Eigen::VectorXd hqp::Task::upper_</td>
         </tr>
       </table>
   </td>
@@ -655,8 +678,6 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Right-hand side vector. </p>
 
 </div>
 </div>
