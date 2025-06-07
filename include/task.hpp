@@ -156,6 +156,9 @@ class TaskInterface : public Task {
         assert(lower_.rows() == upper_.rows());
         assert(equalitySet_.size() == upper_.rows());
 
+
+        equalitySet_ = upper_.array() == lower_.array();
+
         if (!indices_.size()) {
             auto n   = matrix_.cols();
             indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
