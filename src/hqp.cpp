@@ -53,9 +53,8 @@ void HierarchicalQP::equality_hqp() {
     k_ = 0;
     for (; k_ < sot.size() && dof > 0; ++k_) {
         if ((sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_).any()) {
-            auto rows                             = find(sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_);
-            Eigen::MatrixXd matrix                = Eigen::MatrixXd::Zero(rows.size(), col_);
-            matrix(Eigen::all, sot[k_]->indices_) = sot[k_]->matrix_(rows, Eigen::all);
+            auto rows               = find(sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_);
+            Eigen::MatrixXd matrix  = sot[k_]->matrix_(rows, Eigen::all);
             Eigen::VectorXd vector  = sot[k_]->activeUpSet_(rows).select(sot[k_]->upper_(rows), sot[k_]->lower_(rows));
             vector                 -= matrix * primal_;
 
@@ -168,11 +167,10 @@ void HierarchicalQP::inequality_hqp() {
             slack = -1;
             for (auto k = 0; k < sot.size(); ++k) {
                 if ((!sot[k]->activeUpSet_).any()) {
-                    auto rows                            = find(!sot[k]->activeUpSet_);
-                    Eigen::MatrixXd matrix               = Eigen::MatrixXd::Zero(rows.size(), col_);
-                    matrix(Eigen::all, sot[k]->indices_) = sot[k]->matrix_(rows, Eigen::all);
-                    Eigen::VectorXd vector               = sot[k]->upper_(rows);
-                    mValue                               = (matrix * primal_ - vector).maxCoeff(&idx);
+                    auto rows              = find(!sot[k]->activeUpSet_);
+                    Eigen::MatrixXd matrix = sot[k]->matrix_(rows, Eigen::all);
+                    Eigen::VectorXd vector = sot[k]->upper_(rows);
+                    mValue                 = (matrix * primal_ - vector).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
                         level        = k;
@@ -182,11 +180,10 @@ void HierarchicalQP::inequality_hqp() {
                 }
 
                 if ((!sot[k]->activeLowSet_).any()) {
-                    auto rows                            = find(!sot[k]->activeLowSet_);
-                    Eigen::MatrixXd matrix               = Eigen::MatrixXd::Zero(rows.size(), col_);
-                    matrix(Eigen::all, sot[k]->indices_) = sot[k]->matrix_(rows, Eigen::all);
-                    Eigen::VectorXd vector               = sot[k]->lower_(rows);
-                    mValue                               = (vector - matrix * primal_).maxCoeff(&idx);
+                    auto rows              = find(!sot[k]->activeLowSet_);
+                    Eigen::MatrixXd matrix = sot[k]->matrix_(rows, Eigen::all);
+                    Eigen::VectorXd vector = sot[k]->lower_(rows);
+                    mValue                 = (vector - matrix * primal_).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
                         level        = k;
@@ -242,9 +239,8 @@ void HierarchicalQP::inequality_hqp() {
 
 
 void HierarchicalQP::dual_update(int h) {
-    auto rows                            = find(sot[h]->activeLowSet_ || sot[h]->activeUpSet_);
-    Eigen::MatrixXd matrix               = Eigen::MatrixXd::Zero(rows.size(), col_);
-    matrix(Eigen::all, sot[h]->indices_) = sot[h]->matrix_(rows, Eigen::all);
+    auto rows              = find(sot[h]->activeLowSet_ || sot[h]->activeUpSet_);
+    Eigen::MatrixXd matrix = sot[h]->matrix_(rows, Eigen::all);
     Eigen::VectorXd vector = sot[h]->activeUpSet_(rows).select(sot[h]->upper_(rows), sot[h]->lower_(rows));
 
     if (h >= k_) {
@@ -265,10 +261,9 @@ void HierarchicalQP::dual_update(int h) {
                   .triangularView<Eigen::Upper>()
                   .transpose()
                   .solveInPlace<Eigen::OnTheLeft>(f);
-                sot[k]->dual_(rows)                   = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
-                Eigen::MatrixXd matrix                = Eigen::MatrixXd::Zero(rows.size(), col_);
-                matrix(Eigen::all, sot[k]->indices_)  = sot[k]->matrix_(rows, Eigen::all);
-                tau                                  -= matrix.transpose() * sot[k]->dual_(rows);
+                sot[k]->dual_(rows)     = sot[k]->codLeft_(rows, Eigen::seqN(0, sot[k]->rank_)) * f;
+                Eigen::MatrixXd matrix  = sot[k]->matrix_(rows, Eigen::all);
+                tau                    -= matrix.transpose() * sot[k]->dual_(rows);
             } else {
                 sot[k]->dual_(rows).setZero();
             }
@@ -290,6 +285,10 @@ void HierarchicalQP::prepare_task(TaskPtr task) {
         // Shift problem to the origin
         task->lower_ -= task->matrix_ * guess_(task->indices_);
         task->upper_ -= task->matrix_ * guess_(task->indices_);
+
+        auto tmp = task->matrix_;
+        task->matrix_.resize(tmp.rows(), col_);
+        task->matrix_(Eigen::all, task->indices_) = tmp;
     }
 }
 
