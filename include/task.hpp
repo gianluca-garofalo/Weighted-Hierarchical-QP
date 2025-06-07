@@ -74,7 +74,7 @@ class Task {
      *
      * @param set Boolean array specifying which constraints are treated as equality constraints.
      */
-    Task(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
+    Task(int size);
     virtual ~Task() = default;
 
     /**
@@ -170,8 +170,8 @@ class TaskInterface : public Task {
      *
      * Note: No task arguments are initialized here. You must call update() before compute().
      */
-    TaskInterface(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : Task(set)
+    TaskInterface(int size)
+      : Task(size)
       , args_(std::nullopt) {
     }
 
@@ -209,7 +209,7 @@ class SubTasks : public Task {
      * @brief Constructs a SubTasks instance with a given equality constraint set.
      * @param set Boolean array indicating equality constraints.
      */
-    SubTasks(const Eigen::Array<bool, Eigen::Dynamic, 1>& set);
+    SubTasks(int size);
 
     /**
      * @brief Aggregates the results from all subtasks to form a composite solution.

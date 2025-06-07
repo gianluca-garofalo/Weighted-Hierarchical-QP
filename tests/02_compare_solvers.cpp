@@ -15,8 +15,8 @@ class Task0 : public hqp::TaskInterface<> {
     }
 
   public:
-    Task0(Eigen::Array<bool, Eigen::Dynamic, 1> const& set)
-      : TaskInterface(set) {
+    Task0(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -29,8 +29,8 @@ class Task1 : public hqp::TaskInterface<> {
     }
 
   public:
-    Task1(Eigen::Array<bool, Eigen::Dynamic, 1> const& set)
-      : TaskInterface(set) {
+    Task1(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -42,8 +42,8 @@ class Task2 : public hqp::TaskInterface<> {
     }
 
   public:
-    Task2(Eigen::Array<bool, Eigen::Dynamic, 1> const& set)
-      : TaskInterface(set) {
+    Task2(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -56,8 +56,8 @@ class Task3 : public hqp::TaskInterface<> {
     }
 
   public:
-    Task3(Eigen::Array<bool, Eigen::Dynamic, 1> const& set)
-      : TaskInterface(set) {
+    Task3(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -66,10 +66,10 @@ int main() {
     // HQP
     hqp::HierarchicalQP hqp(3);
     hqp.sot.reserve(4);
-    hqp.sot.emplace_back<Task0>(Eigen::VectorXi::Zero(3).cast<bool>());
-    hqp.sot.emplace_back<Task1>(Eigen::VectorXi::Zero(1).cast<bool>());
-    hqp.sot.emplace_back<Task2>(Eigen::VectorXi::Ones(1).cast<bool>());
-    hqp.sot.emplace_back<Task3>(Eigen::VectorXi::Zero(1).cast<bool>());
+    hqp.sot.emplace_back<Task0>(3);
+    hqp.sot.emplace_back<Task1>(1);
+    hqp.sot.emplace_back<Task2>(1);
+    hqp.sot.emplace_back<Task3>(1);
     auto t_start  = std::chrono::high_resolution_clock::now();
     auto solution = hqp.get_primal();
     auto t_end    = std::chrono::high_resolution_clock::now();

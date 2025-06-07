@@ -123,17 +123,14 @@ void HierarchicalQP::set_stack(Eigen::MatrixXd const& A,
         }
 
       public:
-        GenericTask(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-          : TaskInterface(set) {
+        GenericTask(int size)
+          : TaskInterface(size) {
         }
     };
 
     sot.reserve(break_points.size());
     for (int start = 0; int const& stop : break_points) {
-        Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet =
-          bu.segment(start, stop - start).array() == bl.segment(start, stop - start).array();
-
-        sot.emplace_back<GenericTask>(equalitySet);
+        sot.emplace_back<GenericTask>(stop - start);
         sot.back().cast<GenericTask>()->update(
           A.middleRows(start, stop - start), bl.segment(start, stop - start), bu.segment(start, stop - start));
         sot.back()->compute();

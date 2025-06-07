@@ -18,8 +18,8 @@ class Task0 : public TaskInterface<> {
     void run() override;
 
   public:
-    Task0(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task0(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -28,8 +28,8 @@ class Task1 : public TaskInterface<double, Eigen::VectorXd const&> {
     void run(double, Eigen::VectorXd const& vec) override;
 
   public:
-    Task1(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task1(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -38,8 +38,8 @@ class Task2 : public TaskInterface<> {
     void run() override;
 
   public:
-    Task2(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task2(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -48,8 +48,8 @@ class Task3 : public TaskInterface<> {
     void run() override;
 
   public:
-    Task3(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task3(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -58,8 +58,8 @@ class Task5 : public TaskInterface<> {
     void run() override;
 
   public:
-    Task5(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task5(int size)
+      : TaskInterface(size) {
     }
 };
 
@@ -68,8 +68,8 @@ class Task6 : public TaskInterface<> {
     void run() override;
 
   public:
-    Task6(const Eigen::Array<bool, Eigen::Dynamic, 1>& set)
-      : TaskInterface(set) {
+    Task6(int size)
+      : TaskInterface(size) {
     }
 };
 
