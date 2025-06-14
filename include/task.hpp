@@ -37,6 +37,8 @@ class Task {
     Eigen::MatrixXd codMid_;
     /** Auxiliary matrix for decomposition. */
     Eigen::MatrixXd codLeft_;
+    /** Auxiliary matrix for decomposition. */
+    Eigen::MatrixXd codRight_;
     friend class HierarchicalQP;
     friend class SubTasks;
 

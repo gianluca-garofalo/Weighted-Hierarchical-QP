@@ -29,10 +29,6 @@ class HierarchicalQP {
     Eigen::VectorXd guess_;
     /** Stores pseudo-inverse data. */
     Eigen::MatrixXd inverse_;
-    /** Basis for the nullspace. */
-    Eigen::MatrixXd nullSpace_;
-    /** Matrix used for decomposition adjustments. */
-    Eigen::MatrixXd codRight_;
     /** Cholesky metric used for stability. */
     Eigen::MatrixXd cholMetric_;
     /** Index tracking the active task level. */

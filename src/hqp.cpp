@@ -10,8 +10,6 @@ HierarchicalQP::HierarchicalQP(int n)
   , task_{Eigen::VectorXd::Zero(n)}
   , guess_{Eigen::VectorXd::Zero(n)}
   , inverse_{Eigen::MatrixXd::Zero(n, n)}
-  , nullSpace_{Eigen::MatrixXd::Identity(n, n)}
-  , codRight_{Eigen::MatrixXd::Zero(n, n)}
   , cholMetric_{Eigen::MatrixXd::Identity(n, n)} {
 }
 
@@ -19,6 +17,7 @@ HierarchicalQP::HierarchicalQP(int n)
 void HierarchicalQP::solve() {
     bool isAllEquality = true;
     for (auto& task : sot) {
+        task->codRight_.resize(col_, col_);
         prepare_task(task);
         if (!task->activeLowSet_.size() || !task->activeUpSet_.size()) {
             task->activeLowSet_ = task->activeUpSet_ = task->equalitySet_;
@@ -47,8 +46,8 @@ void HierarchicalQP::solve() {
 
 void HierarchicalQP::equality_hqp() {
     primal_.setZero();
-    auto dof   = col_;
-    nullSpace_ = cholMetric_;
+    auto dof = col_;
+    Eigen::MatrixXd nullSpace{cholMetric_};
 
     k_ = 0;
     for (; k_ < sot.size() && dof > 0; ++k_) {
@@ -61,19 +60,20 @@ void HierarchicalQP::equality_hqp() {
             Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
             // TODO: dynamically update tolerances to avoid tasks oscillations
             cod.setThreshold(sot[k_]->tolerance);
-            cod.compute(matrix * nullSpace_.leftCols(dof));
+            cod.compute(matrix * nullSpace.leftCols(dof));
             auto rank    = cod.rank();
             auto leftDof = dof - rank;
 
-            codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
+            sot[k_]->codRight_.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
             if (leftDof > 0) {
                 // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
-                codRight_.leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
-                nullSpace_.leftCols(leftDof) = codRight_.middleCols(rank, leftDof);
+                sot[k_]->codRight_.leftCols(dof) =
+                  nullSpace.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
+                nullSpace.leftCols(leftDof) = sot[k_]->codRight_.middleCols(rank, leftDof);
             }
             Eigen::MatrixXd codLeft = cod.householderQ();
 
-            inverse_.middleCols(col_ - dof, rank) = codRight_.leftCols(rank);
+            inverse_.middleCols(col_ - dof, rank) = sot[k_]->codRight_.leftCols(rank);
             task_.segment(col_ - dof, rank)       = codLeft.leftCols(rank).transpose() * vector;
             sot[k_]->dual_(rows)                  = vector - codLeft.leftCols(rank) * task_.segment(col_ - dof, rank);
             cod.matrixT()
