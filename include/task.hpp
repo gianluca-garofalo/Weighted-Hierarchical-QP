@@ -26,9 +26,14 @@ class Task {
     int rank_;
     /** Dual variables for inequality handling. */
     Eigen::VectorXd dual_;
-    /** Current active constraints. */
+    /** Current active lower-bound constraints. */
     Eigen::Array<bool, Eigen::Dynamic, 1> activeLowSet_;
+    /** Current active upper-bound constraints. */
     Eigen::Array<bool, Eigen::Dynamic, 1> activeUpSet_;
+    /** Constraints allowed to contribute to primal. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> enabledSet_;
+    /** Current active and enabled constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeSet_;
     /** Constraints temporarily locked. */
     Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
     /** Working set of constraints. */
@@ -52,6 +57,8 @@ class Task {
     Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
     /** Indices of active variables. */
     Eigen::VectorXi indices_;
+    /** Level of the nullspace in which to project. */
+    Eigen::ArrayXi parent_;
     /** Flag indicating if task computation is up-to-date. */
     bool isComputed_ = false;
     /** Weight based on Cholesky decomposition. */

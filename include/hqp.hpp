@@ -34,11 +34,18 @@ class HierarchicalQP {
     /** Index tracking the active task level. */
     int k_ = 0;
 
-    void solve();                     ///< Solves the overall HQP by combining tasks.
-    void equality_hqp();              ///< Handles equality constraint resolution.
-    void inequality_hqp();            ///< Handles inequality constrained tasks.
-    void dual_update(int h);          ///< Updates dual variables.
-    void prepare_task(TaskPtr task);  ///< Prepares task data.
+    /** Solves the overall HQP by combining tasks. */
+    void solve();
+    /** Handles equality constraint resolution. */
+    void equality_hqp();
+    /** Handles inequality constrained tasks. */
+    void inequality_hqp();
+    /** Updates dual variables. */
+    void dual_update(int h);
+    /** Prepares task data. */
+    void prepare_task(TaskPtr task);
+    /** Increment primal due to contribution of active constraints in level. */
+    void increment_primal(int parent, int level);
 
   public:
     /** Tolerance for convergence and numerical stability. */

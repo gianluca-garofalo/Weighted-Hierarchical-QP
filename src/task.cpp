@@ -4,8 +4,10 @@ namespace hqp {
 
 Task::Task(int size) {
     equalitySet_ = lockedSet_ = workSet_ = Eigen::VectorXi::Zero(size).cast<bool>();
+    enabledSet_ = activeSet_ = Eigen::VectorXi::Ones(size).cast<bool>();
     dual_ = Eigen::VectorXd::Zero(size);
     codMid_ = codLeft_ = Eigen::MatrixXd::Zero(size, size);
+    parent_ = -Eigen::ArrayXi::Ones(size);
 }
 
 void Task::select_variables(const Eigen::VectorXi& indices) {

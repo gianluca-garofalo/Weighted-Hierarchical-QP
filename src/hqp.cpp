@@ -47,45 +47,15 @@ void HierarchicalQP::solve() {
 void HierarchicalQP::equality_hqp() {
     primal_.setZero();
     auto dof = col_;
-    Eigen::MatrixXd nullSpace{cholMetric_};
 
-    k_ = 0;
-    for (; k_ < sot.size() && dof > 0; ++k_) {
-        if ((sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_).any()) {
-            auto rows               = find(sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_);
-            Eigen::MatrixXd matrix  = sot[k_]->matrix_(rows, Eigen::all);
-            Eigen::VectorXd vector  = sot[k_]->activeUpSet_(rows).select(sot[k_]->upper_(rows), sot[k_]->lower_(rows));
-            vector                 -= matrix * primal_;
+    int lastActive = -1;
+    for (k_ = 0; k_ < sot.size() && dof > 0; ++k_) {
+        sot[k_]->activeSet_ = (sot[k_]->activeLowSet_ || sot[k_]->activeUpSet_) && sot[k_]->enabledSet_;
+        if (sot[k_]->activeSet_.any()) {
+            increment_primal(lastActive, k_);
+            lastActive = k_;
 
-            Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
-            // TODO: dynamically update tolerances to avoid tasks oscillations
-            cod.setThreshold(sot[k_]->tolerance);
-            cod.compute(matrix * nullSpace.leftCols(dof));
-            auto rank    = cod.rank();
-            auto leftDof = dof - rank;
-
-            sot[k_]->codRight_.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
-            if (leftDof > 0) {
-                // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
-                sot[k_]->codRight_.leftCols(dof) =
-                  nullSpace.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
-                nullSpace.leftCols(leftDof) = sot[k_]->codRight_.middleCols(rank, leftDof);
-            }
-            Eigen::MatrixXd codLeft = cod.householderQ();
-
-            inverse_.middleCols(col_ - dof, rank) = sot[k_]->codRight_.leftCols(rank);
-            task_.segment(col_ - dof, rank)       = codLeft.leftCols(rank).transpose() * vector;
-            sot[k_]->dual_(rows)                  = vector - codLeft.leftCols(rank) * task_.segment(col_ - dof, rank);
-            cod.matrixT()
-              .topLeftCorner(rank, rank)
-              .triangularView<Eigen::Upper>()
-              .solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, rank));
-            primal_ += inverse_.middleCols(col_ - dof, rank) * task_.segment(col_ - dof, rank);
-
-            dof                                           = leftDof;
-            sot[k_]->rank_                                = rank;
-            sot[k_]->codMid_.topLeftCorner(rank, rank)    = cod.matrixT().topLeftCorner(rank, rank);
-            sot[k_]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
+            dof -= sot[k_]->rank_;
         }
     }
 }
@@ -154,7 +124,7 @@ void HierarchicalQP::inequality_hqp() {
     Eigen::Index idx;
     int level, row;
     double slack, dual, mValue;
-    bool isLowerBound;
+    bool isLowerBound;  // needed to distinguish between upper and lower bound in case they are both active
 
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
@@ -292,7 +262,63 @@ void HierarchicalQP::prepare_task(TaskPtr task) {
 }
 
 
-// TODO: upgrade to a logger keeping track of the active set
+void HierarchicalQP::increment_primal(int parent, int level) {
+    auto dof                  = col_;
+    Eigen::MatrixXd nullSpace = cholMetric_;
+    int k;
+    // Go up until level included and compute contribution to primal due to level alone
+    for (k = 0; k < level; ++k) {
+        sot[k]->activeSet_ = (sot[k]->activeLowSet_ || sot[k]->activeUpSet_) && sot[k]->enabledSet_;
+        if (sot[k]->activeSet_.any()) {
+            int rank    = sot[k]->rank_;
+            int leftDof = dof - rank;
+            if (leftDof > 0) {
+                nullSpace.leftCols(leftDof) = sot[k]->codRight_.middleCols(rank, leftDof);
+            }
+            dof = leftDof;
+        }
+    }
+    if (dof <= 0) {
+        return;
+    }
+
+    k = level;
+
+    Eigen::VectorXi rows    = find(sot[k]->activeSet_);
+    Eigen::MatrixXd matrix  = sot[k]->matrix_(rows, Eigen::all);
+    Eigen::VectorXd vector  = sot[k]->activeUpSet_(rows).select(sot[k]->upper_(rows), sot[k]->lower_(rows));
+    vector                 -= matrix * primal_;
+
+    sot[k]->parent_(rows) = parent;
+
+    Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
+    cod.setThreshold(sot[k]->tolerance);
+    cod.compute(matrix * nullSpace.leftCols(dof));
+    int rank    = cod.rank();
+    int leftDof = dof - rank;
+
+    sot[k]->codRight_.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
+    if (leftDof > 0) {
+        // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
+        sot[k]->codRight_.leftCols(dof) *= cod.matrixZ().transpose();
+    }
+    Eigen::MatrixXd codLeft = cod.householderQ();
+
+    inverse_.middleCols(col_ - dof, rank) = sot[k]->codRight_.leftCols(rank);
+    task_.segment(col_ - dof, rank)       = codLeft.leftCols(rank).transpose() * vector;
+    sot[k]->dual_(rows)                   = vector - codLeft.leftCols(rank) * task_.segment(col_ - dof, rank);
+    cod.matrixT()
+      .topLeftCorner(rank, rank)
+      .triangularView<Eigen::Upper>()
+      .solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, rank));
+    primal_ += inverse_.middleCols(col_ - dof, rank) * task_.segment(col_ - dof, rank);
+
+    sot[k]->rank_                                = rank;
+    sot[k]->codMid_.topLeftCorner(rank, rank)    = cod.matrixT().topLeftCorner(rank, rank);
+    sot[k]->codLeft_(rows, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
+}
+
+
 void HierarchicalQP::print_active_set() {
     std::cout << "Active set:\n";
     for (auto k = 0; const auto& task : sot) {
