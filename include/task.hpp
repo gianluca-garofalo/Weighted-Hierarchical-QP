@@ -22,6 +22,8 @@ namespace hqp {
 
 class Task {
   private:
+    /** Degrees of Freedom available for the task. */
+    int dof_ = -1;
     /** Rank of the task computed during solve. */
     int rank_;
     /** Dual variables for inequality handling. */

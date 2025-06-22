@@ -262,27 +262,13 @@ void HierarchicalQP::prepare_task(TaskPtr task) {
 }
 
 
-void HierarchicalQP::increment_primal(int parent, int level) {
-    auto dof                  = col_;
-    Eigen::MatrixXd nullSpace = cholMetric_;
-    int k;
-    // Go up until level included and compute contribution to primal due to level alone
-    for (k = 0; k < level; ++k) {
-        sot[k]->activeSet_ = (sot[k]->activeLowSet_ || sot[k]->activeUpSet_) && sot[k]->enabledSet_;
-        if (sot[k]->activeSet_.any()) {
-            int rank    = sot[k]->rank_;
-            int leftDof = dof - rank;
-            if (leftDof > 0) {
-                nullSpace.leftCols(leftDof) = sot[k]->codRight_.middleCols(rank, leftDof);
-            }
-            dof = leftDof;
-        }
-    }
+void HierarchicalQP::increment_primal(int parent, int k) {
+    int dof = (parent < 0) ? col_ : sot[parent]->dof_ - sot[parent]->rank_;
     if (dof <= 0) {
+        sot[k]->dof_ = sot[k]->rank_ = 0;
         return;
     }
-
-    k = level;
+    sot[k]->dof_ = dof;
 
     Eigen::VectorXi rows    = find(sot[k]->activeSet_);
     Eigen::MatrixXd matrix  = sot[k]->matrix_(rows, Eigen::all);
@@ -291,13 +277,14 @@ void HierarchicalQP::increment_primal(int parent, int level) {
 
     sot[k]->parent_(rows) = parent;
 
+    Eigen::MatrixXd nullSpace = (parent < 0) ? cholMetric_ : sot[parent]->codRight_.middleCols(sot[parent]->rank_, dof);
     Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
     cod.setThreshold(sot[k]->tolerance);
-    cod.compute(matrix * nullSpace.leftCols(dof));
+    cod.compute(matrix * nullSpace);
     int rank    = cod.rank();
     int leftDof = dof - rank;
 
-    sot[k]->codRight_.leftCols(dof) = nullSpace.leftCols(dof) * cod.colsPermutation();
+    sot[k]->codRight_.leftCols(dof) = nullSpace * cod.colsPermutation();
     if (leftDof > 0) {
         // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
         sot[k]->codRight_.leftCols(dof) *= cod.matrixZ().transpose();
