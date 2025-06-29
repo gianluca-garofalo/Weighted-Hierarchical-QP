@@ -12,13 +12,13 @@
 #include <vector>
 #include <tuple>
 #include <Eigen/Dense>
-#include "task.hpp"
 #include "utils.hpp"
 
 namespace hqp {
 
 class HierarchicalQP {
   private:
+    int row_;
     /** Number of variables in the problem. */
     int col_;
     /** The current solution vector. */
@@ -31,8 +31,41 @@ class HierarchicalQP {
     Eigen::MatrixXd inverse_;
     /** Cholesky metric used for stability. */
     Eigen::MatrixXd cholMetric_;
+
     /** Index tracking the active task level. */
     int k_ = 0;
+    /** Current active lower-bound constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeLowSet_;
+    /** Current active upper-bound constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> activeUpSet_;
+    /** Initial equality constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
+    /** Constraints temporarily locked. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
+    /** Working set of constraints. */
+    Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
+    Eigen::ArrayXi level_;
+    /** Dual variables for inequality handling. */
+    Eigen::VectorXd dual_;
+    /** Right-hand side vector. */
+    Eigen::VectorXd lower_;
+    Eigen::VectorXd upper_;
+    Eigen::VectorXd vector_;
+    /** Constraint matrix computed by the task. */
+    Eigen::MatrixXd matrix_;
+    /** Auxiliary matrix for decomposition. */
+    Eigen::MatrixXd codLefts_;
+
+    /** Degrees of Freedom available for the task. */
+    std::vector<int> dofs_;
+    /** Rank of the task computed during solve. */
+    std::vector<int> ranks_;
+    /** Stores middle factor in decompositions. */
+    std::vector<Eigen::MatrixXd> codMids_;
+    /** Auxiliary matrix for decomposition. */
+    std::vector<Eigen::MatrixXd> codRights_;
+    /** Level of the nullspace in which to project. */
+    // Eigen::ArrayXi parent_;
 
     /** Solves the overall HQP by combining tasks. */
     void solve();
@@ -42,22 +75,24 @@ class HierarchicalQP {
     void inequality_hqp();
     /** Updates dual variables. */
     void dual_update(int h);
-    /** Prepares task data. */
-    void prepare_task(TaskPtr task);
     /** Increment primal due to contribution of active constraints in level. */
     void increment_primal(int parent, int level);
 
   public:
     /** Tolerance for convergence and numerical stability. */
     double tolerance = 1e-9;
-    /** Container for all task pointers. */
-    TaskContainer sot;
 
     /**
      * @brief Constructs the HierarchicalQP solver.
      * @param n Number of degrees of freedom (columns) in the problem.
      */
-    HierarchicalQP(int n);
+    HierarchicalQP(int m, int n);
+
+    /**
+     * @brief Sets the metric matrix used to define the quadratic cost.
+     * @param metric The metric matrix that influences the solver's behavior.
+     */
+    void set_metric(const Eigen::MatrixXd& metric);
 
     /**
      * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
@@ -72,16 +107,10 @@ class HierarchicalQP {
      *   - A.rows() == bu.size() == bl.size()
      *   - break_points must be increasing and the last element equal to A.rows()
      */
-    void set_stack(Eigen::MatrixXd const& A,
-                   Eigen::VectorXd const& bu,
-                   Eigen::VectorXd const& bl,
-                   Eigen::VectorXi const& break_points);
-
-    /**
-     * @brief Sets the metric matrix used to define the quadratic cost.
-     * @param metric The metric matrix that influences the solver's behavior.
-     */
-    void set_metric(const Eigen::MatrixXd& metric);
+    void set_problem(Eigen::MatrixXd const& matrix,
+                     Eigen::VectorXd const& lower,
+                     Eigen::VectorXd const& upper,
+                     Eigen::VectorXi const& breaks);
 
     /**
      * @brief Computes and retrieves the primal solution.
