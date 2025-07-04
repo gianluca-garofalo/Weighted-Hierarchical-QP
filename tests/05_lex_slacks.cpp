@@ -19,8 +19,8 @@ int main() {
     auto daqp   = result.get_primal();
     std::cout << "DAQP solution: " << daqp.transpose() << std::endl;
 
-    hqp::HierarchicalQP solver(cols);
-    solver.set_stack(A, bu, bl, break_points);
+    hqp::HierarchicalQP solver(rows, cols);
+    solver.set_problem(A, bl, bu, break_points);
     auto hqp = solver.get_primal();
     std::cout << "HQP solution: " << hqp.transpose() << std::endl;
 

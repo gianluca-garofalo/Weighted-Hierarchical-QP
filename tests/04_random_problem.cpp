@@ -105,8 +105,8 @@ int main() {
               << std::endl;
 
     // HQP
-    hqp::HierarchicalQP solver(ncols);
-    solver.set_stack(A, bu, bl, break_points);
+    hqp::HierarchicalQP solver(A.rows(), ncols);
+    solver.set_problem(A, bl, bu, break_points);
     t_start  = std::chrono::high_resolution_clock::now();
     auto hqp = solver.get_primal();
     t_stop   = std::chrono::high_resolution_clock::now();

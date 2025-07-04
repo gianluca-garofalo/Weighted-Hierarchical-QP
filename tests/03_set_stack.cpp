@@ -32,8 +32,8 @@ int main() {
     Eigen::VectorXi break_points = (Eigen::VectorXi(4) << 3, 4, 5, 6).finished();
 
     // Solve
-    hqp::HierarchicalQP hqp(3);
-    hqp.set_stack(A, bu, bl, break_points);
+    hqp::HierarchicalQP hqp(A.rows(), A.cols());
+    hqp.set_problem(A, bl, bu, break_points);
     auto t_start{std::chrono::high_resolution_clock::now()};
     Eigen::VectorXd solution{hqp.get_primal()};
     auto t_end{std::chrono::high_resolution_clock::now()};
