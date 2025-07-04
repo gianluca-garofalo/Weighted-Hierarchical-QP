@@ -22,59 +22,25 @@ namespace hqp {
 
 class Task {
   private:
-    /** Degrees of Freedom available for the task. */
-    int dof_ = -1;
-    /** Rank of the task computed during solve. */
-    int rank_;
-    /** Dual variables for inequality handling. */
-    Eigen::VectorXd dual_;
-    /** Current active lower-bound constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> activeLowSet_;
-    /** Current active upper-bound constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> activeUpSet_;
-    /** Constraints allowed to contribute to primal. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> enabledSet_;
-    /** Current active and enabled constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> activeSet_;
-    /** Constraints temporarily locked. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
-    /** Working set of constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
-    /** Stores middle factor in decompositions. */
-    Eigen::MatrixXd codMid_;
-    /** Auxiliary matrix for decomposition. */
-    Eigen::MatrixXd codLeft_;
-    /** Auxiliary matrix for decomposition. */
-    Eigen::MatrixXd codRight_;
-    friend class HierarchicalQP;
+    int rows_;
     friend class SubTasks;
 
   protected:
-    /** Constraint matrix computed by the task. */
-    Eigen::MatrixXd matrix_;
-    /** Right-hand side vector. */
-    Eigen::VectorXd lower_;
-    Eigen::VectorXd upper_;
-    /** Initial equality constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
     /** Indices of active variables. */
     Eigen::VectorXi indices_;
-    /** Level of the nullspace in which to project. */
-    Eigen::ArrayXi parent_;
     /** Flag indicating if task computation is up-to-date. */
     bool isComputed_ = false;
     /** Weight based on Cholesky decomposition. */
     Eigen::LLT<Eigen::MatrixXd> weight_;
 
-    /**
-     * @brief Pure virtual function to compute task-specific output.
-     */
-    virtual void compute() = 0;
     virtual bool is_computed();
 
   public:
-    /** Tolerance value for computation accuracy. */
-    double tolerance = 1e-9;
+    /** Constraint matrix computed by the task. */
+    Eigen::MatrixXd matrix_;
+    /** Right-hand side vector. */
+    Eigen::VectorXd lower_;
+    Eigen::VectorXd upper_;
 
     /**
      * @brief Initializes a Task instance with a given set of equality constraints.
@@ -93,7 +59,12 @@ class Task {
      *
      * @param indices Vector specifying the positions of selected variables.
      */
-    void select_variables(const Eigen::VectorXi& indices);
+    void set_mask(const Eigen::VectorXi& indices);
+
+    /**
+     * @brief Pure virtual function to compute task-specific output.
+     */
+    virtual void compute() = 0;
 };
 
 
@@ -111,6 +82,28 @@ using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
  * @brief Container for smart pointers to Task objects.
  */
 using TaskContainer = SmartContainer<std::vector, GenericPtr, std::shared_ptr, Task>;
+
+
+/**
+ * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
+ *
+ * @param A           Constraint matrix (rows = total constraints, cols = variables)
+ * @param bu          Upper bounds vector (size = total constraints)
+ * @param bl          Lower bounds vector (size = total constraints)
+ * @param break_points Vector of indices marking the end of each task in the stack
+ * @return TaskContainer with each task as a GenericTask
+ *
+ * Requirements:
+ *   - A.rows() == bu.size() == bl.size()
+ *   - break_points must be increasing and the last element equal to A.rows()
+ */
+TaskContainer set_stack(Eigen::MatrixXd const& A,
+                        Eigen::VectorXd const& bu,
+                        Eigen::VectorXd const& bl,
+                        Eigen::VectorXi const& break_points);
+
+
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> get_stack(TaskContainer const& sot);
 
 
 /**
@@ -155,6 +148,10 @@ class TaskInterface : public Task {
     virtual void run(Args... args) = 0;
 
     void compute() override {
+        if (isComputed_) {
+            return;
+        }
+
         std::apply(
           [this](auto&&... args) {
               run(unwrap(std::forward<decltype(args)>(args))...);
@@ -163,15 +160,25 @@ class TaskInterface : public Task {
 
         assert(matrix_.rows() == upper_.rows());
         assert(lower_.rows() == upper_.rows());
-        assert(equalitySet_.size() == upper_.rows());
-
-
-        equalitySet_ = upper_.array() == lower_.array();
 
         if (!indices_.size()) {
-            auto n   = matrix_.cols();
-            indices_ = Eigen::VectorXi::LinSpaced(n, 0, n - 1);
+            indices_ = Eigen::VectorXi::Ones(matrix_.cols());
         }
+        if (weight_.size()) {
+            // Weight subtasks within task
+            matrix_ = weight_.matrixU() * matrix_;
+            lower_  = weight_.matrixU() * lower_;
+            upper_  = weight_.matrixU() * upper_;
+        }
+
+        Eigen::MatrixXd tmp = matrix_;
+        matrix_.resize(tmp.rows(), indices_.size());
+        for (int k = 0, h = 0; h < indices_.size(); ++h) {
+            if (indices_(h)) {
+                matrix_.col(h) = tmp.col(k++);
+            }
+        }
+
         isComputed_ = true;
     }
 
