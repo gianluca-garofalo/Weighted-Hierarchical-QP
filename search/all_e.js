@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['rank_5f_0',['rank_',['../classhqp_1_1Task.html#aa81701fa61decfdf9defa3b5d4eee473',1,'hqp::Task']]],
-  ['run_1',['run',['../classhqp_1_1TaskInterface.html#adf438bcb5931d58002bd23db6857d567',1,'hqp::TaskInterface']]]
+  ['set_5fmask_0',['set_mask',['../classhqp_1_1Task.html#aaf87d447b06930bfd28f4728b49e93b0',1,'hqp::Task']]],
+  ['set_5fmetric_1',['set_metric',['../classhqp_1_1HierarchicalQP.html#a126f16766c7f830ac0b5778a9ea4b7c2',1,'hqp::HierarchicalQP']]],
+  ['set_5fproblem_2',['set_problem',['../classhqp_1_1HierarchicalQP.html#a06804e9c91797478d08e43a2759cbb07',1,'hqp::HierarchicalQP']]],
+  ['set_5fstack_3',['set_stack',['../classhqp_1_1StackOfTasks.html#a0978886085a35f86ce60c07b06008f32',1,'hqp::StackOfTasks']]],
+  ['smartcontainer_4',['SmartContainer',['../classhqp_1_1SmartContainer.html',1,'hqp']]],
+  ['smartptr_5',['SmartPtr',['../namespacehqp.html#aeeaa1ccab8a2d282c2123626c86c014c',1,'hqp']]],
+  ['solve_6',['solve',['../classhqp_1_1HierarchicalQP.html#adac78a9cc96e9d4f311b9ef72acd7ebd',1,'hqp::HierarchicalQP']]],
+  ['stackoftasks_7',['StackOfTasks',['../classhqp_1_1StackOfTasks.html',1,'hqp']]]
 ];

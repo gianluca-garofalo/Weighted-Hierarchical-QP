@@ -124,9 +124,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5cefb8fa72a7159b4ae66fa02355781f inherit pub_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe8e505e97a3e642a51e044c1bb99795 inherit pub_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#abe8e505e97a3e642a51e044c1bb99795">~Task</a> ()=default</td></tr>
 <tr class="separator:abe8e505e97a3e642a51e044c1bb99795 inherit pub_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac247b5a10cc505d841a0449923d8ad9f inherit pub_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac247b5a10cc505d841a0449923d8ad9f">select_variables</a> (const Eigen::VectorXi &amp;indices)</td></tr>
-<tr class="memdesc:ac247b5a10cc505d841a0449923d8ad9f inherit pub_methods_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the indices of variables involved in this task.  <br /></td></tr>
-<tr class="separator:ac247b5a10cc505d841a0449923d8ad9f inherit pub_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf87d447b06930bfd28f4728b49e93b0 inherit pub_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aaf87d447b06930bfd28f4728b49e93b0">set_mask</a> (const Eigen::VectorXi &amp;indices)</td></tr>
+<tr class="memdesc:aaf87d447b06930bfd28f4728b49e93b0 inherit pub_methods_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the indices of variables involved in this task.  <br /></td></tr>
+<tr class="separator:aaf87d447b06930bfd28f4728b49e93b0 inherit pub_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e71bc66fcbaa2a73895373b6091b180 inherit pub_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a1e71bc66fcbaa2a73895373b6091b180">compute</a> ()=0</td></tr>
+<tr class="memdesc:a1e71bc66fcbaa2a73895373b6091b180 inherit pub_methods_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual function to compute task-specific output.  <br /></td></tr>
+<tr class="separator:a1e71bc66fcbaa2a73895373b6091b180 inherit pub_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -137,9 +140,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a23e607e49230479472ea687297604d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual function to compute task-specific output.  <br /></td></tr>
 <tr class="separator:a23e607e49230479472ea687297604d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classhqp_1_1Task"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classhqp_1_1Task')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
-<tr class="memitem:a1e71bc66fcbaa2a73895373b6091b180 inherit pro_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a1e71bc66fcbaa2a73895373b6091b180">compute</a> ()=0</td></tr>
-<tr class="memdesc:a1e71bc66fcbaa2a73895373b6091b180 inherit pro_methods_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pure virtual function to compute task-specific output.  <br /></td></tr>
-<tr class="separator:a1e71bc66fcbaa2a73895373b6091b180 inherit pro_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9212affa67773daccd4192daac74d37b inherit pro_methods_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a9212affa67773daccd4192daac74d37b">is_computed</a> ()</td></tr>
 <tr class="separator:a9212affa67773daccd4192daac74d37b inherit pro_methods_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -148,17 +148,6 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a14240bd78f680d81b34290723a4db2ee"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::tuple&lt; <a class="el" href="classhqp_1_1TaskInterface.html#a74a30e3959ddfa76fa5791927461f6f2">ArgStorage</a>&lt; Args &gt;... &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskInterface.html#a14240bd78f680d81b34290723a4db2ee">args_</a></td></tr>
 <tr class="separator:a14240bd78f680d81b34290723a4db2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classhqp_1_1Task"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classhqp_1_1Task')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
-<tr class="memitem:ac50347ebfb913039837e2de3025e5ce6 inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac50347ebfb913039837e2de3025e5ce6">matrix_</a></td></tr>
-<tr class="memdesc:ac50347ebfb913039837e2de3025e5ce6 inherit pro_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraint matrix computed by the task.  <br /></td></tr>
-<tr class="separator:ac50347ebfb913039837e2de3025e5ce6 inherit pro_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab15d99d1046b30dff7b324ba4543247d inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ab15d99d1046b30dff7b324ba4543247d">lower_</a></td></tr>
-<tr class="memdesc:ab15d99d1046b30dff7b324ba4543247d inherit pro_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side vector.  <br /></td></tr>
-<tr class="separator:ab15d99d1046b30dff7b324ba4543247d inherit pro_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3f4c735caae03cc2e9eb197a417d70f inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa3f4c735caae03cc2e9eb197a417d70f">upper_</a></td></tr>
-<tr class="separator:aa3f4c735caae03cc2e9eb197a417d70f inherit pro_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7761e65e5dabe87839768a6e68b4a7e inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; bool, Eigen::Dynamic, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa7761e65e5dabe87839768a6e68b4a7e">equalitySet_</a></td></tr>
-<tr class="memdesc:aa7761e65e5dabe87839768a6e68b4a7e inherit pro_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial equality constraints.  <br /></td></tr>
-<tr class="separator:aa7761e65e5dabe87839768a6e68b4a7e inherit pro_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f7c96cfb63bafebd91d4c5819a80934 inherit pro_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXi&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#a7f7c96cfb63bafebd91d4c5819a80934">indices_</a></td></tr>
 <tr class="memdesc:a7f7c96cfb63bafebd91d4c5819a80934 inherit pro_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indices of active variables.  <br /></td></tr>
 <tr class="separator:a7f7c96cfb63bafebd91d4c5819a80934 inherit pro_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,9 +173,14 @@ Static Private Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_attribs_classhqp_1_1Task"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classhqp_1_1Task')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classhqp_1_1Task.html">hqp::Task</a></td></tr>
-<tr class="memitem:af97ea56dd647086bbe4842de98bea197 inherit pub_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#af97ea56dd647086bbe4842de98bea197">tolerance</a> = 1e-9</td></tr>
-<tr class="memdesc:af97ea56dd647086bbe4842de98bea197 inherit pub_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tolerance value for computation accuracy.  <br /></td></tr>
-<tr class="separator:af97ea56dd647086bbe4842de98bea197 inherit pub_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac50347ebfb913039837e2de3025e5ce6 inherit pub_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ac50347ebfb913039837e2de3025e5ce6">matrix_</a></td></tr>
+<tr class="memdesc:ac50347ebfb913039837e2de3025e5ce6 inherit pub_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraint matrix computed by the task.  <br /></td></tr>
+<tr class="separator:ac50347ebfb913039837e2de3025e5ce6 inherit pub_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15d99d1046b30dff7b324ba4543247d inherit pub_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#ab15d99d1046b30dff7b324ba4543247d">lower_</a></td></tr>
+<tr class="memdesc:ab15d99d1046b30dff7b324ba4543247d inherit pub_attribs_classhqp_1_1Task"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side vector.  <br /></td></tr>
+<tr class="separator:ab15d99d1046b30dff7b324ba4543247d inherit pub_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f4c735caae03cc2e9eb197a417d70f inherit pub_attribs_classhqp_1_1Task"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1Task.html#aa3f4c735caae03cc2e9eb197a417d70f">upper_</a></td></tr>
+<tr class="separator:aa3f4c735caae03cc2e9eb197a417d70f inherit pub_attribs_classhqp_1_1Task"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... Args&gt;<br />

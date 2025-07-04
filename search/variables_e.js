@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['upper_5f_0',['upper_',['../classhqp_1_1Task.html#aa3f4c735caae03cc2e9eb197a417d70f',1,'hqp::Task']]]
+  ['weight_5f_0',['weight_',['../classhqp_1_1Task.html#a8f44fc95e8c02521f34e59e2213905e5',1,'hqp::Task']]],
+  ['workset_5f_1',['workSet_',['../classhqp_1_1HierarchicalQP.html#ad35a52a41a760daffbfd246aa2a89653',1,'hqp::HierarchicalQP']]]
 ];
