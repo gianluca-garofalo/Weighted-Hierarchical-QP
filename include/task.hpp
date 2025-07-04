@@ -21,10 +21,6 @@
 namespace hqp {
 
 class Task {
-  private:
-    int rows_;
-    friend class SubTasks;
-
   protected:
     /** Indices of active variables. */
     Eigen::VectorXi indices_;
@@ -82,28 +78,6 @@ using TaskPtr       = GenericPtr<std::shared_ptr, Task>;
  * @brief Container for smart pointers to Task objects.
  */
 using TaskContainer = SmartContainer<std::vector, GenericPtr, std::shared_ptr, Task>;
-
-
-/**
- * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
- *
- * @param A           Constraint matrix (rows = total constraints, cols = variables)
- * @param bu          Upper bounds vector (size = total constraints)
- * @param bl          Lower bounds vector (size = total constraints)
- * @param break_points Vector of indices marking the end of each task in the stack
- * @return TaskContainer with each task as a GenericTask
- *
- * Requirements:
- *   - A.rows() == bu.size() == bl.size()
- *   - break_points must be increasing and the last element equal to A.rows()
- */
-TaskContainer set_stack(Eigen::MatrixXd const& A,
-                        Eigen::VectorXd const& bu,
-                        Eigen::VectorXd const& bl,
-                        Eigen::VectorXi const& break_points);
-
-
-std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> get_stack(TaskContainer const& sot);
 
 
 /**
@@ -214,39 +188,33 @@ class TaskInterface : public Task {
 
 
 // Composite task that aggregates multiple subtasks.
-class SubTasks : public Task {
-  protected:
-    bool is_computed() override;
-
+class StackOfTasks : public TaskContainer {
   public:
-    /**
-     * @brief Container holding smart pointers to subtasks.
-     */
-    TaskContainer sot;
+    using TaskContainer::TaskContainer;
+    using TaskContainer::emplace_back;
 
-    /**
-     * @brief Constructs a SubTasks instance with a given equality constraint set.
-     * @param set Boolean array indicating equality constraints.
-     */
-    SubTasks(int size);
+/**
+ * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
+ *
+ * @param A           Constraint matrix (rows = total constraints, cols = variables)
+ * @param bu          Upper bounds vector (size = total constraints)
+ * @param bl          Lower bounds vector (size = total constraints)
+ * @param break_points Vector of indices marking the end of each task in the stack
+ * @return TaskContainer with each task as a GenericTask
+ *
+ * Requirements:
+ *   - A.rows() == bu.size() == bl.size()
+ *   - break_points must be increasing and the last element equal to A.rows()
+ */
+void set_stack(Eigen::MatrixXd const& A,
+                        Eigen::VectorXd const& bu,
+                        Eigen::VectorXd const& bl,
+                        Eigen::VectorXi const& break_points);
 
-    /**
-     * @brief Aggregates the results from all subtasks to form a composite solution.
-     *
-     * The method computes each subtask and concatenates their matrices and vectors,
-     * ensuring consistency in dimensions and variable indices.
-     */
-    void compute() override;
 
-    /**
-     * @brief Applies a weight matrix to adjust the subtasks' outputs.
-     *
-     * Uses a Cholesky decomposition to modify the task's matrix and vector,
-     * enhancing numerical stability during the solution process.
-     *
-     * @param weight The metric matrix applied to the subtasks.
-     */
-    void set_weight(const Eigen::MatrixXd& weight);
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> get_stack();
+
+TaskPtr to_task();
 };
 
 }  // namespace hqp
