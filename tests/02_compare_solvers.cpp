@@ -7,74 +7,40 @@
 #include "lexls_interface.hpp"
 
 
-class Task0 : public hqp::TaskInterface<> {
-  private:
-    void run() override {
-        matrix_ = Eigen::MatrixXd::Identity(3, 3);
-        lower_ = -Eigen::VectorXd::Ones(3);
-        upper_ = Eigen::VectorXd::Ones(3);
-    }
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task0() {
+    return {Eigen::MatrixXd::Identity(3, 3), -Eigen::VectorXd::Ones(3), Eigen::VectorXd::Ones(3)};
+}
 
-  public:
-    Task0(int size)
-      : TaskInterface(size) {
-    }
-};
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task1() {
+    return {(Eigen::MatrixXd(1, 3) << 1, 1, 1).finished(), -1e9 * Eigen::VectorXd::Ones(1), Eigen::VectorXd::Ones(1)};
+}
 
-class Task1 : public hqp::TaskInterface<> {
-  private:
-    void run() override {
-        matrix_ = (Eigen::MatrixXd(1, 3) << 1, 1, 1).finished();
-        lower_ = -1e9 * Eigen::VectorXd::Ones(1);
-        upper_ = Eigen::VectorXd::Ones(1);
-    }
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task2() {
+    return {
+      (Eigen::MatrixXd(1, 3) << 1, -1, 0).finished(), 0.5 * Eigen::VectorXd::Ones(1), 0.5 * Eigen::VectorXd::Ones(1)};
+}
 
-  public:
-    Task1(int size)
-      : TaskInterface(size) {
-    }
-};
-
-class Task2 : public hqp::TaskInterface<> {
-  private:
-    void run() override {
-        matrix_ = (Eigen::MatrixXd(1, 3) << 1, -1, 0).finished();
-        lower_ = upper_ = 0.5 * Eigen::VectorXd::Ones(1);
-    }
-
-  public:
-    Task2(int size)
-      : TaskInterface(size) {
-    }
-};
-
-class Task3 : public hqp::TaskInterface<> {
-  private:
-    void run() override {
-        matrix_ = (Eigen::MatrixXd(1, 3) << 3, 1, -1).finished();
-        lower_ = 10 * Eigen::VectorXd::Ones(1);
-        upper_ = 20 * Eigen::VectorXd::Ones(1);
-    }
-
-  public:
-    Task3(int size)
-      : TaskInterface(size) {
-    }
-};
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task3() {
+    return {
+      (Eigen::MatrixXd(1, 3) << 3, 1, -1).finished(), 10 * Eigen::VectorXd::Ones(1), 20 * Eigen::VectorXd::Ones(1)};
+}
 
 
 int main() {
-    // HQP
-    hqp::StackOfTasks sot;
-    sot.reserve(4);
-    sot.emplace_back<Task0>(3);
-    sot.emplace_back<Task1>(1);
-    sot.emplace_back<Task2>(1);
-    sot.emplace_back<Task3>(1);
-    auto [A, bl, bu, break_points] = sot.get_stack();
+    // Create a stack of tasks
+    hqp::StackOfTasks sot(4);
+    sot[0] = hqp::bind_task(run_task0);
+    sot[1] = hqp::bind_task(run_task1);
+    sot[2] = hqp::bind_task(run_task2);
+    sot[3] = hqp::bind_task(run_task3);
+    for (auto& task : sot) {
+        task.cast<hqp::Task<>>()->compute();
+    }
+    auto [A, bl, bu, breaks] = sot.get_stack();
 
+    // HQP
     hqp::HierarchicalQP hqp(A.rows(), A.cols());
-    hqp.set_problem(A, bl, bu, break_points);
+    hqp.set_problem(A, bl, bu, breaks);
     auto t_start  = std::chrono::high_resolution_clock::now();
     auto solution = hqp.get_primal();
     auto t_end    = std::chrono::high_resolution_clock::now();
@@ -86,7 +52,7 @@ int main() {
     // DAQP
     DAQP daqp(3, 50, 5);
     t_start = std::chrono::high_resolution_clock::now();
-    daqp.solve(A, bu, bl, break_points);
+    daqp.solve(A, bu, bl, breaks);
     solution  = daqp.get_primal();
     t_end     = std::chrono::high_resolution_clock::now();
     t_elapsed = t_end - t_start;
@@ -94,7 +60,7 @@ int main() {
     std::cout << "DAQP execution time: " << t_elapsed.count() << " seconds" << std::endl;
 
     // LexLS
-    auto lexls  = lexls_from_stack(A, bu, bl, break_points);
+    auto lexls  = lexls_from_stack(A, bu, bl, breaks);
     t_start     = std::chrono::high_resolution_clock::now();
     auto status = lexls.solve();
     solution    = lexls.get_x();

@@ -1,35 +1,40 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <hqp.hpp>
+#include <task.hpp>
 #include "library.hpp"
 
 int main() {
-    auto task2 = hqp::SmartPtr<hqp::Task2>(2);
-    auto task3 = hqp::SmartPtr<hqp::Task3>(2);
-    
-    hqp::StackOfTasks task4(2);
-    auto task5 = hqp::SmartPtr<hqp::Task5>(1);
-    task4[1] = hqp::SmartPtr<hqp::Task6>(1);
-    task4[0] = task5;
+    hqp::StackOfTasks sot(3), task3_stack(2);
 
-    hqp::StackOfTasks sot;
-    sot.push_back(task2);
-    sot.push_back(task3);
-    sot.push_back(task4.to_task());
-    auto [A, bl, bu, break_points] = sot.get_stack();
+    task3_stack[0] = hqp::bind_task(run_task4);
+    task3_stack[1] = hqp::bind_task(run_task5);
+    task3_stack[0].cast<hqp::Task<>>()->compute();
+    task3_stack[1].cast<hqp::Task<>>()->compute();
+
+    sot[0] = hqp::bind_task(run_task2);
+    sot[1] = hqp::bind_task(run_task3);
+    sot[2] = hqp::bind_task<>([&task3_stack]() {
+        auto [A, bl, bu, breaks] = task3_stack.get_stack();
+        return std::make_tuple(A, bl, bu);
+    });
+    for (auto& task : sot) {
+        task.cast<hqp::Task<>>()->compute();
+    }
 
     Eigen::Matrix<double, 2, 2> M;
     M << 10, 5, 5, 7;
+
+    auto [A, bl, bu, breaks] = sot.get_stack();
     hqp::HierarchicalQP solver(A.rows(), A.cols());
     solver.set_metric(M);
-    solver.set_problem(A, bl, bu, break_points);
+    solver.set_problem(A, bl, bu, breaks);
     auto first_solution = solver.get_primal();
     std::cout << "First Solution: " << first_solution.transpose() << std::endl;
 
     std::swap(sot[0], sot[2]);
-    task5->update();
-    std::tie(A, bl, bu, break_points) = sot.get_stack();
-    solver.set_problem(A, bl, bu, break_points);
+    std::tie(A, bl, bu, breaks) = sot.get_stack();
+    solver.set_problem(A, bl, bu, breaks);
     auto second_solution = solver.get_primal();
     std::cout << "Second Solution: " << second_solution.transpose() << std::endl;
 

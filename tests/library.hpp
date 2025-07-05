@@ -1,78 +1,19 @@
-/**
- * @file library.hpp
- * @brief Defines test task classes for the Weighted-Hierarchical-QP solver.
- *
- * This header provides several derived task classes that are used to test the solver.
- * Each task implements a custom run() function that returns a matrix and vector tailored for testing.
- */
 #ifndef _LibraryOfTasks_
 #define _LibraryOfTasks_
 
+#include <tuple>
 #include <Eigen/Dense>
-#include "task.hpp"
 
-namespace hqp {
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task0();
 
-class Task0 : public TaskInterface<> {
-  private:
-    void run() override;
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task1(double scale, Eigen::Vector2d const& offset);
 
-  public:
-    Task0(int size)
-      : TaskInterface(size) {
-    }
-};
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task2();
 
-class Task1 : public TaskInterface<double, Eigen::VectorXd const&> {
-  private:
-    void run(double, Eigen::VectorXd const& vec) override;
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task3();
 
-  public:
-    Task1(int size)
-      : TaskInterface(size) {
-    }
-};
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task4();
 
-class Task2 : public TaskInterface<> {
-  private:
-    void run() override;
-
-  public:
-    Task2(int size)
-      : TaskInterface(size) {
-    }
-};
-
-class Task3 : public TaskInterface<> {
-  private:
-    void run() override;
-
-  public:
-    Task3(int size)
-      : TaskInterface(size) {
-    }
-};
-
-class Task5 : public TaskInterface<> {
-  private:
-    void run() override;
-
-  public:
-    Task5(int size)
-      : TaskInterface(size) {
-    }
-};
-
-class Task6 : public TaskInterface<> {
-  private:
-    void run() override;
-
-  public:
-    Task6(int size)
-      : TaskInterface(size) {
-    }
-};
-
-}  // namespace hqp
+std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd> run_task5();
 
 #endif  // _LibraryOfTasks_
