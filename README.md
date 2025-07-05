@@ -1,7 +1,5 @@
 # Weighted-Hierarchical-QP
 
-![Build Status](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/cmake-single-platform.yml/badge.svg)
-
 ## Overview
 
 Weighted-Hierarchical-QP is a sophisticated solver designed to tackle prioritized quadratic programming problems.  
@@ -12,6 +10,7 @@ It combines task-based hierarchies and matrix decomposition techniques to handle
 - **Hierarchical Task Management**: Aggregate multiple tasks with increasing priority levels.
 - **Flexible Constraint Handling**: Supports both equality and inequality constraints.
 - **Robust Numerical Methods**: Uses Cholesky decompositions, orthogonal decompositions, and call graph analysis.
+- **Python Bindings**: Python interface available for easy integration with Python projects.
 - **Comprehensive Documentation**: Auto-generated API docs powered by Doxygen.
 
 ## Installation
@@ -42,6 +41,24 @@ It combines task-based hierarchies and matrix decomposition techniques to handle
    ```bash
    ctest -C Release
    ```
+
+### Python Bindings
+
+The solver also provides Python bindings for easy integration with Python projects:
+
+```bash
+# Install Python dependencies
+pip install numpy pybind11
+
+# Build Python bindings
+cd python
+python setup.py build_ext --inplace
+
+# Test the bindings
+python test_pyhqp.py
+```
+
+For detailed instructions and examples, see [PYTHON_BINDINGS.md](PYTHON_BINDINGS.md).
 
 ## Usage
 

@@ -11,6 +11,7 @@ message(CMAKE_CURRENT_BINARY_DIR="${CMAKE_CURRENT_BINARY_DIR}")
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 set(CMAKE_DEBUG_POSTFIX deb)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
+option(BUILD_PYTHON_BINDINGS "Build Python bindings" OFF)
 
 include(CTest)
 include(CMakePackageConfigHelpers)
@@ -33,6 +34,10 @@ target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
 if(BUILD_TESTING)
 	add_subdirectory(tests)
+endif()
+
+if(BUILD_PYTHON_BINDINGS)
+	add_subdirectory(python)
 endif()
 
 
