@@ -4,6 +4,8 @@
 
 namespace hqp {
 
+// TODO: template n
+// TODO: template max constraints per level, and keep only one matrix and vector to be filled with the temp values.
 HierarchicalQP::HierarchicalQP(int m, int n)
   : row_{m}
   , col_{n}
@@ -30,6 +32,7 @@ HierarchicalQP::HierarchicalQP(int m, int n)
 }
 
 
+// TODO: move codRight_ to the level struct, initialized in this class and templated
 void HierarchicalQP::solve() {
     // Shift problem to the origin
     lower_ -= matrix_ * guess_;
@@ -58,6 +61,8 @@ void HierarchicalQP::equality_hqp() {
 
     int lastActive = -1;
     for (k_ = 0; k_ <= level_.maxCoeff() && dof > 0; ++k_) {
+        ranks_[k_] = 0;
+        dofs_[k_]  = 0;
         auto activeSet = level_ == k_ && (activeLowSet_ || activeUpSet_);
         if (activeSet.any()) {
             increment_primal(lastActive, k_);
@@ -65,6 +70,9 @@ void HierarchicalQP::equality_hqp() {
 
             dof -= ranks_[k_];
         }
+    }
+    for (int k = k_; k <= level_.maxCoeff(); ++k) {
+        ranks_[k] = dofs_[k] = 0;
     }
 }
 
@@ -118,6 +126,7 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
 
 
 Eigen::VectorXd HierarchicalQP::get_primal() {
+    // TODO: move k = 0 in loop (leave int k out) and check style of all loops
     // TODO: move this logic in utils where both the stack and the solver are wrapped together in a new class
     // int k;
     // for (k = 0; k < k_ && sot[k].is_computed(); ++k) {}
@@ -135,13 +144,12 @@ void HierarchicalQP::inequality_hqp() {
     double slack, dual, mValue;
     bool isLowerBound;  // needed to distinguish between upper and lower bound in case they are both active
 
+    equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
     for (auto iter = 0, h = 0; iter < maxIter && h <= level_.maxCoeff(); ++h) {
         slack = dual = 1;
         while ((slack > 0 || dual > 0) && iter < maxIter) {
-            equality_hqp();
-
             // Add tasks to the active set.
             slack = -1;
             for (auto k = 0; k <= level_.maxCoeff(); ++k) {
@@ -170,11 +178,13 @@ void HierarchicalQP::inequality_hqp() {
                 }
             }
             if (slack > tolerance) {
+                decrement_from(level_(row));
                 if (isLowerBound) {
                     activeLowSet_(row) = true;
                 } else {
                     activeUpSet_(row) = true;
                 }
+                increment_from(level_(row));
                 continue;
             }
 
@@ -185,6 +195,8 @@ void HierarchicalQP::inequality_hqp() {
             dual     = -1;
             for (auto k = 0; k <= h; ++k) {
                 if ((level_ == k && workSet_).any()) {
+                    // TODO: as it seems that both sides can be active, this might not be correct. Or rather it still
+                    // considers one active constraint at a time?
                     Eigen::VectorXi rows = find(level_ == k && workSet_);
                     dual_(rows)          = activeUpSet_(rows).select(dual_(rows), -dual_(rows));
                     mValue               = dual_(rows).maxCoeff(&idx);
@@ -195,8 +207,10 @@ void HierarchicalQP::inequality_hqp() {
                 }
             }
             if (dual > tolerance) {
+                decrement_from(level_(row));
                 activeLowSet_(row) = false;
                 activeUpSet_(row)  = false;
+                increment_from(level_(row));
                 continue;
             }
 
@@ -245,9 +259,44 @@ void HierarchicalQP::dual_update(int h) {
 }
 
 
+// TODO: The matrix and vector data accessed using aliases like: auto&& alias = vector_(rows); to avoid long expressions.
+
+
+void HierarchicalQP::decrement_from(int level) {
+    for (int k = level; k <= level_.maxCoeff(); ++k) {
+        // if (k == k_) {k_ = parent;}
+        auto activeSet = level_ == k && (activeLowSet_ || activeUpSet_);
+        if (activeSet.any() && ranks_[k] > 0) {
+            primal_  -= inverse_.middleCols(col_ - dofs_[k], ranks_[k]) * task_.segment(col_ - dofs_[k], ranks_[k]);
+            dofs_[k] = ranks_[k] = 0;
+        }
+    }
+}
+
+
+void HierarchicalQP::increment_from(int level) {
+    int parent = -1;
+    for (int h = 0; h < level; ++h) {
+        parent = ranks_[h] > 0 ? h : parent;
+    }
+
+    int dof = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
+    for (k_ = level; dof > 0 && k_ <= level_.maxCoeff(); ++k_) {
+        auto activeSet = level_ == k_ && (activeLowSet_ || activeUpSet_);
+        if (activeSet.any()) {
+            increment_primal(parent, k_);
+            parent = k_;
+
+            dof = dofs_[k_] - ranks_[k_];
+        }
+    }
+}
+
+
 void HierarchicalQP::increment_primal(int parent, int k) {
     int dof = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
     if (dof <= 0) {
+        // TODO: is it needed to set to zero?
         dofs_[k] = ranks_[k] = 0;
         return;
     }
@@ -258,8 +307,8 @@ void HierarchicalQP::increment_primal(int parent, int k) {
     Eigen::VectorXd vector  = activeUpSet_(rows).select(upper_(rows), lower_(rows));
     vector                 -= matrix * primal_;
 
-    // sot[k].parent_(rows) = parent;
-
+    // TODO: dynamically update tolerances to avoid tasks oscillations
+    // TODO: keep nullspace as class member to avoid re-instantiation
     Eigen::MatrixXd nullSpace = (parent < 0) ? cholMetric_ : codRights_[parent].middleCols(ranks_[parent], dof);
     Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
     cod.setThreshold(tolerance);
@@ -284,11 +333,13 @@ void HierarchicalQP::increment_primal(int parent, int k) {
     primal_ += inverse_.middleCols(col_ - dof, rank) * task_.segment(col_ - dof, rank);
 
     ranks_[k]                             = rank;
+    // TODO: Can I just save matrixT() and extract T, Q and Z from it?
     codMids_[k].topLeftCorner(rank, rank) = cod.matrixT().topLeftCorner(rank, rank);
     codLefts_(rows, Eigen::seqN(0, rank)) = codLeft.leftCols(rank);
 }
 
 
+// TODO: upgrade to a logger keeping track of the active set
 void HierarchicalQP::print_active_set() {
     std::cout << "Active set:\n";
     for (auto k = 0; k < k_; ++k) {

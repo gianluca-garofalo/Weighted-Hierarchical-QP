@@ -64,8 +64,6 @@ class HierarchicalQP {
     std::vector<Eigen::MatrixXd> codMids_;
     /** Auxiliary matrix for decomposition. */
     std::vector<Eigen::MatrixXd> codRights_;
-    /** Level of the nullspace in which to project. */
-    // Eigen::ArrayXi parent_;
 
     /** Solves the overall HQP by combining tasks. */
     void solve();
@@ -75,6 +73,10 @@ class HierarchicalQP {
     void inequality_hqp();
     /** Updates dual variables. */
     void dual_update(int h);
+    /** Decrement solution after a change in the active set. */
+    void decrement_from(int level);
+    /** Increment solution after a change in the active set. */
+    void increment_from(int level);
     /** Increment primal due to contribution of active constraints in level. */
     void increment_primal(int parent, int level);
 
@@ -117,6 +119,8 @@ class HierarchicalQP {
      * @return The computed primal solution vector.
      */
     Eigen::VectorXd get_primal();
+
+// TODO: add get dual and get slack, where the latter are computed like in the test
 
     /**
      * @brief Outputs the active set details to the console.

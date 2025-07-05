@@ -1,0 +1,87 @@
+void HierarchicalQP::update_active_set(int level, int row, bool isLowerBound) {
+    Eigen::MatrixXd nullSpace = cholMetric_;
+    Eigen::MatrixXd test, newRow;
+    test = newRow = matrix_.row(row);
+    Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
+    auto dof = col_;
+
+int lastActive = -1;
+int rank       = 1;
+for (auto k = 0; rank > 0 && dof > 0 && k <= level_.maxCoeff(); ++k) {
+    if ((level_ == k && (activeLowSet_ || activeUpSet_)).any()) {
+        test.leftCols(dof) = matrix_.row(row) * nullSpace.leftCols(dof);
+        int rank           = (newRow.array().abs() > tolerance).any();
+        if (rank > 0) {
+            lastActive           = k;
+            newRow.leftCols(dof) = test.leftCols(dof);
+        } else if (lastActive >= level) {
+            if (isLowerBound) {
+                activeLowSet_(row) = true;
+            } else {
+                activeUpSet_(row) = true;
+            }
+
+int leftDof  = dof + ranks_[lastActive];
+primal_     -= inverse_.middleCols(col_ - leftDof, ranks_[lastActive]) *
+           task_.segment(col_ - leftDof, ranks_[lastActive]);
+
+Eigen::VectorXi overlap = overlap_search(lastActive, newRow);
+if (lastActive > level) {
+    sot[lastActive]->enabledSet_(overlap) = false;
+    for (auto& h : sot[lastActive]->parent_) {
+        increment_primal(sot[lastActive]->parent_(h), lastActive);
+    }
+}
+
+increment_primal(lastActive, level);
+// Possibly correct for a scalar factor if the nullspace changed after recomputation of level
+} else {
+if (isLowerBound) {
+    activeLowSet_(row) = true;
+} else {
+    activeUpSet_(row) = true;
+}
+return;
+}
+dof -= ranks_[k];
+if (dof > 0) {
+nullSpace.leftCols(dof) = codRights_[k].middleCols(ranks_[k], dof);
+}
+}
+}
+
+if (rank > 0 && dof > 0) {
+    if (isLowerBound) {
+        activeLowSet_(row) = true;
+    } else {
+        activeUpSet_(row) = true;
+    }
+
+increment_primal(sot[level]->parent_(row), level);
+}
+}
+
+
+
+// Eigen::VectorXi HierarchicalQP::overlap_search(int parent, Eigen::MatrixXd const& newRow) {
+Eigen::VectorXi HierarchicalQP::overlap_search(int row,
+                                               int origin,
+                                               int target,
+                                               Eigen::Array<bool, Eigen::Dynamic, 1> const& filter) {
+    int dof = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
+
+Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
+cod.setThreshold(tolerance);
+cod.compute(newRow.leftCols(dof));
+
+Eigen::MatrixXd N = cod.colsPermutation();
+if (dof > 1) {
+    // In this case matrixZ() is not the identity
+    N *= cod.matrixZ().transpose();
+}
+
+auto activeSet_         = level_ == target && (activeLowSet_ || activeUpSet_) && filter;
+Eigen::VectorXi rows    = find(activeSet_);
+Eigen::MatrixXd matrix  = matrix_(rows, Eigen::all) * N.middleCols(1, dof - 1);
+Eigen::VectorXi overlap = rows(find(matrix.rowwise().any().array() == false));
+}

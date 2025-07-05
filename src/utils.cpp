@@ -1,3 +1,10 @@
+/**
+ * @file utils.cpp
+ * @brief Provides utility functions for the HQP solver.
+ *
+ * This module contains helper functions that perform common operations used in the solver,
+ * such as identifying indices where conditions are met.
+ */
 #include "utils.hpp"
 
 namespace hqp {
