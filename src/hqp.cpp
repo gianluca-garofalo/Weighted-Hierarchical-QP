@@ -221,19 +221,20 @@ void HierarchicalQP::dual_update(int h) {
         ranks_[h]   = 0;
     }
     Eigen::VectorXd tau = matrix.transpose() * dual_(rows);
+    Eigen::VectorXd f   = primal_;
 
     for (auto dof = ranks_[h], k = h - 1; k >= 0; --k) {
         if ((level_ == k && (activeLowSet_ || activeUpSet_)).any()) {
             Eigen::VectorXi rows = find(level_ == k && (activeLowSet_ || activeUpSet_));
             if (ranks_[k] && k < k_) {
                 dof               += ranks_[k];
-                Eigen::VectorXd f  = -inverse_.middleCols(col_ - dof, ranks_[k]).transpose() * tau;
+                f.head(ranks_[k])  = -inverse_.middleCols(col_ - dof, ranks_[k]).transpose() * tau;
                 codMids_[k]
                   .topLeftCorner(ranks_[k], ranks_[k])
                   .triangularView<Eigen::Upper>()
                   .transpose()
-                  .solveInPlace<Eigen::OnTheLeft>(f);
-                dual_(rows)             = codLefts_(rows, Eigen::seqN(0, ranks_[k])) * f;
+                  .solveInPlace<Eigen::OnTheLeft>(f.head(ranks_[k]));
+                dual_(rows)             = codLefts_(rows, Eigen::seqN(0, ranks_[k])) * f.head(ranks_[k]);
                 Eigen::MatrixXd matrix  = matrix_(rows, Eigen::all);
                 tau                    += matrix.transpose() * dual_(rows);
             } else {
