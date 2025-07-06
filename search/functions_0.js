@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['cast_0',['cast',['../classhqp_1_1GenericPtr.html#ae61a45562a1653f7afd02ccc67d05b20',1,'hqp::GenericPtr']]],
-  ['compute_1',['compute',['../classhqp_1_1Task.html#a1e71bc66fcbaa2a73895373b6091b180',1,'hqp::Task::compute()'],['../classhqp_1_1TaskInterface.html#a23e607e49230479472ea687297604d1f',1,'hqp::TaskInterface::compute()']]]
+  ['bind_5ftask_0',['bind_task',['../namespacehqp.html#a19846a698f65950cb840d2f66d3e9452',1,'hqp']]]
 ];

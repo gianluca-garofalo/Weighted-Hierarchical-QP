@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hierarchicalqp_0',['HierarchicalQP',['../classhqp_1_1HierarchicalQP.html#a464b878a37d67c3888ff85a2c0ef2d5d',1,'hqp::HierarchicalQP']]]
+  ['get_5fprimal_0',['get_primal',['../classhqp_1_1HierarchicalQP.html#afd188fe690d31e139bdb9ed95b8acf01',1,'hqp::HierarchicalQP']]],
+  ['get_5fstack_1',['get_stack',['../structhqp_1_1StackOfTasks.html#afffd0f3f02e636e0fec99a26bca5e929',1,'hqp::StackOfTasks']]]
 ];

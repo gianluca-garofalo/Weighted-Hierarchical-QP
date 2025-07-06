@@ -1,11 +1,9 @@
 <map id="include/task.hpp" name="include/task.hpp">
-<area shape="rect" id="node1" title="Declares the abstract Task interface and its derivatives used in the HQP solver." alt="" coords="213,5,343,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,60,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="46,152,123,177"/>
-<area shape="rect" id="node4" title=" " alt="" coords="341,79,401,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="148,152,240,177"/>
-<area shape="rect" id="node6" title=" " alt="" coords="426,79,495,104"/>
-<area shape="rect" id="node7" title=" " alt="" coords="519,79,594,104"/>
-<area shape="rect" id="node8" title=" " alt="" coords="264,152,367,177"/>
-<area shape="rect" id="node9" href="$utils_8hpp.html" title="Declares common utility functions used throughout the HQP solver." alt="" coords="136,79,215,104"/>
+<area shape="rect" id="node1" title=" " alt="" coords="227,5,356,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,79,92,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="117,79,194,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="219,79,281,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="305,79,360,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="384,79,487,104"/>
+<area shape="rect" id="node7" title=" " alt="" coords="511,79,586,104"/>
 </map>

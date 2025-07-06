@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['upper_5f_0',['upper_',['../classhqp_1_1HierarchicalQP.html#a1731c02f03170eaa2e42aaec1ceb997f',1,'hqp::HierarchicalQP::upper_()'],['../classhqp_1_1Task.html#aa3f4c735caae03cc2e9eb197a417d70f',1,'hqp::Task::upper_()']]]
+  ['upper_0',['upper',['../structhqp_1_1TaskBase.html#a6ac810f7383b1e80664f71d3ef7b07ed',1,'hqp::TaskBase']]],
+  ['upper_5f_1',['upper_',['../classhqp_1_1HierarchicalQP.html#a1731c02f03170eaa2e42aaec1ceb997f',1,'hqp::HierarchicalQP']]]
 ];

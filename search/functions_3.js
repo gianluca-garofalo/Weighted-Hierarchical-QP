@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['find_0',['find',['../namespacehqp.html#ab85e1340e7fee0a8d13730c50a970ceb',1,'hqp']]]
+  ['equality_5fhqp_0',['equality_hqp',['../classhqp_1_1HierarchicalQP.html#add4448ad1c21585e607457463016a027',1,'hqp::HierarchicalQP']]]
 ];

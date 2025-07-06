@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['genericptr_0',['GenericPtr',['../classhqp_1_1GenericPtr.html',1,'hqp']]]
+  ['hierarchicalqp_0',['HierarchicalQP',['../classhqp_1_1HierarchicalQP.html',1,'hqp']]]
 ];
