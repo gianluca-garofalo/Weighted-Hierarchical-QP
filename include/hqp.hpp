@@ -27,10 +27,16 @@ class HierarchicalQP {
     Eigen::VectorXd task_;
     /** Previous solution used as a warm start. */
     Eigen::VectorXd guess_;
+    /** Force vector for primal updates. */
+    Eigen::VectorXd force_;
+    /** Stores the tau vector for dual updates. */
+    Eigen::VectorXd tau_;
     /** Stores pseudo-inverse data. */
     Eigen::MatrixXd inverse_;
     /** Cholesky metric used for stability. */
     Eigen::MatrixXd cholMetric_;
+    /** Reusable nullspace matrix to avoid re-instantiation. */
+    Eigen::MatrixXd nullSpace_;
 
     /** Index tracking the active task level. */
     int k_ = 0;
@@ -99,15 +105,18 @@ class HierarchicalQP {
     /**
      * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
      *
-     * @param A           Constraint matrix (rows = total constraints, cols = variables)
-     * @param bu          Upper bounds vector (size = total constraints)
-     * @param bl          Lower bounds vector (size = total constraints)
-     * @param break_points Vector of indices marking the end of each task in the stack
-     * @return TaskContainer with each task as a GenericTask
+     * @param matrix          Constraint matrix (rows = total constraints, cols = variables)
+     * @param lower           Lower bounds vector (size = total constraints)
+     * @param upper           Upper bounds vector (size = total constraints)
+     * @param breaks          Fixed-size vector of indices marking the end of each task in the stack
+     * 
+     * The breaks vector specifies the cumulative constraint counts for exactly L levels.
+     * For example, for L=3 levels with 2, 3, and 1 constraints respectively:
+     * breaks = [2, 5, 6] (constraint indices: level 0: [0,2), level 1: [2,5), level 2: [5,6))
      *
      * Requirements:
-     *   - A.rows() == bu.size() == bl.size()
-     *   - break_points must be increasing and the last element equal to A.rows()
+     *   - matrix.rows() == lower.size() == upper.size()
+     *   - breaks must be increasing and the last element equal to A.rows()
      */
     void set_problem(Eigen::MatrixXd const& matrix,
                      Eigen::VectorXd const& lower,
