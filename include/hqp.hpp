@@ -12,10 +12,10 @@
 #include <vector>
 #include <tuple>
 #include <Eigen/Dense>
-#include "utils.hpp"
 
 namespace hqp {
 
+// template<int MaxRows, int MaxCols>
 class HierarchicalQP {
   private:
     int row_;
@@ -46,10 +46,7 @@ class HierarchicalQP {
     Eigen::Array<bool, Eigen::Dynamic, 1> activeUpSet_;
     /** Initial equality constraints. */
     Eigen::Array<bool, Eigen::Dynamic, 1> equalitySet_;
-    /** Constraints temporarily locked. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> lockedSet_;
-    /** Working set of constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1> workSet_;
+    /** Priority level for each constraint. */
     Eigen::ArrayXi level_;
     /** Dual variables for inequality handling. */
     Eigen::VectorXd dual_;
@@ -59,6 +56,7 @@ class HierarchicalQP {
     Eigen::VectorXd vector_;
     /** Constraint matrix computed by the task. */
     Eigen::MatrixXd matrix_;
+    // Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Auxiliary matrix for decomposition. */
     Eigen::MatrixXd codLefts_;
 
@@ -70,6 +68,12 @@ class HierarchicalQP {
     std::vector<Eigen::MatrixXd> codMids_;
     /** Auxiliary matrix for decomposition. */
     std::vector<Eigen::MatrixXd> codRights_;
+    /** Index in sorted list of locked constraints for each task level. */
+    std::vector<int> breaksEq1_;
+    /** Index in sorted list of active constraints for each task level. */
+    std::vector<int> breaksAc2_;
+    /** Index in sorted list of inactive constraints for each task level. */
+    Eigen::VectorXi breaks_;
 
     /** Solves the overall HQP by combining tasks. */
     void solve();
@@ -85,6 +89,14 @@ class HierarchicalQP {
     void increment_from(int level);
     /** Increment primal due to contribution of active constraints in level. */
     void increment_primal(int parent, int level);
+    /** Locks a constraint at the specified row. */
+    void lock_constraint(int row);
+    /** Activates a constraint at the specified row, indicating whether it is a lower or upper bound. */
+    void activate_constraint(int row, bool isLowerBound);
+    /** Deactivates a constraint at the specified row. */
+    void deactivate_constraint(int row);
+    /** Swaps two constraints at specified indices. */
+    void swap_constraints(int i, int j);
 
   public:
     /** Tolerance for convergence and numerical stability. */
@@ -94,7 +106,10 @@ class HierarchicalQP {
      * @brief Constructs the HierarchicalQP solver.
      * @param n Number of degrees of freedom (columns) in the problem.
      */
+    // template<int MaxRows, int MaxCols>
+    // HierarchicalQP(int m, int n) {matrix_.resize(m, n);}
     HierarchicalQP(int m, int n);
+    // HierarchicalQP(int m, int n) : HierarchicalQP<0, 0>(m, n) {}
 
     /**
      * @brief Sets the metric matrix used to define the quadratic cost.
@@ -109,7 +124,7 @@ class HierarchicalQP {
      * @param lower           Lower bounds vector (size = total constraints)
      * @param upper           Upper bounds vector (size = total constraints)
      * @param breaks          Fixed-size vector of indices marking the end of each task in the stack
-     * 
+     *
      * The breaks vector specifies the cumulative constraint counts for exactly L levels.
      * For example, for L=3 levels with 2, 3, and 1 constraints respectively:
      * breaks = [2, 5, 6] (constraint indices: level 0: [0,2), level 1: [2,5), level 2: [5,6))
@@ -129,7 +144,7 @@ class HierarchicalQP {
      */
     Eigen::VectorXd get_primal();
 
-// TODO: add get dual and get slack, where the latter are computed like in the test
+    // TODO: add get dual and get slack, where the latter are computed like in the test
 
     /**
      * @brief Outputs the active set details to the console.
