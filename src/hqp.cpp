@@ -45,7 +45,7 @@ void HierarchicalQP::solve() {
     guess_   = primal_;
 
     // Deactivate unused tasks for next guess
-    for (int level = k_; level <= level_.maxCoeff(); ++level) {
+    for (int level = k_; level < lev_; ++level) {
         for (int row = level == 0 ? 0 : breaks_(level - 1); row < breaksAc2_[level]; ++row) {
             if (!equalitySet_(row)) {
                 deactivate_constraint(row);
@@ -94,16 +94,16 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
     activeLowSet_ = equalitySet_.select(true, activeLowSet_);
     activeUpSet_  = equalitySet_.select(true, activeUpSet_);
 
-    int n_levels = breaks.size();
+    lev_ = breaks.size();
     // Resize vectors to the number of levels
-    dofs_.resize(n_levels, -1);
-    ranks_.resize(n_levels, 0);
-    codMids_.resize(n_levels);
-    codRights_.resize(n_levels);
-    breaksEq1_.resize(n_levels);
-    breaksAc2_.resize(n_levels);
+    dofs_.resize(lev_, -1);
+    ranks_.resize(lev_, 0);
+    codMids_.resize(lev_);
+    codRights_.resize(lev_);
+    breaksEq1_.resize(lev_);
+    breaksAc2_.resize(lev_);
 
-    for (int stop = 0, start = 0, k = 0; k < n_levels; ++k) {
+    for (int stop = 0, start = 0, k = 0; k < lev_; ++k) {
         int dim                    = breaks(k) - start;
         codMids_[k]                = Eigen::MatrixXd(dim, dim);
         codRights_[k]              = Eigen::MatrixXd(col_, col_);
@@ -147,12 +147,12 @@ void HierarchicalQP::inequality_hqp() {
     equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
-    for (auto iter = 0, h = 0; iter < maxIter && h <= level_.maxCoeff(); ++h) {
+    for (auto iter = 0, h = 0; iter < maxIter && h < lev_; ++h) {
         slack = dual = 1;
         while ((slack > 0 || dual > 0) && iter < maxIter) {
             // Add tasks to the active set.
             slack = -1;
-            for (int k = 0; k <= level_.maxCoeff(); ++k) {
+            for (int k = 0; k < lev_; ++k) {
                 int dim = breaks_(k) - breaksAc2_[k];
                 if (dim > 0) {
                     vector_.segment(breaksAc2_[k], dim) =
@@ -263,7 +263,7 @@ void HierarchicalQP::decrement_from(int level) {
     }
 
     int start = level == 0 ? 0 : breaks_(level - 1);
-    for (int k = level; k <= level_.maxCoeff(); ++k) {
+    for (int k = level; k < lev_; ++k) {
         // if (k == k_) {k_ = parent;} no needed because it always calls increment_from right after
         if (breaksAc2_[k] > start && ranks_[k] > 0) {
             primal_  -= inverse_.middleCols(col_ - dofs_[k], ranks_[k]) * task_.segment(col_ - dofs_[k], ranks_[k]);
@@ -286,7 +286,7 @@ void HierarchicalQP::increment_from(int level) {
 
     int dof   = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
     int start = level == 0 ? 0 : breaks_(level - 1);
-    for (k_ = level; dof > 0 && k_ <= level_.maxCoeff(); ++k_) {
+    for (k_ = level; dof > 0 && k_ < lev_; ++k_) {
         if (breaksAc2_[k_] > start) {
             increment_primal(parent, k_);
             parent = k_;

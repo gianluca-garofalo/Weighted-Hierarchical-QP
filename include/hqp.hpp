@@ -21,6 +21,8 @@ class HierarchicalQP {
     int row_;
     /** Number of variables in the problem. */
     int col_;
+    /** Number of levels in the task hierarchy. */
+    int lev_;
     /** The current solution vector. */
     Eigen::VectorXd primal_;
     /** Intermediate task solution vector. */
