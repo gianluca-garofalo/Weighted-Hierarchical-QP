@@ -1,35 +1,37 @@
 #include <iostream>
-#include "hqp.hpp"
 
 namespace hqp {
 
-HierarchicalQP::HierarchicalQP(int m, int n)
+template<int MaxRows, int MaxCols, int MaxLevels>
+HierarchicalQP<MaxRows, MaxCols, MaxLevels>::HierarchicalQP(int m, int n)
   : row_{m}
-  , col_{n}
+  , col_{n} {
+    primal_.resize(n);
+    task_.resize(n);
+    guess_.resize(n);
+    force_.resize(n);
+    tau_.resize(n);
+    inverse_.resize(n, n);
+    cholMetric_.resize(n, n);
+    nullSpace_.resize(n, n);
+    activeLowSet_.resize(m);
+    activeUpSet_.resize(m);
+    equalitySet_.resize(m);
+    level_.resize(m);
+    dual_.resize(m);
+    lower_.resize(m);
+    upper_.resize(m);
+    vector_.resize(m);
+    matrix_.resize(m, n);
+    codLefts_.resize(m, m);
 
-  , primal_{Eigen::VectorXd::Zero(n)}
-  , task_{Eigen::VectorXd::Zero(n)}
-  , guess_{Eigen::VectorXd::Zero(n)}
-  , force_{Eigen::VectorXd::Zero(n)}
-  , inverse_{Eigen::MatrixXd::Zero(n, n)}
-  , cholMetric_{Eigen::MatrixXd::Identity(n, n)}
-  , nullSpace_{Eigen::MatrixXd::Identity(n, n)}
-
-  , activeLowSet_{Eigen::VectorXi::Zero(m).cast<bool>()}
-  , activeUpSet_{Eigen::VectorXi::Zero(m).cast<bool>()}
-  , equalitySet_{Eigen::VectorXi::Zero(m).cast<bool>()}
-  , level_{Eigen::VectorXi::Zero(m)}
-  , dual_{Eigen::VectorXd::Zero(m)}
-  , lower_{Eigen::VectorXd::Zero(m)}
-  , upper_{Eigen::VectorXd::Zero(m)}
-  , vector_{Eigen::VectorXd::Zero(m)}
-
-  , matrix_{Eigen::MatrixXd::Zero(m, n)}
-  , codLefts_{Eigen::MatrixXd::Zero(m, m)} {
+    guess_.setZero();
+    cholMetric_.setIdentity();
 }
 
 
-void HierarchicalQP::solve() {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::solve() {
     // Shift problem to the origin
     lower_ -= matrix_ * guess_;
     upper_ -= matrix_ * guess_;
@@ -46,7 +48,7 @@ void HierarchicalQP::solve() {
 
     // Deactivate unused tasks for next guess
     for (int level = k_; level < lev_; ++level) {
-        for (int row = level == 0 ? 0 : breaks_(level - 1); row < breaksAc2_[level]; ++row) {
+        for (int row = level == 0 ? 0 : breaks_(level - 1); row < breaksAct_(level); ++row) {
             if (!equalitySet_(row)) {
                 deactivate_constraint(row);
             }
@@ -55,14 +57,16 @@ void HierarchicalQP::solve() {
 }
 
 
-void HierarchicalQP::equality_hqp() {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::equality_hqp() {
     primal_.setZero();
     k_ = std::numeric_limits<int>::max();
     increment_from(0);
 }
 
 
-void HierarchicalQP::set_metric(const Eigen::MatrixXd& metric) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::set_metric(const Eigen::MatrixXd& metric) {
     assert(metric.rows() == metric.cols() && metric.rows() == col_ && "Metric must be a square matrix");
     Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
     assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
@@ -71,10 +75,11 @@ void HierarchicalQP::set_metric(const Eigen::MatrixXd& metric) {
 }
 
 
-void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
-                                 Eigen::VectorXd const& lower,
-                                 Eigen::VectorXd const& upper,
-                                 Eigen::VectorXi const& breaks) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::set_problem(Eigen::MatrixXd const& matrix,
+                                                              Eigen::VectorXd const& lower,
+                                                              Eigen::VectorXd const& upper,
+                                                              Eigen::VectorXi const& breaks) {
     assert(matrix.rows() == lower.size() && lower.size() == upper.size() &&
            "matrix, upper and lower must have the same number of rows");
     assert(breaks.size() > 0 && "breaks must not be empty");
@@ -96,12 +101,12 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
 
     lev_ = breaks.size();
     // Resize vectors to the number of levels
-    dofs_.resize(lev_, -1);
-    ranks_.resize(lev_, 0);
+    dofs_.resize(lev_);
+    ranks_ = Eigen::VectorXi::Zero(lev_);
     codMids_.resize(lev_);
     codRights_.resize(lev_);
-    breaksEq1_.resize(lev_);
-    breaksAc2_.resize(lev_);
+    breaksFix_.resize(lev_);
+    breaksAct_.resize(lev_);
 
     for (int stop = 0, start = 0, k = 0; k < lev_; ++k) {
         int dim                    = breaks(k) - start;
@@ -109,7 +114,7 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
         codRights_[k]              = Eigen::MatrixXd(col_, col_);
         level_.segment(start, dim) = k * Eigen::VectorXi::Ones(dim);
 
-        breaksEq1_[k] = breaksAc2_[k] = start;
+        breaksFix_(k) = breaksAct_(k) = start;
         for (int row = start; row < breaks(k); ++row) {
             if (activeLowSet_(row)) {
                 activate_constraint(row, true);
@@ -117,7 +122,7 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
                 activate_constraint(row, false);
             }
             if (equalitySet_(row)) {
-                lock_constraint(breaksAc2_[level_(row)] - 1);
+                lock_constraint(breaksAct_(level_(row)) - 1);
             }
         }
 
@@ -126,7 +131,8 @@ void HierarchicalQP::set_problem(Eigen::MatrixXd const& matrix,
 }
 
 
-Eigen::VectorXd HierarchicalQP::get_primal() {
+template<int MaxRows, int MaxCols, int MaxLevels>
+Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels>::get_primal() {
     // TODO: move k = 0 in loop (leave int k out) and check style of all loops
     // TODO: move this logic in utils where both the stack and the solver are wrapped together in a new class
     // int k;
@@ -138,7 +144,8 @@ Eigen::VectorXd HierarchicalQP::get_primal() {
 }
 
 
-void HierarchicalQP::inequality_hqp() {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::inequality_hqp() {
     Eigen::Index idx;
     int row;
     double slack, dual, mValue;
@@ -153,25 +160,25 @@ void HierarchicalQP::inequality_hqp() {
             // Add tasks to the active set.
             slack = -1;
             for (int k = 0; k < lev_; ++k) {
-                int dim = breaks_(k) - breaksAc2_[k];
+                int dim = breaks_(k) - breaksAct_(k);
                 if (dim > 0) {
-                    vector_.segment(breaksAc2_[k], dim) =
-                      (!activeUpSet_.segment(breaksAc2_[k], dim)).select(upper_.segment(breaksAc2_[k], dim), 1e9);
-                    mValue = (matrix_.middleRows(breaksAc2_[k], dim) * primal_ - vector_.segment(breaksAc2_[k], dim))
+                    vector_.segment(breaksAct_(k), dim) =
+                      (!activeUpSet_.segment(breaksAct_(k), dim)).select(upper_.segment(breaksAct_(k), dim), 1e9);
+                    mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
-                        row          = breaksAc2_[k] + idx;
+                        row          = breaksAct_(k) + idx;
                         isLowerBound = false;
                     }
 
-                    vector_.segment(breaksAc2_[k], dim) =
-                      (!activeLowSet_.segment(breaksAc2_[k], dim)).select(lower_.segment(breaksAc2_[k], dim), -1e9);
-                    mValue = (vector_.segment(breaksAc2_[k], dim) - matrix_.middleRows(breaksAc2_[k], dim) * primal_)
+                    vector_.segment(breaksAct_(k), dim) =
+                      (!activeLowSet_.segment(breaksAct_(k), dim)).select(lower_.segment(breaksAct_(k), dim), -1e9);
+                    mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
-                        row          = breaksAc2_[k] + idx;
+                        row          = breaksAct_(k) + idx;
                         isLowerBound = true;
                     }
                 }
@@ -188,17 +195,17 @@ void HierarchicalQP::inequality_hqp() {
 
             dual = -1;
             for (auto k = 0; k <= h; ++k) {
-                int dim = breaksAc2_[k] - breaksEq1_[k];
+                int dim = breaksAct_(k) - breaksFix_(k);
                 if (dim > 0) {
                     // TODO: as it seems that both sides can be active, this might not be correct. Or rather it still
                     // considers one active constraint at a time?
-                    dual_.segment(breaksEq1_[k], dim) =
-                      activeUpSet_.segment(breaksEq1_[k], dim)
-                        .select(dual_.segment(breaksEq1_[k], dim), -dual_.segment(breaksEq1_[k], dim));
-                    mValue = dual_.segment(breaksEq1_[k], dim).maxCoeff(&idx);
+                    dual_.segment(breaksFix_(k), dim) =
+                      activeUpSet_.segment(breaksFix_(k), dim)
+                        .select(dual_.segment(breaksFix_(k), dim), -dual_.segment(breaksFix_(k), dim));
+                    mValue = dual_.segment(breaksFix_(k), dim).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > dual) {
                         dual = mValue;
-                        row  = breaksEq1_[k] + idx;
+                        row  = breaksFix_(k) + idx;
                     }
                 }
             }
@@ -210,7 +217,7 @@ void HierarchicalQP::inequality_hqp() {
             }
 
             for (int k = 0; k <= h; ++k) {
-                for (int row = breaksEq1_[k]; row < breaksAc2_[k]; ++row) {
+                for (int row = breaksFix_(k); row < breaksAct_(k); ++row) {
                     if (dual_(row) < -tolerance) {
                         lock_constraint(row);
                     }
@@ -223,31 +230,31 @@ void HierarchicalQP::inequality_hqp() {
 }
 
 
-void HierarchicalQP::dual_update(int h) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::dual_update(int h) {
     int start = h == 0 ? 0 : breaks_(h - 1);
-    int dim   = breaksAc2_[h] - start;
+    int dim   = breaksAct_(h) - start;
 
     if (h >= k_) {
         dual_.segment(start, dim) =
           activeUpSet_.segment(start, dim).select(upper_.segment(start, dim), lower_.segment(start, dim)) -
           matrix_.middleRows(start, dim) * primal_;
-        ranks_[h] = 0;
     }
     tau_ = matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
 
-    for (int dof = ranks_[h], k = h - 1; k >= 0; --k) {
+    for (int dof = ranks_(h), k = h - 1; k >= 0; --k) {
         start = k == 0 ? 0 : breaks_(k - 1);
-        dim   = breaksAc2_[k] - start;
+        dim   = breaksAct_(k) - start;
         if (dim > 0) {
-            if (ranks_[k] && k < k_) {
-                dof                    += ranks_[k];
-                force_.head(ranks_[k])  = -inverse_.middleCols(col_ - dof, ranks_[k]).transpose() * tau_;
+            if (ranks_(k) && k < k_) {
+                dof                    += ranks_(k);
+                force_.head(ranks_(k))  = -inverse_.middleCols(col_ - dof, ranks_(k)).transpose() * tau_;
                 codMids_[k]
-                  .topLeftCorner(ranks_[k], ranks_[k])
-                  .triangularView<Eigen::Upper>()
+                  .topLeftCorner(ranks_(k), ranks_(k))
+                  .template triangularView<Eigen::Upper>()
                   .transpose()
-                  .solveInPlace<Eigen::OnTheLeft>(force_.head(ranks_[k]));
-                dual_.segment(start, dim)  = codLefts_.block(start, 0, dim, ranks_[k]) * force_.head(ranks_[k]);
+                  .template solveInPlace<Eigen::OnTheLeft>(force_.head(ranks_(k)));
+                dual_.segment(start, dim)  = codLefts_.block(start, 0, dim, ranks_(k)) * force_.head(ranks_(k));
                 tau_                      += matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
             } else {
                 dual_.segment(start, dim).setZero();
@@ -257,7 +264,8 @@ void HierarchicalQP::dual_update(int h) {
 }
 
 
-void HierarchicalQP::decrement_from(int level) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::decrement_from(int level) {
     if (level >= k_) {
         return;
     }
@@ -265,16 +273,17 @@ void HierarchicalQP::decrement_from(int level) {
     int start = level == 0 ? 0 : breaks_(level - 1);
     for (int k = level; k < lev_; ++k) {
         // if (k == k_) {k_ = parent;} no needed because it always calls increment_from right after
-        if (breaksAc2_[k] > start && ranks_[k] > 0) {
-            primal_  -= inverse_.middleCols(col_ - dofs_[k], ranks_[k]) * task_.segment(col_ - dofs_[k], ranks_[k]);
-            dofs_[k] = ranks_[k] = 0;
+        if (breaksAct_(k) > start && ranks_(k) > 0) {
+            primal_  -= inverse_.middleCols(col_ - dofs_(k), ranks_(k)) * task_.segment(col_ - dofs_(k), ranks_(k));
+            dofs_(k) = ranks_(k) = 0;
             start                = breaks_(k);
         }
     }
 }
 
 
-void HierarchicalQP::increment_from(int level) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::increment_from(int level) {
     if (level >= k_) {
         return;
     }
@@ -284,41 +293,42 @@ void HierarchicalQP::increment_from(int level) {
         parent = ranks_[h] > 0 ? h : parent;
     }
 
-    int dof   = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
-    int start = level == 0 ? 0 : breaks_(level - 1);
+    int dof    = (parent < 0) ? col_ : dofs_(parent) - ranks_(parent);
+    int start  = level == 0 ? 0 : breaks_(level - 1);
     for (k_ = level; dof > 0 && k_ < lev_; ++k_) {
-        if (breaksAc2_[k_] > start) {
+        if (breaksAct_(k_) > start) {
             increment_primal(parent, k_);
             parent = k_;
 
-            dof   -= ranks_[k_];
+            dof   -= ranks_(k_);
             start  = breaks_(k_);
         }
     }
 }
 
 
-void HierarchicalQP::increment_primal(int parent, int k) {
-    int dof = (parent < 0) ? col_ : dofs_[parent] - ranks_[parent];
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::increment_primal(int parent, int k) {
+    int dof = (parent < 0) ? col_ : dofs_(parent) - ranks_(parent);
     if (dof <= 0) {
-        dofs_[k] = ranks_[k] = 0;
+        dofs_(k) = ranks_(k) = 0;
         return;
     }
-    dofs_[k] = dof;
+    dofs_(k) = dof;
 
     int start  = k == 0 ? 0 : breaks_(k - 1);
-    int n_rows = breaksAc2_[k] - start;
+    int n_rows = breaksAct_(k) - start;
     vector_.segment(start, n_rows) =
       activeUpSet_.segment(start, n_rows).select(upper_.segment(start, n_rows), lower_.segment(start, n_rows)) -
       matrix_.middleRows(start, n_rows) * primal_;
 
     // TODO: dynamically update tolerances to avoid tasks oscillations
-    nullSpace_.leftCols(dof) = (parent < 0) ? cholMetric_ : codRights_[parent].middleCols(ranks_[parent], dof);
+    nullSpace_.leftCols(dof) = (parent < 0) ? cholMetric_ : codRights_[parent].middleCols(ranks_(parent), dof);
     Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
     cod.setThreshold(tolerance);
     cod.compute(matrix_.middleRows(start, n_rows) * nullSpace_.leftCols(dof));
-    ranks_[k]   = cod.rank();
-    int leftDof = dof - ranks_[k];
+    ranks_(k)   = cod.rank();
+    int leftDof = dof - ranks_(k);
 
     codRights_[k].leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
     if (leftDof > 0) {
@@ -327,54 +337,58 @@ void HierarchicalQP::increment_primal(int parent, int k) {
     }
     codLefts_.block(start, 0, n_rows, n_rows) = cod.householderQ() * Eigen::MatrixXd::Identity(n_rows, n_rows);
 
-    inverse_.middleCols(col_ - dof, ranks_[k]) = codRights_[k].leftCols(ranks_[k]);
-    task_.segment(col_ - dof, ranks_[k]) =
-      codLefts_.block(start, 0, n_rows, ranks_[k]).transpose() * vector_.segment(start, n_rows);
+    inverse_.middleCols(col_ - dof, ranks_(k)) = codRights_[k].leftCols(ranks_(k));
+    task_.segment(col_ - dof, ranks_(k)) =
+      codLefts_.block(start, 0, n_rows, ranks_(k)).transpose() * vector_.segment(start, n_rows);
     dual_.segment(start, n_rows) = vector_.segment(start, n_rows) -
-                                   codLefts_.block(start, 0, n_rows, ranks_[k]) * task_.segment(col_ - dof, ranks_[k]);
+                                   codLefts_.block(start, 0, n_rows, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
     cod.matrixT()
-      .topLeftCorner(ranks_[k], ranks_[k])
-      .triangularView<Eigen::Upper>()
-      .solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, ranks_[k]));
-    primal_ += inverse_.middleCols(col_ - dof, ranks_[k]) * task_.segment(col_ - dof, ranks_[k]);
+      .topLeftCorner(ranks_(k), ranks_(k))
+      .template triangularView<Eigen::Upper>()
+      .template solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, ranks_(k)));
+    primal_ += inverse_.middleCols(col_ - dof, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
 
-    codMids_[k].topLeftCorner(ranks_[k], ranks_[k]) = cod.matrixT().topLeftCorner(ranks_[k], ranks_[k]);
+    codMids_[k].topLeftCorner(ranks_(k), ranks_(k)) = cod.matrixT().topLeftCorner(ranks_(k), ranks_(k));
 }
 
 
-void HierarchicalQP::lock_constraint(int row) {
-    if (breaksEq1_[level_(row)] < breaksAc2_[level_(row)]) {
-        swap_constraints(breaksEq1_[level_(row)], row);
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::lock_constraint(int row) {
+    if (breaksFix_(level_(row)) < breaksAct_(level_(row))) {
+        swap_constraints(breaksFix_(level_(row)), row);
     } else {
         throw std::runtime_error("Cannot lock more constraints than the active ones.");
     }
-    ++breaksEq1_[level_(row)];
+    ++breaksFix_(level_(row));
 }
 
-void HierarchicalQP::activate_constraint(int row, bool isLowerBound) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::activate_constraint(int row, bool isLowerBound) {
     if (isLowerBound) {
         activeLowSet_(row) = true;
     } else {
         activeUpSet_(row) = true;
     }
 
-    if (breaksAc2_[level_(row)] < breaks_(level_(row))) {
-        swap_constraints(breaksAc2_[level_(row)], row);
+    if (breaksAct_(level_(row)) < breaks_(level_(row))) {
+        swap_constraints(breaksAct_(level_(row)), row);
     } else {
         throw std::runtime_error("Cannot activate more constraints than the available ones.");
     }
-    ++breaksAc2_[level_(row)];
+    ++breaksAct_(level_(row));
 }
 
-void HierarchicalQP::deactivate_constraint(int row) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::deactivate_constraint(int row) {
     activeLowSet_(row) = false;
     activeUpSet_(row)  = false;
 
-    swap_constraints(--breaksAc2_[level_(row)], row);
+    swap_constraints(--breaksAct_(level_(row)), row);
 }
 
 
-void HierarchicalQP::swap_constraints(int i, int j) {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::swap_constraints(int i, int j) {
     if (i == j) {
         return;
     }
@@ -391,11 +405,12 @@ void HierarchicalQP::swap_constraints(int i, int j) {
 
 
 // TODO: upgrade to a logger keeping track of the active set
-void HierarchicalQP::print_active_set() {
+template<int MaxRows, int MaxCols, int MaxLevels>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::print_active_set() {
     std::cout << "Active set:\n";
     for (int start = 0, k = 0; k < k_; ++k) {
         std::cout << "\tLevel " << k << ":\n";
-        for (int row = start; row < breaksAc2_[k]; ++row) {
+        for (int row = start; row < breaksAct_(k); ++row) {
             std::cout << "\t\t" << lower_(row) << " < " << matrix_.row(row) << " < " << upper_(row) << "\n";
         }
         start = breaks_(k);

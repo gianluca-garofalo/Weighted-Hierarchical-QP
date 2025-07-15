@@ -16,33 +16,19 @@ include(CTest)
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
-
-file(GLOB SRC_FILES src/*.cpp)
-message(SRC_FILES="${SRC_FILES}")
-add_library(${PROJECT_NAME} ${SRC_FILES})
+add_library(${PROJECT_NAME} INTERFACE)
 add_library("${PROJECT_NAME}::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
-set_target_properties(
-    ${PROJECT_NAME}
-    PROPERTIES
-        VERSION ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-)
-
 find_package (Eigen3 3.4.0 REQUIRED NO_MODULE)
-target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
+target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
-target_include_directories(
-    ${PROJECT_NAME}
-    PUBLIC
+target_include_directories(${PROJECT_NAME} 
+    INTERFACE 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-
-target_compile_features(${PROJECT_NAME}	PUBLIC cxx_std_20)
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
 
 if(BUILD_TESTING)
@@ -58,7 +44,13 @@ install(
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# Install header files
+install(
+    DIRECTORY include/
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.hpp" PATTERN "*.tpp"
+)
 
 add_subdirectory(doc)
 
