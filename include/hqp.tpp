@@ -283,16 +283,23 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::decrement_from(int level) {
 
 
 template<int MaxRows, int MaxCols, int MaxLevels>
+int HierarchicalQP<MaxRows, MaxCols, MaxLevels>::get_parent(int level) {
+    int parent = -1;
+    for (int start = 0, k = 0; k < level; ++k) {
+        parent = breaksAct_(k) > start ? k : parent;
+        start  = breaks_(k);
+    }
+    return parent;
+}
+
+
+template<int MaxRows, int MaxCols, int MaxLevels>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels>::increment_from(int level) {
     if (level >= k_) {
         return;
     }
 
-    int parent = -1;
-    for (int h = 0; h < level; ++h) {
-        parent = ranks_[h] > 0 ? h : parent;
-    }
-
+    int parent = get_parent(level);
     int dof    = (parent < 0) ? col_ : dofs_(parent) - ranks_(parent);
     int start  = level == 0 ? 0 : breaks_(level - 1);
     for (k_ = level; dof > 0 && k_ < lev_; ++k_) {

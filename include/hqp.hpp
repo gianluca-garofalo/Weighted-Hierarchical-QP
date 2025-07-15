@@ -100,6 +100,8 @@ class HierarchicalQP {
     void deactivate_constraint(int row);
     /** Swaps two constraints at specified indices. */
     void swap_constraints(int i, int j);
+    /** Computes the parent level for a given task level. */
+    int get_parent(int level);
 
   public:
     /** Tolerance for convergence and numerical stability. */
