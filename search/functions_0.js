@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bind_5ftask_0',['bind_task',['../namespacehqp.html#a19846a698f65950cb840d2f66d3e9452',1,'hqp']]]
+  ['activate_5fconstraint_0',['activate_constraint',['../classhqp_1_1HierarchicalQP.html#a2327eb1d14913202216927bff8f30af7',1,'hqp::HierarchicalQP']]]
 ];

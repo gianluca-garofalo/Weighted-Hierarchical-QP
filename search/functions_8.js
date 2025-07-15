@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print_5factive_5fset_0',['print_active_set',['../classhqp_1_1HierarchicalQP.html#aae5aaeddac67302f310f34bfa3eb66c4',1,'hqp::HierarchicalQP']]]
+  ['lock_5fconstraint_0',['lock_constraint',['../classhqp_1_1HierarchicalQP.html#a609b1b2f4688505c4c74e50db831efeb',1,'hqp::HierarchicalQP']]]
 ];

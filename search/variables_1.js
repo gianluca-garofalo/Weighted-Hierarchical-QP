@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['cholmetric_5f_0',['cholMetric_',['../classhqp_1_1HierarchicalQP.html#abbf5394d2dd09f7716f64741455003be',1,'hqp::HierarchicalQP']]],
-  ['codlefts_5f_1',['codLefts_',['../classhqp_1_1HierarchicalQP.html#a77043098383b1015f5c9896ce4e6fc90',1,'hqp::HierarchicalQP']]],
-  ['codmids_5f_2',['codMids_',['../classhqp_1_1HierarchicalQP.html#a1b4a355e71f14c0ee98326ee0e04b651',1,'hqp::HierarchicalQP']]],
-  ['codrights_5f_3',['codRights_',['../classhqp_1_1HierarchicalQP.html#a5346ae77dbcae11eac8e8723434ae2ee',1,'hqp::HierarchicalQP']]],
-  ['col_5f_4',['col_',['../classhqp_1_1HierarchicalQP.html#a72faa4c6c01075fcd81e7381e4f34cbe',1,'hqp::HierarchicalQP']]]
+  ['breaks_5f_0',['breaks_',['../classhqp_1_1HierarchicalQP.html#a941f15a57a9cf0d0fe1447bf272e9eea',1,'hqp::HierarchicalQP']]],
+  ['breaksact_5f_1',['breaksAct_',['../classhqp_1_1HierarchicalQP.html#ab89620fd372dbfcb636039f626ff6158',1,'hqp::HierarchicalQP']]],
+  ['breaksfix_5f_2',['breaksFix_',['../classhqp_1_1HierarchicalQP.html#a364cf79573583fbaf2e7568f145fbca4',1,'hqp::HierarchicalQP']]]
 ];

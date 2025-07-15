@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['guess_5f_0',['guess_',['../classhqp_1_1HierarchicalQP.html#a96233fd5c1568f62a2a94fab1553ebbc',1,'hqp::HierarchicalQP']]]
+  ['equalityset_5f_0',['equalitySet_',['../classhqp_1_1HierarchicalQP.html#aadd5c7fe4de3e1a7ee43d7a1a8237abf',1,'hqp::HierarchicalQP']]]
 ];
