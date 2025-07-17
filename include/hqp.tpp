@@ -181,7 +181,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::inequality_hqp() {
             for (int k = 0; k < lev_; ++k) {
                 int dim = breaks_(k) - breaksAct_(k);
                 if (dim > 0) {
-                    vector_.segment(breaksAct_(k), dim) =
+                    vector_.segment(breaksAct_(k), dim).noalias() =
                       (!activeUpSet_.segment(breaksAct_(k), dim)).select(upper_.segment(breaksAct_(k), dim), 1e9);
                     mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
@@ -191,7 +191,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::inequality_hqp() {
                         isLowerBound = false;
                     }
 
-                    vector_.segment(breaksAct_(k), dim) =
+                    vector_.segment(breaksAct_(k), dim).noalias() =
                       (!activeLowSet_.segment(breaksAct_(k), dim)).select(lower_.segment(breaksAct_(k), dim), -1e9);
                     mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
                                .maxCoeff(&idx);
@@ -218,7 +218,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::inequality_hqp() {
                 if (dim > 0) {
                     // TODO: as it seems that both sides can be active, this might not be correct. Or rather it still
                     // considers one active constraint at a time?
-                    dual_.segment(breaksFix_(k), dim) =
+                    dual_.segment(breaksFix_(k), dim).noalias() =
                       activeUpSet_.segment(breaksFix_(k), dim)
                         .select(dual_.segment(breaksFix_(k), dim), -dual_.segment(breaksFix_(k), dim));
                     mValue = dual_.segment(breaksFix_(k), dim).maxCoeff(&idx);
@@ -255,7 +255,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::dual_update(int h)
     int dim   = breaksAct_(h) - start;
 
     if (h >= k_) {
-        dual_.segment(start, dim) =
+        dual_.segment(start, dim).noalias() =
           activeUpSet_.segment(start, dim).select(upper_.segment(start, dim), lower_.segment(start, dim)) -
           matrix_.middleRows(start, dim) * primal_;
     }
@@ -266,15 +266,16 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::dual_update(int h)
         dim   = breaksAct_(k) - start;
         if (dim > 0) {
             if (ranks_(k) && k < k_) {
-                dof                    += ranks_(k);
-                force_.head(ranks_(k))  = -inverse_.middleCols(col_ - dof, ranks_(k)).transpose() * tau_;
+                dof                              += ranks_(k);
+                force_.head(ranks_(k)).noalias()  = -inverse_.middleCols(col_ - dof, ranks_(k)).transpose() * tau_;
                 codMids_[k]
                   .topLeftCorner(ranks_(k), ranks_(k))
                   .template triangularView<Eigen::Upper>()
                   .transpose()
                   .template solveInPlace<Eigen::OnTheLeft>(force_.head(ranks_(k)));
-                dual_.segment(start, dim)  = codLefts_.block(start, 0, dim, ranks_(k)) * force_.head(ranks_(k));
-                tau_                      += matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
+                dual_.segment(start, dim).noalias() =
+                  codLefts_.block(start, 0, dim, ranks_(k)) * force_.head(ranks_(k));
+                tau_ += matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
             } else {
                 dual_.segment(start, dim).setZero();
             }
@@ -344,7 +345,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::increment_primal(i
 
     int start  = k == 0 ? 0 : breaks_(k - 1);
     int n_rows = breaksAct_(k) - start;
-    vector_.segment(start, n_rows) =
+    vector_.segment(start, n_rows).noalias() =
       activeUpSet_.segment(start, n_rows).select(upper_.segment(start, n_rows), lower_.segment(start, n_rows)) -
       matrix_.middleRows(start, n_rows) * primal_;
 
@@ -360,25 +361,29 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::increment_primal(i
     ranks_(k)   = cod.rank();
     int leftDof = dof - ranks_(k);
 
-    codRights_[k].leftCols(dof) = nullSpace_.leftCols(dof) * cod.colsPermutation();
     if (leftDof > 0) {
         // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
-        codRights_[k].leftCols(dof) *= cod.matrixZ().transpose();
+        codRights_[k].leftCols(dof).noalias() =
+          nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
+    } else {
+        codRights_[k].leftCols(dof).noalias() = nullSpace_.leftCols(dof) * cod.colsPermutation();
     }
-    codLefts_.block(start, 0, n_rows, n_rows) = cod.householderQ() * Eigen::MatrixXd::Identity(n_rows, n_rows);
+    codLefts_.block(start, 0, n_rows, n_rows).noalias() =
+      cod.householderQ() * Eigen::MatrixXd::Identity(n_rows, n_rows);
 
-    inverse_.middleCols(col_ - dof, ranks_(k)) = codRights_[k].leftCols(ranks_(k));
-    task_.segment(col_ - dof, ranks_(k)) =
+    inverse_.middleCols(col_ - dof, ranks_(k)).noalias() = codRights_[k].leftCols(ranks_(k));
+    task_.segment(col_ - dof, ranks_(k)).noalias() =
       codLefts_.block(start, 0, n_rows, ranks_(k)).transpose() * vector_.segment(start, n_rows);
-    dual_.segment(start, n_rows) = vector_.segment(start, n_rows) -
-                                   codLefts_.block(start, 0, n_rows, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
+    dual_.segment(start, n_rows).noalias() =
+      vector_.segment(start, n_rows) -
+      codLefts_.block(start, 0, n_rows, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
     cod.matrixT()
       .topLeftCorner(ranks_(k), ranks_(k))
       .template triangularView<Eigen::Upper>()
       .template solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, ranks_(k)));
     primal_ += inverse_.middleCols(col_ - dof, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
 
-    codMids_[k].topLeftCorner(ranks_(k), ranks_(k)) = cod.matrixT().topLeftCorner(ranks_(k), ranks_(k));
+    codMids_[k].topLeftCorner(ranks_(k), ranks_(k)).noalias() = cod.matrixT().topLeftCorner(ranks_(k), ranks_(k));
 }
 
 
