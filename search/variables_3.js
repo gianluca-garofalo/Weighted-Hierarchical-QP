@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dofs_5f_0',['dofs_',['../classhqp_1_1HierarchicalQP.html#a8a843affee8320354b8c96afcd14270c',1,'hqp::HierarchicalQP']]],
-  ['dual_5f_1',['dual_',['../classhqp_1_1HierarchicalQP.html#a0a33835ab5fbc12f2bbf0de80f06dbe1',1,'hqp::HierarchicalQP']]]
+  ['dofs_5f_0',['dofs_',['../classhqp_1_1HierarchicalQP.html#afd1fe16d9bab72dcc83575da1e50ae81',1,'hqp::HierarchicalQP']]],
+  ['dual_5f_1',['dual_',['../classhqp_1_1HierarchicalQP.html#a9fccc69eb701240258001fe937f5c60d',1,'hqp::HierarchicalQP']]]
 ];
