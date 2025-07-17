@@ -33,21 +33,21 @@ double calculate_mean(const std::vector<double>& times) {
 }
 
 double calculate_std(const std::vector<double>& times) {
-    double mean = calculate_mean(times);
+    double mean   = calculate_mean(times);
     double sq_sum = std::inner_product(times.begin(), times.end(), times.begin(), 0.0);
     return std::sqrt(sq_sum / times.size() - mean * mean);
 }
 
 double calculate_coefficient_of_variation(const std::vector<double>& times) {
     double mean = calculate_mean(times);
-    double std = calculate_std(times);
+    double std  = calculate_std(times);
     return std / mean;
 }
 
 int main() {
     const int num_iterations = 1000;
     std::vector<double> hqp_times, daqp_times, lexls_times;
-    
+
     // Create a stack of tasks
     hqp::StackOfTasks sot(4);
     sot[0] = hqp::bind_task(run_task0);
@@ -64,16 +64,17 @@ int main() {
     hqp.set_problem(A, bl, bu, breaks);
     
     DAQP daqp(3, 50, 5);
-    
+
     auto lexls = lexls_from_stack(A, bu, bl, breaks);
 
     std::cout << "Running " << num_iterations << " iterations for timing analysis...\n\n";
 
     // Benchmark HQP
     for (int i = 0; i < num_iterations; ++i) {
-        auto t_start = std::chrono::high_resolution_clock::now();
+        auto t_start  = std::chrono::high_resolution_clock::now();
         auto solution = hqp.get_primal();
-        auto t_end = std::chrono::high_resolution_clock::now();
+        auto t_end    = std::chrono::high_resolution_clock::now();
+
         std::chrono::duration<double> t_elapsed = t_end - t_start;
         hqp_times.push_back(t_elapsed.count());
     }
@@ -83,17 +84,19 @@ int main() {
         auto t_start = std::chrono::high_resolution_clock::now();
         daqp.solve(A, bu, bl, breaks);
         auto solution = daqp.get_primal();
-        auto t_end = std::chrono::high_resolution_clock::now();
+        auto t_end    = std::chrono::high_resolution_clock::now();
+
         std::chrono::duration<double> t_elapsed = t_end - t_start;
         daqp_times.push_back(t_elapsed.count());
     }
 
     // Benchmark LexLS
     for (int i = 0; i < num_iterations; ++i) {
-        auto t_start = std::chrono::high_resolution_clock::now();
-        auto status = lexls.solve();
+        auto t_start  = std::chrono::high_resolution_clock::now();
+        auto status   = lexls.solve();
         auto solution = lexls.get_x();
-        auto t_end = std::chrono::high_resolution_clock::now();
+        auto t_end    = std::chrono::high_resolution_clock::now();
+
         std::chrono::duration<double> t_elapsed = t_end - t_start;
         lexls_times.push_back(t_elapsed.count());
     }
@@ -101,21 +104,21 @@ int main() {
     // Statistical analysis
     std::cout << "Timing Analysis Results:\n";
     std::cout << "========================\n\n";
-    
+
     std::cout << "HQP Solver:\n";
     std::cout << "  Mean: " << calculate_mean(hqp_times) << " seconds\n";
     std::cout << "  Std:  " << calculate_std(hqp_times) << " seconds\n";
     std::cout << "  CV:   " << calculate_coefficient_of_variation(hqp_times) << "\n";
     std::cout << "  Min:  " << *std::min_element(hqp_times.begin(), hqp_times.end()) << " seconds\n";
     std::cout << "  Max:  " << *std::max_element(hqp_times.begin(), hqp_times.end()) << " seconds\n\n";
-    
+
     std::cout << "DAQP Solver:\n";
     std::cout << "  Mean: " << calculate_mean(daqp_times) << " seconds\n";
     std::cout << "  Std:  " << calculate_std(daqp_times) << " seconds\n";
     std::cout << "  CV:   " << calculate_coefficient_of_variation(daqp_times) << "\n";
     std::cout << "  Min:  " << *std::min_element(daqp_times.begin(), daqp_times.end()) << " seconds\n";
     std::cout << "  Max:  " << *std::max_element(daqp_times.begin(), daqp_times.end()) << " seconds\n\n";
-    
+
     std::cout << "LexLS Solver:\n";
     std::cout << "  Mean: " << calculate_mean(lexls_times) << " seconds\n";
     std::cout << "  Std:  " << calculate_std(lexls_times) << " seconds\n";

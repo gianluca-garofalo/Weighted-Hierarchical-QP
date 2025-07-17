@@ -5,8 +5,8 @@
 int main() {
     std::cout << "=== Template Matrix Size Demo ===" << std::endl;
 
-    int cols = 8;
-    int rows = 24;
+    constexpr int cols = 8;
+    constexpr int rows = 24;
     Eigen::MatrixXd A(rows, cols);
     Eigen::VectorXd bu(rows), bl(rows);
     Eigen::VectorXi breaks = (Eigen::VectorXi(7) << 3, 5, 9, 11, 14, 16, 24).finished();
@@ -23,18 +23,33 @@ int main() {
     hqp::HierarchicalQP<30, 10> solver_fixed(rows, cols);
     solver_fixed.set_problem(A, bl, bu, breaks);
 
-    Eigen::VectorXd solution_dynamic = solver_dynamic.get_primal();
-    Eigen::VectorXd solution_fixed   = solver_fixed.get_primal();
+    std::cout << "3. Template parameter deduction with fixed-size matrices:" << std::endl;
+    hqp::HierarchicalQP hqp(A.topLeftCorner<rows, cols>().eval());
+    hqp.set_problem(
+      A.topLeftCorner<rows, cols>().eval(), bl.head<rows>().eval(), bu.head<rows>().eval(), breaks.head<7>().eval());
+
+    Eigen::VectorXd solution_dynamic  = solver_dynamic.get_primal();
+    Eigen::VectorXd solution_fixed    = solver_fixed.get_primal();
+    Eigen::VectorXd solution_template = hqp.get_primal();
 
     std::cout << "Dynamic solver solution: " << solution_dynamic.transpose() << std::endl;
     std::cout << "Fixed solver solution:   " << solution_fixed.transpose() << std::endl;
+    std::cout << "Template solver solution: " << solution_template.transpose() << std::endl;
 
-    bool test = solution_dynamic.isApprox(solution_fixed);
-    if (test) {
-        std::cout << "✓ Both solvers produce the same result!" << std::endl;
+    bool test1 = solution_dynamic.isApprox(solution_fixed);
+    bool test2 = solution_dynamic.isApprox(solution_template);
+
+    if (test1 && test2) {
+        std::cout << "✓ All solvers produce the same result!" << std::endl;
     } else {
         std::cout << "✗ Solutions differ!" << std::endl;
+        if (!test1) {
+            std::cout << "  Dynamic vs Fixed differ" << std::endl;
+        }
+        if (!test2) {
+            std::cout << "  Dynamic vs Template differ" << std::endl;
+        }
     }
 
-    return test ? 0 : 1;
+    return (test1 && test2) ? 0 : 1;
 }

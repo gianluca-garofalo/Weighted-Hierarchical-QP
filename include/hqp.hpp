@@ -15,7 +15,7 @@
 
 namespace hqp {
 
-template<int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1>
+template<int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic>
 class HierarchicalQP {
   private:
     int row_;
@@ -24,53 +24,53 @@ class HierarchicalQP {
     /** Number of levels in the task hierarchy. */
     int lev_;
     /** The current solution vector. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxCols, 1> primal_;
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> primal_;
     /** Intermediate task solution vector. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxCols, 1> task_;
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> task_;
     /** Previous solution used as a warm start. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxCols, 1> guess_;
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> guess_;
     /** Force vector for primal updates. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxCols, 1> force_;
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> force_;
     /** Stores the tau vector for dual updates. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxCols, 1> tau_;
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> tau_;
     /** Stores pseudo-inverse data. */
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign,MaxCols, MaxCols> inverse_;
+    Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> inverse_;
     /** Cholesky metric used for stability. */
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign,MaxCols, MaxCols> cholMetric_;
+    Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> cholMetric_;
     /** Reusable nullspace matrix to avoid re-instantiation. */
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign,MaxCols, MaxCols> nullSpace_;
+    Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> nullSpace_;
 
     /** Index tracking the active task level. */
     int k_ = 0;
     /** Current active lower-bound constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> activeLowSet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> activeLowSet_;
     /** Current active upper-bound constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> activeUpSet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> activeUpSet_;
     /** Initial equality constraints. */
-    Eigen::Array<bool, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> equalitySet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> equalitySet_;
     /** Priority level for each constraint. */
-    Eigen::Array<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> level_;
+    Eigen::Array<int, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> level_;
     /** Dual variables for inequality handling. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> dual_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> dual_;
     /** Lower bounds for constraints. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> lower_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> lower_;
     /** Upper bounds for constraints. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> upper_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> upper_;
     /** Right-hand side vector. */
-    Eigen::Matrix<double, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxRows, 1> vector_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> vector_;
     /** Constraint matrix computed by the task. */
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
+    Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Left-hand side matrix in decompositions. */
-    Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::AutoAlign,MaxRows, MaxRows> codLefts_;
+    Eigen::Matrix<double, ROWS, ROWS, Eigen::AutoAlign, MaxRows, MaxRows> codLefts_;
 
     /** Degrees of Freedom available for the task. */
     Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> dofs_;
     /** Ranks of the task computed during solve. */
     Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> ranks_;
     /** Stores middle factor in decompositions. */
-    std::vector<Eigen::MatrixXd> codMids_;
+    std::vector<Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols>> codMids_;
     /** Stores right-hand side matrix in decompositions. */
-    std::vector<Eigen::MatrixXd> codRights_;
+    std::vector<Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols>> codRights_;
     /** Index in sorted list of locked constraints for each task level. */
     Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> breaksFix_;
     /** Index in sorted list of active constraints for each task level. */
@@ -114,6 +114,14 @@ class HierarchicalQP {
     HierarchicalQP(int m, int n);
 
     /**
+     * @brief Constructs the HierarchicalQP solver from an Eigen matrix with compile-time size.
+     * @param matrix Eigen matrix with fixed compile-time dimensions
+     * Template parameters are automatically deduced from the matrix dimensions.
+     */
+    template<int m, int n>
+    HierarchicalQP(const Eigen::Matrix<double, m, n>& matrix);
+
+    /**
      * @brief Sets the metric matrix used to define the quadratic cost.
      * @param metric The metric matrix that influences the solver's behavior.
      */
@@ -134,11 +142,16 @@ class HierarchicalQP {
      * Requirements:
      *   - matrix.rows() == lower.size() == upper.size()
      *   - breaks must be increasing and the last element equal to A.rows()
+     * 
+     * This unified template function accepts both dynamic matrices (Eigen::MatrixXd, etc.)
+     * and fixed-size matrices (Eigen::Matrix<double, m, n>, etc.) for optimal performance.
+     * Compile-time checks ensure template parameter compatibility with fixed-size inputs.
      */
-    void set_problem(Eigen::MatrixXd const& matrix,
-                     Eigen::VectorXd const& lower,
-                     Eigen::VectorXd const& upper,
-                     Eigen::VectorXi const& breaks);
+    template<typename MatrixType, typename LowerType, typename UpperType, typename BreaksType>
+    void set_problem(const MatrixType& matrix,
+                     const LowerType& lower,
+                     const UpperType& upper,
+                     const BreaksType& breaks);
 
     /**
      * @brief Computes and retrieves the primal solution.
@@ -154,9 +167,18 @@ class HierarchicalQP {
      * Provides a comprehensive summary of active constraints at each task level.
      */
     void print_active_set();
-};
+
+};  // class HierarchicalQP
+
+// Deduction guide for dynamic sizing (default behavior)
+HierarchicalQP(int, int) -> HierarchicalQP<>;
+
+// Deduction guide for Eigen matrix with compile-time size
+template<int m, int n>
+HierarchicalQP(const Eigen::Matrix<double, m, n>&) -> HierarchicalQP<m, n, -1, m, n>;
 
 }  // namespace hqp
+
 
 #include "hqp.tpp"
 
