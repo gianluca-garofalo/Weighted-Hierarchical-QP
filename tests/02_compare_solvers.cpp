@@ -1,8 +1,8 @@
 #include <Eigen/Dense>
 #include <chrono>
 #include <daqp.hpp>
-#include <hqp.hpp>
-#include <task.hpp>
+#include <hqp/hqp.hpp>
+#include <task/task.hpp>
 #include <iostream>
 #include "lexls_interface.hpp"
 

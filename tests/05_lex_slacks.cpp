@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 #include <daqp.hpp>
-#include <hqp.hpp>
+#include <hqp/hqp.hpp>
 #include "lexls_interface.hpp"
 
 int main() {

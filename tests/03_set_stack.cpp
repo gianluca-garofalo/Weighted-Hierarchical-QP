@@ -1,7 +1,7 @@
 #include <chrono>
 #include <iostream>
 #include <Eigen/Dense>
-#include <hqp.hpp>
+#include <hqp/hqp.hpp>
 
 int main() {
     // Task 0: -1 <= x <= 1

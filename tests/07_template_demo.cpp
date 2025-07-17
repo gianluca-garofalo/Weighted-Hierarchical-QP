@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Eigen/Dense>
-#include <hqp.hpp>
+#include <hqp/hqp.hpp>
 
 int main() {
     std::cout << "=== Template Matrix Size Demo ===" << std::endl;

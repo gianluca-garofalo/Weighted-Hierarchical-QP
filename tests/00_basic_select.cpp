@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
-#include <hqp.hpp>
-#include <task.hpp>
+#include <hqp/hqp.hpp>
+#include <task/task.hpp>
 #include "library.hpp"
 
 int main() {

@@ -47,7 +47,7 @@ It combines task-based hierarchies and matrix decomposition techniques to handle
 
 After building, you may integrate the solver as a library:
 ```cpp
-#include <hqp.hpp>
+#include <hqp/hqp.hpp>
 // ...use the HierarchicalQP solver as documented in the API...
 ```
 
@@ -74,12 +74,3 @@ Contributions are welcome! Please review the following guidelines:
 ## License
 
 This project is distributed under the BSD 3-Clause License. See the [LICENSE](LICENSE) file for more details.
-
-cmake -B build -DEIGEN=ON
-cmake --build build
-cmake --install build --prefix ../../nimbleone/wholebody_controller/whqp/
-cmake --build build --target doc
-cd build
-ctest
-
-cat install_manifest.txt | xargs echo sudo rm | sh
