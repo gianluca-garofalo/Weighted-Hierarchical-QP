@@ -1,5 +1,9 @@
 # Weighted-Hierarchical-QP
 
+[![C++ CI](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-cpp.yml/badge.svg)](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-cpp.yml)
+[![Python CI](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-python.yml/badge.svg)](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-python.yml)
+[![Docs CI](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-docs.yml)
+
 ## Overview
 
 Weighted-Hierarchical-QP is a sophisticated solver designed to tackle prioritized quadratic programming problems.  
@@ -50,15 +54,16 @@ The solver also provides Python bindings for easy integration with Python projec
 # Install Python dependencies
 pip install numpy pybind11
 
-# Build Python bindings
+# Build using CMake (recommended)
+cmake --build --preset python-release
+
+# Or build using setup.py
 cd python
 python setup.py build_ext --inplace
 
 # Test the bindings
 python test_pyhqp.py
 ```
-
-For detailed instructions and examples, see [PYTHON_BINDINGS.md](PYTHON_BINDINGS.md).
 
 ## Usage
 

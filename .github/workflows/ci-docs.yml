@@ -1,0 +1,32 @@
+name: ci-docs
+
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'doc/**'
+      - 'include/**'
+      - '.github/workflows/ci-docs.yml'
+
+jobs:
+  deploy-docs:
+    name: Deploy Doxygen Documentation
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+    steps:
+      # ![Docs](https://github.com/${{ github.repository }}/actions/workflows/ci-docs.yml/badge.svg)
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Doxygen version
+        run: doxygen --version || echo "Doxygen not found!"
+
+      - name: Deploy Doxygen to GitHub Pages
+        uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config_file: doc/Doxyfile

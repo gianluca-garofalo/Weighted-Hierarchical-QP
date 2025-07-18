@@ -3,9 +3,10 @@
 Test script for pyhqp Python bindings.
 """
 
-import numpy as np
-import sys
 import os
+import sys
+
+import numpy as np
 
 # Add the current directory to the path so we can import pyhqp
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

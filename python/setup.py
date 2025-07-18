@@ -2,11 +2,11 @@
 Setup script for pyhqp - Python bindings for HQP solver
 """
 
-from setuptools import setup, Extension
-from pybind11.setup_helpers import Pybind11Extension, build_ext
-from pybind11 import get_cmake_dir
-import pybind11
 import os
+
+import pybind11
+from pybind11.setup_helpers import Pybind11Extension, build_ext
+from setuptools import setup
 
 # Get the directory of this setup.py file
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,7 +38,9 @@ setup(
     author="Gianluca Garofalo",
     author_email="gianluca.garofalo@outlook.com",
     description="Python bindings for HQP (Hierarchical Quadratic Programming) solver",
-    long_description=open(os.path.join(parent_dir, "README.md"), encoding="utf-8").read(),
+    long_description=open(
+        os.path.join(parent_dir, "README.md"), encoding="utf-8"
+    ).read(),
     long_description_content_type="text/markdown",
     ext_modules=ext_modules,
     cmdclass={"build_ext": build_ext},

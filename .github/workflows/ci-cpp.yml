@@ -1,0 +1,91 @@
+name: ci-cpp
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel previous runs on new commits
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and Test C++ (CMake)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        build_type: [debug, release]
+    steps:
+      # Status badge (add to README):
+      # ![C++ CI](https://github.com/${{ github.repository }}/actions/workflows/ci-cpp/badge.svg)
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show CMake and Compiler Versions
+        run: |
+          cmake --version
+          ${{ matrix.compiler }} --version
+
+      - name: Cache APT packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: apt-${{ runner.os }}
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake ninja-build libeigen3-dev
+
+      - name: Cache CMake build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: cmake-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-${{ hashFiles('CMakeLists.txt', 'cmake/**') }}
+          restore-keys: |
+            cmake-${{ runner.os }}-${{ matrix.compiler }}-${{ matrix.build_type }}-
+            cmake-${{ runner.os }}-${{ matrix.compiler }}-
+
+      - name: Configure CMake
+        run: |
+          # export CC=${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
+          # export CXX=${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
+          cmake --preset=${{ matrix.build_type }}
+
+      - name: Build
+        run: cmake --build ${{github.workspace}}/build --preset ${{ matrix.build_type }}
+
+      - name: Test
+        run: ctest --preset ${{ matrix.build_type }} --output-on-failure
+
+      - name: Generate coverage report
+        if: matrix.compiler == 'gcc' && matrix.build_type == 'debug'
+        run: |
+          sudo apt-get install -y gcovr
+          gcovr --root . --html --html-details -o coverage.html
+          echo "Coverage report generated: coverage.html"
+
+      - name: Upload build artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ matrix.compiler }}-${{ matrix.build_type }}
+          path: |
+            build/
+            !build/_deps/
+          retention-days: 5
+
+      - name: Upload coverage report
+        if: matrix.compiler == 'gcc' && matrix.build_type == 'debug'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.html
+          retention-days: 30

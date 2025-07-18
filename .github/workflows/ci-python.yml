@@ -1,0 +1,152 @@
+name: ci-python
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'python/**'
+      - 'include/**'
+      - 'CMakeLists.txt'
+      - '.github/workflows/ci-python.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'python/**'
+      - 'include/**'
+      - 'CMakeLists.txt'
+      - '.github/workflows/ci-python.yml'
+
+jobs:
+  test-python-bindings:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt update
+        sudo apt install -y cmake ninja-build libeigen3-dev
+
+    - name: Install system dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install cmake ninja eigen
+
+    - name: Setup MSVC (Windows)
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Install system dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install cmake ninja
+        vcpkg install eigen3:x64-windows
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pybind11 numpy pytest
+
+    - name: Configure CMake (Ubuntu/macOS)
+      if: runner.os != 'Windows'
+      run: |
+        cmake --preset python-release
+
+    - name: Configure CMake (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        cmake --preset python-release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+
+    - name: Build Python bindings
+      run: |
+        cmake --build --preset python-release --config Release
+
+    - name: Test Python bindings (Ubuntu/macOS)
+      if: runner.os != 'Windows'
+      run: |
+        cd python
+        PYTHONPATH=../build/python/Release python -m pytest test_pyhqp.py -v
+
+    - name: Test Python bindings (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        cd python
+        $env:PATH = "C:\vcpkg\installed\x64-windows\bin;$env:PATH"
+        $env:PYTHONPATH = "../build/python/Release"
+        python -m pytest test_pyhqp.py -v
+
+  test-setup-py:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y libeigen3-dev
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pybind11 numpy setuptools wheel
+
+    - name: Test setup.py build
+      run: |
+        cd python
+        python setup.py build_ext --inplace
+        python -c "import pyhqp; print('Import successful')"
+
+  lint-python:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install linting tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black isort
+
+    - name: Lint with flake8
+      run: |
+        cd python
+        flake8 --max-line-length=88 --extend-ignore=E203,W503 *.py
+
+    - name: Check formatting with black
+      run: |
+        cd python
+        black --check --diff *.py
+
+    - name: Check import sorting with isort
+      run: |
+        cd python
+        isort --check-only --diff *.py
