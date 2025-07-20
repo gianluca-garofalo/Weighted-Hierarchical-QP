@@ -24,8 +24,7 @@ int main() {
     solver_fixed.set_problem(A, bl, bu, breaks);
 
     std::cout << "3. Template parameter deduction with fixed-size matrices:" << std::endl;
-    hqp::HierarchicalQP hqp(A.topLeftCorner<rows, cols>().eval());
-    hqp.set_problem(
+    hqp::HierarchicalQP hqp(
       A.topLeftCorner<rows, cols>().eval(), bl.head<rows>().eval(), bu.head<rows>().eval(), breaks.head<7>().eval());
 
     Eigen::VectorXd solution_dynamic  = solver_dynamic.get_primal();

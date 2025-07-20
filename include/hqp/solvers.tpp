@@ -3,8 +3,8 @@
 
 namespace hqp {
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::solve() {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
     // Shift problem to the origin
     lower_ -= matrix_ * guess_;
     upper_ -= matrix_ * guess_;
@@ -30,16 +30,16 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::solve() {
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::equality_hqp() {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::equality_hqp() {
     primal_.setZero();
     k_ = std::numeric_limits<int>::max();
     increment_from(0);
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::inequality_hqp() {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_hqp() {
     Eigen::Index idx;
     int row;
     double slack, dual, mValue;
@@ -124,8 +124,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::inequality_hqp() {
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::dual_update(int h) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::dual_update(int h) {
     int start = h == 0 ? 0 : breaks_(h - 1);
     int dim   = breaksAct_(h) - start;
 
@@ -159,8 +159,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::dual_update(int h)
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::decrement_from(int level) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::decrement_from(int level) {
     if (level >= k_) {
         return;
     }
@@ -177,8 +177,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::decrement_from(int
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::increment_from(int level) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_from(int level) {
     if (level >= k_) {
         return;
     }
@@ -198,8 +198,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::increment_from(int
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::increment_primal(int parent, int k) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_primal(int parent, int k) {
     int dof = (parent < 0) ? col_ : dofs_(parent) - ranks_(parent);
     if (dof <= 0) {
         dofs_(k) = ranks_(k) = 0;

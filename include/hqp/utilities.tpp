@@ -6,8 +6,8 @@
 namespace hqp {
 
 // TODO: upgrade to a logger keeping track of the active set
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::print_active_set() {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::print_active_set() {
     std::cout << "Active set:\n";
     for (int start = 0, k = 0; k < k_; ++k) {
         std::cout << "\tLevel " << k << ":\n";

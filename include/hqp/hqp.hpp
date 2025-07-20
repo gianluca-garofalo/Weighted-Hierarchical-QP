@@ -15,7 +15,12 @@
 
 namespace hqp {
 
-template<int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic>
+template<int MaxRows   = -1,
+         int MaxCols   = -1,
+         int MaxLevels = -1,
+         int ROWS      = Eigen::Dynamic,
+         int COLS      = Eigen::Dynamic,
+         int LEVS      = Eigen::Dynamic>
 class HierarchicalQP {
   private:
     int row_;
@@ -43,40 +48,40 @@ class HierarchicalQP {
     /** Index tracking the active task level. */
     int k_ = 0;
     /** Current active lower-bound constraints. */
-    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> activeLowSet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> activeLowSet_;
     /** Current active upper-bound constraints. */
-    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> activeUpSet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> activeUpSet_;
     /** Initial equality constraints. */
-    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> equalitySet_;
+    Eigen::Array<bool, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> equalitySet_;
     /** Priority level for each constraint. */
-    Eigen::Array<int, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> level_;
+    Eigen::Array<int, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> level_;
     /** Dual variables for inequality handling. */
-    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> dual_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> dual_;
     /** Lower bounds for constraints. */
-    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> lower_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> lower_;
     /** Upper bounds for constraints. */
-    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> upper_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> upper_;
     /** Right-hand side vector. */
-    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign,MaxRows, 1> vector_;
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> vector_;
     /** Constraint matrix computed by the task. */
     Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Left-hand side matrix in decompositions. */
     Eigen::Matrix<double, ROWS, ROWS, Eigen::AutoAlign, MaxRows, MaxRows> codLefts_;
 
     /** Degrees of Freedom available for the task. */
-    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> dofs_;
+    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> dofs_;
     /** Ranks of the task computed during solve. */
-    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> ranks_;
+    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> ranks_;
     /** Stores middle factor in decompositions. */
     std::vector<Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols>> codMids_;
     /** Stores right-hand side matrix in decompositions. */
     std::vector<Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols>> codRights_;
     /** Index in sorted list of locked constraints for each task level. */
-    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> breaksFix_;
+    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> breaksFix_;
     /** Index in sorted list of active constraints for each task level. */
-    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> breaksAct_;
+    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> breaksAct_;
     /** Index in sorted list of inactive constraints for each task level. */
-    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign,MaxLevels, 1> breaks_;
+    Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> breaks_;
 
     /** Solves the overall HQP by combining tasks. */
     void solve();
@@ -118,8 +123,11 @@ class HierarchicalQP {
      * @param matrix Eigen matrix with fixed compile-time dimensions
      * Template parameters are automatically deduced from the matrix dimensions.
      */
-    template<int m, int n>
-    HierarchicalQP(const Eigen::Matrix<double, m, n>& matrix);
+    template<int m, int n, int l>
+    HierarchicalQP(const Eigen::Matrix<double, m, n>& matrix,
+                   const Eigen::Vector<double, m>& lower,
+                   const Eigen::Vector<double, m>& upper,
+                   const Eigen::Vector<int, l>& breaks);
 
     /**
      * @brief Sets the metric matrix used to define the quadratic cost.
@@ -142,7 +150,7 @@ class HierarchicalQP {
      * Requirements:
      *   - matrix.rows() == lower.size() == upper.size()
      *   - breaks must be increasing and the last element equal to A.rows()
-     * 
+     *
      * This unified template function accepts both dynamic matrices (Eigen::MatrixXd, etc.)
      * and fixed-size matrices (Eigen::Matrix<double, m, n>, etc.) for optimal performance.
      * Compile-time checks ensure template parameter compatibility with fixed-size inputs.

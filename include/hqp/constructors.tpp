@@ -3,8 +3,8 @@
 
 namespace hqp {
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::HierarchicalQP(int m, int n)
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(int m, int n)
   : row_{m}
   , col_{n}
   , primal_(n)
@@ -30,11 +30,14 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::HierarchicalQP(int m, i
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-template<int m, int n>
-HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::HierarchicalQP(const Eigen::Matrix<double, m, n>& matrix)
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+template<int m, int n, int l>
+HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(const Eigen::Matrix<double, m, n>& matrix,
+                                                                              const Eigen::Vector<double, m>& lower,
+                                                                              const Eigen::Vector<double, m>& upper,
+                                                                              const Eigen::Vector<int, l>& breaks)
   : HierarchicalQP(m, n) {
-    matrix_ = matrix;
+    set_problem(matrix, lower, upper, breaks);
 }
 
 }  // namespace hqp

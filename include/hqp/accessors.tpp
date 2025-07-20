@@ -3,8 +3,8 @@
 
 namespace hqp {
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::get_parent(int level) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_parent(int level) {
     int parent = -1;
     for (int start = 0, k = 0; k < level; ++k) {
         parent = breaksAct_(k) > start ? k : parent;
@@ -14,8 +14,8 @@ int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::get_parent(int leve
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::get_primal() {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_primal() {
     // TODO: move k = 0 in loop (leave int k out) and check style of all loops
     // TODO: move this logic in utils where both the stack and the solver are wrapped together in a new class
     // int k;
@@ -27,8 +27,8 @@ Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::get_pri
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::set_metric(const Eigen::MatrixXd& metric) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_metric(const Eigen::MatrixXd& metric) {
     assert(metric.rows() == metric.cols() && metric.rows() == col_ && "Metric must be a square matrix");
     Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
     assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
@@ -37,12 +37,12 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::set_metric(const E
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 template<typename MatrixType, typename LowerType, typename UpperType, typename BreaksType>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::set_problem(const MatrixType& matrix,
-                                                                          const LowerType& lower,
-                                                                          const UpperType& upper,
-                                                                          const BreaksType& breaks) {
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(const MatrixType& matrix,
+                                                                                const LowerType& lower,
+                                                                                const UpperType& upper,
+                                                                                const BreaksType& breaks) {
     // Compile-time checks for fixed-size matrices
     if constexpr (MatrixType::RowsAtCompileTime != Eigen::Dynamic && MatrixType::ColsAtCompileTime != Eigen::Dynamic) {
         static_assert(ROWS == MatrixType::RowsAtCompileTime || ROWS == Eigen::Dynamic,

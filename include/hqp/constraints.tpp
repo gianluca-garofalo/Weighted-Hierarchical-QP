@@ -3,8 +3,8 @@
 
 namespace hqp {
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::lock_constraint(int row) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::lock_constraint(int row) {
     if (breaksFix_(level_(row)) < breaksAct_(level_(row))) {
         swap_constraints(breaksFix_(level_(row)), row);
     } else {
@@ -14,8 +14,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::lock_constraint(in
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::activate_constraint(int row, bool isLowerBound) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::activate_constraint(int row, bool isLowerBound) {
     if (isLowerBound) {
         activeLowSet_(row) = true;
     } else {
@@ -31,8 +31,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::activate_constrain
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::deactivate_constraint(int row) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::deactivate_constraint(int row) {
     activeLowSet_(row) = false;
     activeUpSet_(row)  = false;
 
@@ -40,8 +40,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::deactivate_constra
 }
 
 
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS>::swap_constraints(int i, int j) {
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::swap_constraints(int i, int j) {
     if (i == j) {
         return;
     }
