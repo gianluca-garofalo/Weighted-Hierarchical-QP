@@ -27,6 +27,8 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
   , codLefts_(m, m) {
     guess_.setZero();
     cholMetric_.setIdentity();
+    activeLowSet_.setZero();
+    activeUpSet_.setZero();
 }
 
 

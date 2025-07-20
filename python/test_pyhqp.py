@@ -48,11 +48,8 @@ def test_basic_problem_solving():
 
     # Set up the problem
     A = np.array([[1.0, 0.0], [0.0, 1.0], [0.0, 1.0]])
-
-    # Use large finite values instead of infinity
-    large_val = 1e9
-    lower = np.array([0.0, 8.0, -large_val])
-    upper = np.array([0.0, large_val, 8.0])
+    lower = np.array([0.0, 8.0, -np.inf])
+    upper = np.array([0.0, np.inf, 8.0])
     breaks = np.array([1, 3], dtype=np.int32)
 
     # Set the problem
