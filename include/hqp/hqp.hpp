@@ -68,6 +68,8 @@ class HierarchicalQP {
     Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> upper_;
     /** Right-hand side vector. */
     Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> vector_;
+    /** (De)Activations counter for anti-cycling. */
+    Eigen::Array<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> frequency_;
     /** Constraint matrix computed by the task. */
     Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Left-hand side matrix in decompositions. */

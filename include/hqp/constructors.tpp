@@ -23,6 +23,7 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
   , lower_(m)
   , upper_(m)
   , vector_(m)
+  , frequency_(m)
   , matrix_(m, n)
   , codLefts_(m, m) {
     guess_.setZero();

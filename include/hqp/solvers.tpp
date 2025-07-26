@@ -62,13 +62,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
     double slack, dual, mValue;
     bool isLowerBound;  // needed to distinguish between upper and lower bound in case they are both active
 
-    // Anti-cycling: track recent constraint changes with larger buffer
-    ConstraintTracker constraint_tracker(
-      std::min(HQP_ANTI_CYCLING_BUFFER_SIZE, row_));  // Remember more changes for larger problems
-    auto getAdaptiveThreshold = [&](int constraint_row) -> double {
-        int frequency = constraint_tracker.getFrequency(constraint_row);
-        return tolerance * std::pow(10.0, frequency);
-    };
+    // Anti-cycling:
+    frequency_.setOnes();
 
     equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
@@ -94,13 +89,12 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 if (dim > 0) {
                     vector_.segment(breaksAct_(k), dim).noalias() =
                       (!activeUpSet_.segment(breaksAct_(k), dim)).select(upper_.segment(breaksAct_(k), dim), 1e9);
-                    mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
+                    mValue = ((matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
+                                .array() /
+                              frequency_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
 
-                    // Use constraint tracker instead of separate set/deque
-                    double threshold = getAdaptiveThreshold(breaksAct_(k) + idx);
-
-                    if (mValue > threshold && mValue > slack) {
+                    if (mValue * frequency_(breaksAct_(k) + idx) > tolerance && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
                         isLowerBound = false;
@@ -108,12 +102,12 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
 
                     vector_.segment(breaksAct_(k), dim).noalias() =
                       (!activeLowSet_.segment(breaksAct_(k), dim)).select(lower_.segment(breaksAct_(k), dim), -1e9);
-                    mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
+                    mValue = ((vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
+                                .array() /
+                              frequency_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
 
-                    threshold = getAdaptiveThreshold(breaksAct_(k) + idx);
-
-                    if (mValue > threshold && mValue > slack) {
+                    if (mValue * frequency_(breaksAct_(k) + idx) > tolerance && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
                         isLowerBound = true;
@@ -121,20 +115,19 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 }
             }
             if (slack > tolerance) {
+                frequency_(row) *= 5;
                 decrement_from(level_(row));
                 activate_constraint(row, isLowerBound);
                 increment_from(level_(row));
-                constraint_tracker.addConstraint(row);
                 solver_info_.constraint_activations++;
                 consecutive_no_change = 0;
 
                 // Check for cycling
-                int frequency = constraint_tracker.getFrequency(row);
-                if (frequency > 5) {
+                if (frequency_(row) > 5) {
                     solver_info_.status         = SolverStatus::CYCLING_DETECTED;
                     // solver_info_.status_message = "Cycling detected: constraint " + std::to_string(row) +
-                    //                              " activated " + std::to_string(frequency) + " times";
-                    solver_info_.cycling_events = frequency;
+                    //                              " activated " + std::to_string(frequency_(row)) + " times";
+                    solver_info_.cycling_events = frequency_(row);
                 }
                 continue;
             }
@@ -151,21 +144,21 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                     dual_.segment(breaksFix_(k), dim).noalias() =
                       activeUpSet_.segment(breaksFix_(k), dim)
                         .select(dual_.segment(breaksFix_(k), dim), -dual_.segment(breaksFix_(k), dim));
-                    mValue = dual_.segment(breaksFix_(k), dim).maxCoeff(&idx);
+                    mValue =
+                      (dual_.segment(breaksFix_(k), dim).array() / frequency_.segment(breaksFix_(k), dim))
+                        .maxCoeff(&idx);
 
-                    double threshold = getAdaptiveThreshold(breaksFix_(k) + idx);
-
-                    if (mValue > threshold && mValue > dual) {
+                    if (mValue * frequency_(breaksFix_(k) + idx) > tolerance && mValue > dual) {
                         dual = mValue;
                         row  = breaksFix_(k) + idx;
                     }
                 }
             }
             if (dual > tolerance) {
+                frequency_(row) *= 5;
                 decrement_from(level_(row));
                 deactivate_constraint(row);
                 increment_from(level_(row));
-                constraint_tracker.addConstraint(row);
                 solver_info_.constraint_deactivations++;
                 consecutive_no_change = 0;
                 continue;
@@ -189,7 +182,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 consecutive_no_change++;
                 if (consecutive_no_change > HQP_STAGNATION_THRESHOLD) {
                     // Force a constraint change to break stagnation
-                    constraint_tracker.clear();
+                    frequency_.setOnes();
                     consecutive_no_change = 0;
                     solver_info_.stagnation_events++;
 
@@ -230,8 +223,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
         solver_info_.levels_completed = h + 1;
         solver_info_.total_iterations = iter;
 
-        // Clear recent changes between hierarchy levels to avoid over-restriction
-        constraint_tracker.clear();
+        frequency_.setOnes();
     }
 }
 
