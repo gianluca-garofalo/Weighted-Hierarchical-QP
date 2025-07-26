@@ -3,7 +3,7 @@
 PROJECT_NAME           = "Weighted-Hierarchical-QP"
 PROJECT_NUMBER         = "0.0.1"
 OUTPUT_DIRECTORY       = docs
-INPUT                  = include doc/mainpage.dox
+INPUT                  = include doc README.md
 EXCLUDE                = ../build
 FILE_PATTERNS          = *.h *.hpp *.c *.cpp *.md *.dox
 RECURSIVE              = YES
@@ -20,7 +20,7 @@ DOT_IMAGE_FORMAT       = svg                 # Use SVG for diagrams
 JAVADOC_AUTOBRIEF      = YES                 # Auto-extract the brief description
 WARN_AS_ERROR          = NO
 QUIET                  = NO
-USE_MDFILE_AS_MAINPAGE = mainpage.dox        # Ensure mainpage.dox is used as the main page
+USE_MDFILE_AS_MAINPAGE = README.md           # Use README.md as the main page
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       =
 EXCLUDE_PATTERNS       = */example* */examples*
