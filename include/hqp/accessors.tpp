@@ -64,6 +64,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
         prev = breaks(k);
     }
     assert(breaks(Eigen::last) == matrix.rows() && "The last break must be equal to matrix.rows()");
+    assert((lower.array() <= upper.array()).all() && "Lower bounds must be less than or equal to upper bounds");
 
     matrix_ = matrix;
     lower_  = lower;
