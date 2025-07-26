@@ -45,6 +45,14 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
     double slack, dual, mValue;
     bool isLowerBound;  // needed to distinguish between upper and lower bound in case they are both active
 
+    // Anti-cycling: track recent constraint changes with larger buffer
+    ConstraintTracker constraint_tracker(
+      std::min(HQP_ANTI_CYCLING_BUFFER_SIZE, row_));  // Remember more changes for larger problems
+    auto getAdaptiveThreshold = [&](int constraint_row) -> double {
+        int frequency = constraint_tracker.getFrequency(constraint_row);
+        return tolerance * std::pow(10.0, frequency);
+    };
+
     equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
@@ -60,7 +68,11 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                       (!activeUpSet_.segment(breaksAct_(k), dim)).select(upper_.segment(breaksAct_(k), dim), 1e9);
                     mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
-                    if (mValue > tolerance && mValue > slack) {
+
+                    // Use constraint tracker instead of separate set/deque
+                    double threshold = getAdaptiveThreshold(breaksAct_(k) + idx);
+
+                    if (mValue > threshold && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
                         isLowerBound = false;
@@ -70,7 +82,10 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                       (!activeLowSet_.segment(breaksAct_(k), dim)).select(lower_.segment(breaksAct_(k), dim), -1e9);
                     mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
                                .maxCoeff(&idx);
-                    if (mValue > tolerance && mValue > slack) {
+
+                    threshold = getAdaptiveThreshold(breaksAct_(k) + idx);
+
+                    if (mValue > threshold && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
                         isLowerBound = true;
@@ -81,6 +96,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 decrement_from(level_(row));
                 activate_constraint(row, isLowerBound);
                 increment_from(level_(row));
+                constraint_tracker.addConstraint(row);
                 continue;
             }
 
@@ -97,7 +113,10 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                       activeUpSet_.segment(breaksFix_(k), dim)
                         .select(dual_.segment(breaksFix_(k), dim), -dual_.segment(breaksFix_(k), dim));
                     mValue = dual_.segment(breaksFix_(k), dim).maxCoeff(&idx);
-                    if (mValue > tolerance && mValue > dual) {
+
+                    double threshold = getAdaptiveThreshold(breaksFix_(k) + idx);
+
+                    if (mValue > threshold && mValue > dual) {
                         dual = mValue;
                         row  = breaksFix_(k) + idx;
                     }
@@ -107,6 +126,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 decrement_from(level_(row));
                 deactivate_constraint(row);
                 increment_from(level_(row));
+                constraint_tracker.addConstraint(row);
                 continue;
             }
 
@@ -120,6 +140,9 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
 
             ++iter;
         }
+
+        // Clear recent changes between hierarchy levels to avoid over-restriction
+        constraint_tracker.clear();
     }
 }
 

@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <tuple>
+#include <unordered_set>
 #include <Eigen/Dense>
 
 namespace hqp {
@@ -107,6 +108,45 @@ class HierarchicalQP {
     void swap_constraints(int i, int j);
     /** Computes the parent level for a given task level. */
     int get_parent(int level);
+
+    class ConstraintTracker {
+      private:
+        std::vector<int> buffer_;                         // Just store constraint rows
+        std::unordered_map<int, int> constraint_counts_;  // row -> count in current window
+        int head_ = 0;
+        int capacity_;
+
+      public:
+        explicit ConstraintTracker(int capacity)
+          : buffer_(capacity, -1)
+          , capacity_(capacity) {
+        }
+
+        void addConstraint(int row) {
+            auto it = constraint_counts_.find(row);
+            if (it != constraint_counts_.end()) {
+                constraint_counts_[row]++;
+                return;
+            }
+
+            if (buffer_[head_] != -1) {  // Slot is occupied
+                constraint_counts_.erase(buffer_[head_]);
+            }
+            buffer_[head_]          = row;
+            constraint_counts_[row] = 1;
+            head_                   = (head_ + 1) % capacity_;
+        }
+
+        int getFrequency(int row) const {
+            auto it = constraint_counts_.find(row);
+            return (it != constraint_counts_.end()) ? it->second : 0;
+        }
+
+        void clear() {
+            constraint_counts_.clear();
+            head_ = 0;
+        }
+    };
 
   public:
     /** Tolerance for convergence and numerical stability. */
