@@ -1,10 +1,12 @@
 /**
  * @file hqp.hpp
- * @brief Main interface for the Weighted-Hierarchical-QP solver.
+ * @brief Main interface for the HQP (Hierarchical Quadratic Programming) solver.
  *
- * This file defines the HierarchicalQP class which encapsulates the algorithm to solve
- * prioritized quadratic programming problems. The solver aggregates multiple tasks and applies
- * iterative refinements, handling both equality and inequality constraints.
+ * Defines the `HierarchicalQP` class for solving prioritized quadratic programming problems.
+ *
+ * @author Gianluca Garofalo
+ * @version 0.1.1
+ * @date 2025
  */
 #ifndef _HierarchicalQP_
 #define _HierarchicalQP_
@@ -114,7 +116,10 @@ class HierarchicalQP {
 
     /**
      * @brief Constructs the HierarchicalQP solver.
-     * @param n Number of degrees of freedom (columns) in the problem.
+     * @param m Number of constraints (rows) in your problem
+     * @param n Number of variables (columns) in your problem
+     *
+     * Create the solver with the dimensions of your problem.
      */
     HierarchicalQP(int m, int n);
 
@@ -136,24 +141,24 @@ class HierarchicalQP {
     void set_metric(const Eigen::MatrixXd& metric);
 
     /**
-     * @brief Stacks multiple tasks into a TaskContainer for hierarchical QP.
+     * @brief Stacks multiple tasks into a hierarchical QP problem.
      *
      * @param matrix          Constraint matrix (rows = total constraints, cols = variables)
      * @param lower           Lower bounds vector (size = total constraints)
      * @param upper           Upper bounds vector (size = total constraints)
-     * @param breaks          Fixed-size vector of indices marking the end of each task in the stack
+     * @param breaks          Indices marking the end of each task level in the hierarchy
      *
-     * The breaks vector specifies the cumulative constraint counts for exactly L levels.
-     * For example, for L=3 levels with 2, 3, and 1 constraints respectively:
-     * breaks = [2, 5, 6] (constraint indices: level 0: [0,2), level 1: [2,5), level 2: [5,6))
+     * The `breaks` vector defines your task hierarchy by marking the end of each priority level.
+     *
+     * Example: For 3 levels with 2, 3, and 1 constraints respectively:
+     *   breaks = [2, 5, 6]  // Level 0: constraints [0,2), Level 1: [2,5), Level 2: [5,6)
      *
      * Requirements:
-     *   - matrix.rows() == lower.size() == upper.size()
-     *   - breaks must be increasing and the last element equal to A.rows()
+     * - `matrix.rows() == lower.size() == upper.size()`
+     * - `breaks` must be increasing and end with `matrix.rows()`
+     * - `lower <= upper` for all constraints
      *
-     * This unified template function accepts both dynamic matrices (Eigen::MatrixXd, etc.)
-     * and fixed-size matrices (Eigen::Matrix<double, m, n>, etc.) for optimal performance.
-     * Compile-time checks ensure template parameter compatibility with fixed-size inputs.
+     * Works with both dynamic and fixed-size Eigen matrices.
      */
     template<typename MatrixType, typename LowerType, typename UpperType, typename BreaksType>
     void set_problem(const MatrixType& matrix,
@@ -163,7 +168,15 @@ class HierarchicalQP {
 
     /**
      * @brief Computes and retrieves the primal solution.
-     * @return The computed primal solution vector.
+     * @return The computed primal solution vector
+     *
+     * Call this method to solve your problem and get the solution. The solver will automatically run if it hasn't been solved yet.
+     *
+     * What happens inside:
+     * 1. If not already solved, triggers the solve process
+     * 2. Applies hierarchical task resolution
+     * 3. Returns the optimal solution vector
+     * 4. Updates solver statistics
      */
     Eigen::VectorXd get_primal();
 
