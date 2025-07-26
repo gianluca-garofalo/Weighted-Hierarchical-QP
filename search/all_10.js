@@ -1,10 +1,19 @@
 var searchData=
 [
-  ['task_0',['Task',['../structhqp_1_1Task.html',1,'hqp::Task&lt; Args &gt;'],['../structhqp_1_1Task.html#a9aa53e03dcdd5297269d827a3125e875',1,'hqp::Task::Task()']]],
-  ['task_2ehpp_1',['task.hpp',['../task_8hpp.html',1,'']]],
-  ['task_5f_2',['task_',['../classhqp_1_1HierarchicalQP.html#a477c4ee444270e0c58c5b83bcfe0d97f',1,'hqp::HierarchicalQP']]],
-  ['taskbase_3',['TaskBase',['../structhqp_1_1TaskBase.html',1,'hqp']]],
-  ['taskptr_4',['TaskPtr',['../classhqp_1_1TaskPtr.html',1,'hqp']]],
-  ['tau_5f_5',['tau_',['../classhqp_1_1HierarchicalQP.html#aabbb594ae1749463411f9e36ddb6571c',1,'hqp::HierarchicalQP']]],
-  ['tolerance_6',['tolerance',['../classhqp_1_1HierarchicalQP.html#ae68c08c3c01ce533bdbfcff60f3dfded',1,'hqp::HierarchicalQP']]]
+  ['set_5fmask_0',['set_mask',['../structhqp_1_1TaskBase.html#a6b3f87cf7de08486b63df8255448b294',1,'hqp::TaskBase']]],
+  ['set_5fmetric_1',['set_metric',['../classhqp_1_1HierarchicalQP.html#a051fcab24cc9064cb9ca7122b97b5ea7',1,'hqp::HierarchicalQP']]],
+  ['set_5fproblem_2',['set_problem',['../classhqp_1_1HierarchicalQP.html#a69daa0202c39b94aff02a274a7918699',1,'hqp::HierarchicalQP']]],
+  ['set_5fstack_3',['set_stack',['../structhqp_1_1StackOfTasks.html#a40e59bf955c5e1d03535d3d25863e250',1,'hqp::StackOfTasks']]],
+  ['solve_4',['solve',['../classhqp_1_1HierarchicalQP.html#a22085be2d3bc2757bd1325908fcc917c',1,'hqp::HierarchicalQP']]],
+  ['solve_5ftime_5fseconds_5',['solve_time_seconds',['../structhqp_1_1SolverInfo.html#aa61b40a522e3ecb690b1e1a5ab0c02f5',1,'hqp::SolverInfo']]],
+  ['solver_5finfo_5f_6',['solver_info_',['../classhqp_1_1HierarchicalQP.html#a90c7bea3ea19ca0cb9bae94f880d242a',1,'hqp::HierarchicalQP']]],
+  ['solverinfo_7',['SolverInfo',['../structhqp_1_1SolverInfo.html',1,'hqp']]],
+  ['solverstatus_8',['SolverStatus',['../namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184',1,'hqp']]],
+  ['stackoftasks_9',['StackOfTasks',['../structhqp_1_1StackOfTasks.html',1,'hqp']]],
+  ['stagnation_5fdetected_10',['STAGNATION_DETECTED',['../namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ae9bd5f5aed2aab3934fda0821e6bbab3',1,'hqp']]],
+  ['stagnation_5fevents_11',['stagnation_events',['../structhqp_1_1SolverInfo.html#ab6aa503bbe8a50dd7bc85ad452cd4e8e',1,'hqp::SolverInfo']]],
+  ['status_12',['status',['../structhqp_1_1SolverInfo.html#a705d6ac30f8162252603f55d44146f40',1,'hqp::SolverInfo']]],
+  ['status_2ehpp_13',['status.hpp',['../status_8hpp.html',1,'']]],
+  ['success_14',['SUCCESS',['../namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ad0749aaba8b833466dfcbb0428e4f89c',1,'hqp']]],
+  ['swap_5fconstraints_15',['swap_constraints',['../classhqp_1_1HierarchicalQP.html#a673be4424ca5dcd9339790908b55eed3',1,'hqp::HierarchicalQP']]]
 ];

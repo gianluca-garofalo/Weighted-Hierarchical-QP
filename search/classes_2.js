@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['task_0',['Task',['../structhqp_1_1Task.html',1,'hqp']]],
-  ['taskbase_1',['TaskBase',['../structhqp_1_1TaskBase.html',1,'hqp']]],
-  ['taskptr_2',['TaskPtr',['../classhqp_1_1TaskPtr.html',1,'hqp']]]
+  ['solverinfo_0',['SolverInfo',['../structhqp_1_1SolverInfo.html',1,'hqp']]],
+  ['stackoftasks_1',['StackOfTasks',['../structhqp_1_1StackOfTasks.html',1,'hqp']]]
 ];

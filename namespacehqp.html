@@ -71,6 +71,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">hqp Namespace Reference</div></div>
 </div><!--header-->
@@ -80,6 +81,9 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html">HierarchicalQP</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1SolverInfo.html">SolverInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detailed solver statistics and information.  <a href="structhqp_1_1SolverInfo.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1StackOfTasks.html">StackOfTasks</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhqp_1_1Task.html">Task</a></td></tr>
@@ -88,6 +92,25 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1TaskPtr.html">TaskPtr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a3d5c61d99022f073a8ddd2df208cf184"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184">SolverStatus</a> { <br />
+&#160;&#160;<a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ad0749aaba8b833466dfcbb0428e4f89c">SUCCESS</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184a5afaf45bc4c02208d502d9c0c26d8287">MAX_ITERATIONS_REACHED</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ab98ad7eb90db3300b4ec89fefc065b86">TIMEOUT_REACHED</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184aea537a85f4347575db2029953e54e70a">CYCLING_DETECTED</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ae9bd5f5aed2aab3934fda0821e6bbab3">STAGNATION_DETECTED</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184a7814b1d7120990d7ae7a18bb7c453ac5">NUMERICAL_ISSUE</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184a6faaca695f728b47f47dd389f31e4a93">INFEASIBLE</a>
+, <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ab8f57afe49b8c154517eec56efe5730b">UNBOUNDED</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184ab34aac8dc612fdffdf75bf272fcdb3c0">NOT_SOLVED</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:a3d5c61d99022f073a8ddd2df208cf184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the HQP solver.  <a href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184">More...</a><br /></td></tr>
+<tr class="separator:a3d5c61d99022f073a8ddd2df208cf184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -100,6 +123,52 @@ Functions</h2></td></tr>
 <tr class="memitem:a19846a698f65950cb840d2f66d3e9452"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacehqp.html#a19846a698f65950cb840d2f66d3e9452">bind_task</a> (F &amp;&amp;f)</td></tr>
 <tr class="separator:a19846a698f65950cb840d2f66d3e9452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a3d5c61d99022f073a8ddd2df208cf184" name="a3d5c61d99022f073a8ddd2df208cf184"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d5c61d99022f073a8ddd2df208cf184">&#9670;&#160;</a></span>SolverStatus</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184">hqp::SolverStatus</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Status codes for the HQP solver. </p>
+<p>These codes indicate the outcome of the solve process. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184ad0749aaba8b833466dfcbb0428e4f89c" name="a3d5c61d99022f073a8ddd2df208cf184ad0749aaba8b833466dfcbb0428e4f89c"></a>SUCCESS&#160;</td><td class="fielddoc"><p>Solution found. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184a5afaf45bc4c02208d502d9c0c26d8287" name="a3d5c61d99022f073a8ddd2df208cf184a5afaf45bc4c02208d502d9c0c26d8287"></a>MAX_ITERATIONS_REACHED&#160;</td><td class="fielddoc"><p>Maximum number of iterations reached. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184ab98ad7eb90db3300b4ec89fefc065b86" name="a3d5c61d99022f073a8ddd2df208cf184ab98ad7eb90db3300b4ec89fefc065b86"></a>TIMEOUT_REACHED&#160;</td><td class="fielddoc"><p>Timeout reached. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184aea537a85f4347575db2029953e54e70a" name="a3d5c61d99022f073a8ddd2df208cf184aea537a85f4347575db2029953e54e70a"></a>CYCLING_DETECTED&#160;</td><td class="fielddoc"><p>Solver detected cycling. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184ae9bd5f5aed2aab3934fda0821e6bbab3" name="a3d5c61d99022f073a8ddd2df208cf184ae9bd5f5aed2aab3934fda0821e6bbab3"></a>STAGNATION_DETECTED&#160;</td><td class="fielddoc"><p>Solver detected stagnation. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184a7814b1d7120990d7ae7a18bb7c453ac5" name="a3d5c61d99022f073a8ddd2df208cf184a7814b1d7120990d7ae7a18bb7c453ac5"></a>NUMERICAL_ISSUE&#160;</td><td class="fielddoc"><p>Numerical issue encountered. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184a6faaca695f728b47f47dd389f31e4a93" name="a3d5c61d99022f073a8ddd2df208cf184a6faaca695f728b47f47dd389f31e4a93"></a>INFEASIBLE&#160;</td><td class="fielddoc"><p>No solution exists for the problem. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184ab8f57afe49b8c154517eec56efe5730b" name="a3d5c61d99022f073a8ddd2df208cf184ab8f57afe49b8c154517eec56efe5730b"></a>UNBOUNDED&#160;</td><td class="fielddoc"><p>Solution is unbounded. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a3d5c61d99022f073a8ddd2df208cf184ab34aac8dc612fdffdf75bf272fcdb3c0" name="a3d5c61d99022f073a8ddd2df208cf184ab34aac8dc612fdffdf75bf272fcdb3c0"></a>NOT_SOLVED&#160;</td><td class="fielddoc"><p>Solver has not been run yet. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a19846a698f65950cb840d2f66d3e9452" name="a19846a698f65950cb840d2f66d3e9452"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a19846a698f65950cb840d2f66d3e9452">&#9670;&#160;</a></span>bind_task()</h2>

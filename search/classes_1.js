@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stackoftasks_0',['StackOfTasks',['../structhqp_1_1StackOfTasks.html',1,'hqp']]]
+  ['hierarchicalqp_0',['HierarchicalQP',['../classhqp_1_1HierarchicalQP.html',1,'hqp']]]
 ];

@@ -1,7 +1,11 @@
 <map id="include/hqp/hqp.hpp" name="include/hqp/hqp.hpp">
-<area shape="rect" id="node1" title="Main interface for the Weighted&#45;Hierarchical&#45;QP solver." alt="" coords="93,5,247,31"/>
+<area shape="rect" id="node1" title="Main interface for the HQP (Hierarchical Quadratic Programming) solver." alt="" coords="219,5,372,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,79,68,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="92,79,147,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="171,79,273,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="297,79,368,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="171,79,286,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="311,79,413,104"/>
+<area shape="rect" id="node6" href="$status_8hpp.html" title=" " alt="" coords="437,79,572,104"/>
+<area shape="rect" id="node9" title=" " alt="" coords="596,79,667,104"/>
+<area shape="rect" id="node7" title=" " alt="" coords="399,152,479,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="503,152,634,177"/>
 </map>

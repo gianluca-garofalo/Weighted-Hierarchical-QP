@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['task_5f_0',['task_',['../classhqp_1_1HierarchicalQP.html#a477c4ee444270e0c58c5b83bcfe0d97f',1,'hqp::HierarchicalQP']]],
-  ['tau_5f_1',['tau_',['../classhqp_1_1HierarchicalQP.html#aabbb594ae1749463411f9e36ddb6571c',1,'hqp::HierarchicalQP']]],
-  ['tolerance_2',['tolerance',['../classhqp_1_1HierarchicalQP.html#ae68c08c3c01ce533bdbfcff60f3dfded',1,'hqp::HierarchicalQP']]]
+  ['ranks_5f_0',['ranks_',['../classhqp_1_1HierarchicalQP.html#afa3c8315b436469c38bd30156c5790e0',1,'hqp::HierarchicalQP']]],
+  ['row_5f_1',['row_',['../classhqp_1_1HierarchicalQP.html#a2271e15434942a20c867a088c779382b',1,'hqp::HierarchicalQP']]],
+  ['run_5f_2',['run_',['../structhqp_1_1Task.html#ad2ffc6aa8e924c52e9d4b2f7a5d4cd6a',1,'hqp::Task']]]
 ];

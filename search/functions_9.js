@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print_5factive_5fset_0',['print_active_set',['../classhqp_1_1HierarchicalQP.html#ab6be65b2fa3d598c561c30c177639674',1,'hqp::HierarchicalQP']]]
+  ['message_0',['message',['../structhqp_1_1SolverInfo.html#a6e14be3391ac652ab229f7fa9e823fe4',1,'hqp::SolverInfo']]]
 ];

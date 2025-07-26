@@ -81,16 +81,18 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Main interface for the Weighted-Hierarchical-QP solver.  
+<p>Main interface for the HQP (Hierarchical Quadratic Programming) solver.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;tuple&gt;</code><br />
+<code>#include &lt;unordered_set&gt;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &lt;<a class="el" href="status_8hpp_source.html">status/status.hpp</a>&gt;</code><br />
 <code>#include &quot;hqp.tpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for hqp.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="hqp_8hpp__incl.svg" width="374" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="hqp_8hpp__incl.svg" width="672" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
@@ -99,6 +101,8 @@ Include dependency graph for hqp.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP_1_1ConstraintTracker.html">hqp::HierarchicalQP&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::ConstraintTracker</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -115,8 +119,11 @@ Functions</h2></td></tr>
 <tr class="separator:a2d25cef547d72ca1214803839ef26161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Main interface for the Weighted-Hierarchical-QP solver. </p>
-<p>This file defines the HierarchicalQP class which encapsulates the algorithm to solve prioritized quadratic programming problems. The solver aggregates multiple tasks and applies iterative refinements, handling both equality and inequality constraints. </p>
+<div class="textblock"><p>Main interface for the HQP (Hierarchical Quadratic Programming) solver. </p>
+<p>Defines the <code>HierarchicalQP</code> class for solving prioritized quadratic programming problems.</p>
+<dl class="section author"><dt>Author</dt><dd>Gianluca Garofalo </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>0.1.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2025 </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
