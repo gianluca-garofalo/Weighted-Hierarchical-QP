@@ -13,6 +13,7 @@
 #include <tuple>
 #include <unordered_set>
 #include <Eigen/Dense>
+#include <status/status.hpp>
 
 namespace hqp {
 
@@ -24,6 +25,7 @@ template<int MaxRows   = -1,
          int LEVS      = Eigen::Dynamic>
 class HierarchicalQP {
   private:
+    SolverInfo solver_info_;
     int row_;
     /** Number of variables in the problem. */
     int col_;
@@ -208,6 +210,16 @@ class HierarchicalQP {
     Eigen::VectorXd get_primal();
 
     // TODO: add get dual and get slack, where the latter are computed like in the test
+
+    /**
+     * @brief Gets detailed solver information and statistics.
+     * @return SolverInfo structure containing status, statistics, and performance metrics
+     *
+     * Returns details about iterations, timing, constraint changes, and more. Useful for debugging and performance analysis.
+     */
+    const SolverInfo& get_solver_info() const {
+        return solver_info_;
+    }
 
     /**
      * @brief Outputs the active set details to the console.

@@ -1,10 +1,17 @@
 #ifndef _HierarchicalQP_SOLVERS_TPP_
 #define _HierarchicalQP_SOLVERS_TPP_
 
+#include <chrono>
+#include "options.hpp"
+
 namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
+    // Reset solver info for new solve
+    solver_info_.clear();
+    auto solve_start_time = std::chrono::high_resolution_clock::now();
+
     // Shift problem to the origin
     lower_ -= matrix_ * guess_;
     upper_ -= matrix_ * guess_;
@@ -26,6 +33,16 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
                 deactivate_constraint(row);
             }
         }
+    }
+
+    // Compute final statistics
+    auto solve_end_time             = std::chrono::high_resolution_clock::now();
+    solver_info_.solve_time_seconds = std::chrono::duration<double>(solve_end_time - solve_start_time).count();
+    solver_info_.final_tolerance    = tolerance;
+
+    // Set success status if not already set by inequality_hqp
+    if (solver_info_.status == SolverStatus::NOT_SOLVED) {
+        solver_info_.status = SolverStatus::SUCCESS;
     }
 }
 
@@ -55,7 +72,18 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
 
     equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
-    int maxIter = 500;
+    // Adaptive iteration limit based on problem size
+    int maxIter               = std::min(HQP_MAX_ITERATIONS, 10 * row_ * lev_);  // Scale with problem size
+    int consecutive_no_change = 0;
+    int last_active_set_size  = 0;
+
+    // Add timeout mechanism for very large problems
+    auto start_time               = std::chrono::high_resolution_clock::now();
+    const double max_time_seconds = HQP_TIMEOUT_SECONDS;  // Configurable timeout
+
+    // Track cycling events
+    int high_frequency_constraints = 0;
+
     for (auto iter = 0, h = 0; iter < maxIter && h < lev_; ++h) {
         slack = dual = 1;
         while ((slack > 0 || dual > 0) && iter < maxIter) {
@@ -97,6 +125,17 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 activate_constraint(row, isLowerBound);
                 increment_from(level_(row));
                 constraint_tracker.addConstraint(row);
+                solver_info_.constraint_activations++;
+                consecutive_no_change = 0;
+
+                // Check for cycling
+                int frequency = constraint_tracker.getFrequency(row);
+                if (frequency > 5) {
+                    solver_info_.status         = SolverStatus::CYCLING_DETECTED;
+                    // solver_info_.status_message = "Cycling detected: constraint " + std::to_string(row) +
+                    //                              " activated " + std::to_string(frequency) + " times";
+                    solver_info_.cycling_events = frequency;
+                }
                 continue;
             }
 
@@ -127,6 +166,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 deactivate_constraint(row);
                 increment_from(level_(row));
                 constraint_tracker.addConstraint(row);
+                solver_info_.constraint_deactivations++;
+                consecutive_no_change = 0;
                 continue;
             }
 
@@ -138,8 +179,56 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 }
             }
 
+            // Check for convergence stagnation
+            int current_active_set_size = 0;
+            for (int k = 0; k < lev_; ++k) {
+                current_active_set_size += breaksAct_(k) - breaksFix_(k);
+            }
+
+            if (current_active_set_size == last_active_set_size) {
+                consecutive_no_change++;
+                if (consecutive_no_change > HQP_STAGNATION_THRESHOLD) {
+                    // Force a constraint change to break stagnation
+                    constraint_tracker.clear();
+                    consecutive_no_change = 0;
+                    solver_info_.stagnation_events++;
+
+                    // Check if we're stuck in stagnation
+                    if (solver_info_.stagnation_events > 5) {
+                        solver_info_.status = SolverStatus::STAGNATION_DETECTED;
+                        // solver_info_.status_message = "Solver stagnated: no progress for " +
+                        //                              std::to_string(consecutive_no_change) + " iterations";
+                        return;
+                    }
+                }
+            } else {
+                consecutive_no_change = 0;
+                last_active_set_size  = current_active_set_size;
+            }
+
+            // Check timeout
+            auto current_time      = std::chrono::high_resolution_clock::now();
+            double elapsed_seconds = std::chrono::duration<double>(current_time - start_time).count();
+            if (elapsed_seconds > max_time_seconds) {
+                solver_info_.status = SolverStatus::TIMEOUT_REACHED;
+                // solver_info_.status_message = "Timeout reached after " + std::to_string(elapsed_seconds) + "
+                // seconds";
+                return;
+            }
+
             ++iter;
         }
+
+        // Check if we reached max iterations
+        if (iter >= maxIter) {
+            solver_info_.status = SolverStatus::MAX_ITERATIONS_REACHED;
+            // solver_info_.status_message = "Maximum iterations (" + std::to_string(maxIter) + ") reached without
+            // convergence";
+            return;
+        }
+
+        solver_info_.levels_completed = h + 1;
+        solver_info_.total_iterations = iter;
 
         // Clear recent changes between hierarchy levels to avoid over-restriction
         constraint_tracker.clear();
