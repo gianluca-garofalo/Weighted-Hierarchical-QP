@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hqp_20solver_20documentation_0',['HQP Solver Documentation',['../index.html',1,'']]]
+  ['hqp_3a_20hierarchical_20quadratic_20programming_0',['HQP: Hierarchical Quadratic Programming',['../index.html',1,'']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Weighted-Hierarchical-QP: HQP Solver Documentation</title>
+<title>Weighted-Hierarchical-QP: HQP: Hierarchical Quadratic Programming</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,10 +69,194 @@ $(function() {
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">HQP Solver Documentation </div></div>
+  <div class="headertitle"><div class="title">HQP: Hierarchical Quadratic Programming </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"> </div></div><!-- PageDoc -->
+<div class="textblock"><p><a class="anchor" id="md_README"></a> <a href="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-cpp.yml"><img src="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-cpp.yml/badge.svg" alt="C++ CI" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-python.yml"><img src="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-python.yml/badge.svg" alt="Python CI" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-docs.yml"><img src="https://github.com/gianluca-garofalo/Weighted-Hierarchical-QP/actions/workflows/ci-docs.yml/badge.svg" alt="Docs CI" style="pointer-events: none;" class="inline"/></a></p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+What is HQP?</h1>
+<p>HQP (Hierarchical Quadratic Programming) is a solver for problems where you have several objectives or constraints, and some are more important than others. You tell it what matters most, and it finds the best solution that respects your priorities.</p>
+<p>If you work in robotics, control, or any field where you need to balance multiple goals, you know this is a problem of logic and mathematics—not magic. HQP is designed to make that process clear, reliable, and efficient.</p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Why Use HQP?</h1>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Hierarchical Task Management</h2>
+<ul>
+<li>Prioritize tasks naturally: HQP lets you specify which constraints matter most, and solves them in order.</li>
+<li>Handles both equality and inequality constraints, so you can model real-world problems accurately.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Robust Numerical Methods</h2>
+<ul>
+<li>Uses proven techniques (Cholesky, orthogonal decompositions) for stability and speed.</li>
+<li>Built-in anti-cycling and adaptive tolerances to keep the solver reliable, even for tough problems.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Transparent Status Reporting</h2>
+<ul>
+<li>Clear feedback on why the solver stopped: success, timeout, cycling, or other conditions.</li>
+<li>Performance metrics and debug output designed to help you understand and improve your models.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md6"></a>
+Performance Optimizations</h2>
+<ul>
+<li>Iteration limits and timeouts that adapt to your problem size.</li>
+<li>Detects stagnation and cycling, so you don’t waste time on unsolvable or ill-posed problems.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md7"></a>
+Quick Start</h1>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Prerequisites</h2>
+<ul>
+<li><b>C++20</b> compiler</li>
+<li><b>CMake</b> ≥3.22</li>
+<li><b>Eigen3</b> ≥3.4.0</li>
+<li><b>Python</b> (optional, for Python bindings)</li>
+<li><b>Doxygen</b> + <b>Graphviz</b> (optional, for docs)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Building</h2>
+<div class="fragment"><div class="line">git clone https://github.com/your-repo/HQP.git</div>
+<div class="line">cd HQP</div>
+<div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line">cmake --preset=release</div>
+<div class="line">cmake --build .</div>
+<div class="line">ctest -C Release</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+Python Bindings</h2>
+<div class="fragment"><div class="line">cmake --preset=python-release</div>
+<div class="line">cmake --build .</div>
+<div class="line">python -c &quot;import hqp; print(&#39;Python bindings work!&#39;)&quot;</div>
+</div><!-- fragment --><p>breaks = np.array([3, 7, 10]) breaks = np.array([3, 7, 10])</p>
+<h1><a class="anchor" id="autotoc_md11"></a>
+Usage Examples</h1>
+<h2><a class="anchor" id="autotoc_md12"></a>
+C++ Example</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="hqp_8hpp.html">hqp/hqp.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;Eigen/Dense&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <a class="code hl_class" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a> solver(10, 5);  <span class="comment">// 10 constraints, 5 variables</span></div>
+<div class="line">    Eigen::MatrixXd A(10, 5);</div>
+<div class="line">    Eigen::VectorXd bl(10), bu(10);</div>
+<div class="line">    Eigen::VectorXi breaks(3);</div>
+<div class="line">    <span class="comment">// ... fill your matrices with actual data ...</span></div>
+<div class="line">    solver.set_problem(A, bl, bu, breaks);</div>
+<div class="line">    <span class="keyword">auto</span> solution = solver.get_primal();</div>
+<div class="line">    <span class="keywordflow">if</span> (solver.is_solved()) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Success!&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Solve time: &quot;</span> &lt;&lt; solver.get_solver_info().solve_time_seconds &lt;&lt; <span class="stringliteral">&quot;s&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">        std::cout &lt;&lt; solver.get_status_message() &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclasshqp_1_1HierarchicalQP_html"><div class="ttname"><a href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></div><div class="ttdef"><b>Definition:</b> hqp.hpp:28</div></div>
+<div class="ttc" id="ahqp_8hpp_html"><div class="ttname"><a href="hqp_8hpp.html">hqp.hpp</a></div><div class="ttdoc">Main interface for the HQP (Hierarchical Quadratic Programming) solver.</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+Python Example</h2>
+<div class="fragment"><div class="line"><span class="keyword">import</span> hqp</div>
+<div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"> </div>
+<div class="line">solver = <a class="code hl_class" href="classhqp_1_1HierarchicalQP.html">hqp.HierarchicalQP</a>(10, 5)</div>
+<div class="line">A = np.random.rand(10, 5)</div>
+<div class="line">bl = -np.ones(10)</div>
+<div class="line">bu = np.ones(10)</div>
+<div class="line">breaks = np.array([3, 7, 10])</div>
+<div class="line">solver.set_problem(A, bl, bu, breaks)</div>
+<div class="line">solution = solver.get_primal()</div>
+<div class="line">print(f<span class="stringliteral">&quot;Status: {solver.get_status_message()}&quot;</span>)</div>
+<div class="line">print(f<span class="stringliteral">&quot;Solved successfully: {solver.is_solved()}&quot;</span>)</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+Configuration Options</h1>
+<p>You can adjust solver behavior with these CMake options:</p>
+<div class="fragment"><div class="line">cmake --preset=release -DHQP_TIMEOUT_SECONDS=10.0         # Set a faster timeout</div>
+<div class="line">cmake --preset=release -DHQP_MAX_ITERATIONS=5000          # Allow more iterations</div>
+<div class="line">cmake --preset=release -DHQP_ANTI_CYCLING_BUFFER_SIZE=100 # Use a bigger anti-cycling buffer</div>
+<div class="line">cmake --preset=debug -DHQP_STAGNATION_THRESHOLD=5         # Lower stagnation threshold for debugging</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
+Status Codes</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Status   </th><th class="markdownTableHeadNone">What It Means    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>SUCCESS</code>   </td><td class="markdownTableBodyNone">Solution found    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>MAX_ITERATIONS_REACHED</code>   </td><td class="markdownTableBodyNone">Maximum iterations reached    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>TIMEOUT_REACHED</code>   </td><td class="markdownTableBodyNone">Timeout reached    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>CYCLING_DETECTED</code>   </td><td class="markdownTableBodyNone">Solver detected cycling    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>STAGNATION_DETECTED</code>   </td><td class="markdownTableBodyNone">Solver detected stagnation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>NUMERICAL_ISSUE</code>   </td><td class="markdownTableBodyNone">Numerical issue encountered    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>INFEASIBLE</code>   </td><td class="markdownTableBodyNone">No solution exists    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>UNBOUNDED</code>   </td><td class="markdownTableBodyNone">Solution is unbounded   </td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md16"></a>
+Testing</h1>
+<div class="fragment"><div class="line">ctest --preset=release                       # Run all tests</div>
+<div class="line">./build/tests/HQP_tests                      # Run a specific test (after preset build)</div>
+<div class="line">ctest --preset=release --output-on-failure   # Run with verbose output</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
+Documentation</h1>
+<h2><a class="anchor" id="autotoc_md18"></a>
+Generate Docs</h2>
+<div class="fragment"><div class="line">cmake --build --preset=release --target doc</div>
+<div class="line">open build/doc/html/index.html</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+API Reference</h2>
+<ul>
+<li><b>Main Class</b>: <code><a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></code> - Main solver class</li>
+<li><b>Status Enum</b>: <code><a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184" title="Status codes for the HQP solver.">hqp::SolverStatus</a></code> - Solver status codes</li>
+<li><b>Info Struct</b>: <code><a class="el" href="structhqp_1_1SolverInfo.html" title="Detailed solver statistics and information.">hqp::SolverInfo</a></code> - Solver details and stats</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md20"></a>
+Contributing</h1>
+<p>Contributions are welcome. If you find a bug or want to add a feature:</p>
+<ol type="1">
+<li>Fork the repo</li>
+<li>Create a feature branch</li>
+<li>Write tests</li>
+<li>Open a pull request</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md21"></a>
+Development Setup</h2>
+<div class="fragment"><div class="line">git clone https://github.com/your-username/HQP.git</div>
+<div class="line">cd HQP</div>
+<div class="line">cmake --preset=debug</div>
+<div class="line">cmake --build --preset=debug</div>
+<div class="line">ctest --preset=debug</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
+Troubleshooting</h1>
+<h2><a class="anchor" id="autotoc_md23"></a>
+Common Issues</h2>
+<p><b>CMake can't find Eigen</b> </p><div class="fragment"><div class="line">sudo apt-get install libeigen3-dev  # Ubuntu/Debian</div>
+<div class="line">brew install eigen                  # macOS</div>
+</div><!-- fragment --><p><b>Solver times out</b> </p><div class="fragment"><div class="line">cmake --preset=release -DHQP_TIMEOUT_SECONDS=60.0</div>
+</div><!-- fragment --><p><b>Python bindings don't work</b> </p><div class="fragment"><div class="line">python --version</div>
+<div class="line">pip install numpy pybind11</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+License</h1>
+<p>BSD 3-Clause License.</p>
+<h1><a class="anchor" id="autotoc_md25"></a>
+What's New</h1>
+<ul>
+<li>Performance improvements</li>
+<li>More detailed status reporting</li>
+<li>Adaptive tolerances</li>
+<li>Anti-cycling mechanisms</li>
+<li>Timeout protection</li>
+<li>Debug output that actually helps</li>
+<li>Easier CMake configuration</li>
+<li>Better error messages</li>
+</ul>
+<hr  />
+<p>*"In a world full of QP solvers, be the one that actually works."* </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
