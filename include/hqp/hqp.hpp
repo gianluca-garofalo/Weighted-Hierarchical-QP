@@ -181,7 +181,16 @@ class HierarchicalQP {
      */
     Eigen::VectorXd get_primal();
 
-    // TODO: add get dual and get slack, where the latter are computed like in the test
+    
+    /**
+     * @brief Retrieves the slack variables.
+     * @return The computed slack variables
+     *
+     * Call this method to get the slack variables after solving the problem. The solver will automatically run if it
+     * hasn't been solved yet.
+     */
+    std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>> get_slack();
+
 
     /**
      * @brief Outputs the active set details to the console.

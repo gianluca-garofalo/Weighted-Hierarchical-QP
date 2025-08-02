@@ -28,6 +28,19 @@ Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::g
 
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
+  HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_slack() {
+    Eigen::Vector<double, ROWS> vector   = matrix_ * primal_;
+    Eigen::Vector<double, ROWS> slackLow = vector - lower_;
+    Eigen::Vector<double, ROWS> slackUp  = vector - upper_;
+    slackLow                             = (slackLow.array() < 0).template cast<double>() * slackLow.array();
+    slackUp                              = (slackUp.array() > 0).template cast<double>() * slackUp.array();
+
+    return {slackLow, slackUp};
+}
+
+
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_metric(const Eigen::MatrixXd& metric) {
     assert(metric.rows() == metric.cols() && metric.rows() == col_ && "Metric must be a square matrix");
     Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
