@@ -5,7 +5,7 @@
 #include "library.hpp"
 
 int main() {
-    hqp::StackOfTasks sot;
+    hqp::StackOfTasks sot, test(1);
     sot.reserve(2);
 
     // Always two steps: 1) create task with function, 2) call update()
@@ -13,13 +13,14 @@ int main() {
     task0->set_mask((Eigen::VectorXi(2) << 1, 0).finished());
     task0->compute();
 
-    auto task1        = hqp::bind_task<double, Eigen::Vector2d>(run_task1);
+    test[0] = hqp::bind_task<double, Eigen::Vector2d>(run_task1);
     Eigen::VectorXd v = Eigen::VectorXd::Ones(2);
-    task1->compute(1, 0 * v);
-    task1->compute(8, v);
+    using T1 = hqp::Task<double, Eigen::Vector2d>;
+    test[0].cast<T1>()->compute(1, 0 * v);
+    test[0].cast<T1>()->compute(8, v);
 
     sot.push_back(task0);
-    sot.push_back(task1);
+    sot.push_back(test[0]);
 
     auto [A, bl, bu, breaks] = sot.get_stack();
     hqp::HierarchicalQP solver(A.rows(), A.cols());

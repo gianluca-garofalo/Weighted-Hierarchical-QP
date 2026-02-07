@@ -98,7 +98,10 @@ void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
     }
     assert(breaks(Eigen::last) == matrix.rows() && "The last break_point must be equal to matrix.rows()");
 
-    this->reserve(breaks.size());
+    if (breaks.size() != this->size()) {
+        this->clear();
+        this->reserve(breaks.size());
+    }
     for (int k = 0, start = 0; k < breaks.size(); ++k) {
         const int stop = breaks(k);
         const int rows = stop - start;
@@ -111,7 +114,7 @@ void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
             return std::make_tuple(std::move(matrix_seg), std::move(lower_seg), std::move(upper_seg));
         });
         task->compute();
-        this->push_back(task);
+        this->at(k) = task;
         start = stop;
     }
 }
