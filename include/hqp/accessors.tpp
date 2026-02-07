@@ -17,12 +17,10 @@ int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_parent(in
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_primal() {
     // TODO: move k = 0 in loop (leave int k out) and check style of all loops
-    // TODO: move this logic in utils where both the stack and the solver are wrapped together in a new class
-    // int k;
-    // for (k = 0; k < k_ && sot[k].is_computed(); ++k) {}
-    // if (k < k_ || k_ == 0) {
-    solve();
-    // }
+    if (!primalValid_) {
+        solve();
+        primalValid_ = true;
+    }
     return primal_;
 }
 
@@ -30,13 +28,18 @@ Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::g
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
   HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_slack() {
-    Eigen::Vector<double, ROWS> vector   = matrix_ * primal_;
-    Eigen::Vector<double, ROWS> slackLow = vector - lower_;
-    Eigen::Vector<double, ROWS> slackUp  = vector - upper_;
-    slackLow                             = (slackLow.array() < 0).template cast<double>() * slackLow.array();
-    slackUp                              = (slackUp.array() > 0).template cast<double>() * slackUp.array();
+    if (!slacksValid_) {
+        solve();
+        Eigen::Vector<double, ROWS> vector = matrix_ * primal_;
 
-    return {slackLow, slackUp};
+        slackLow_ = vector - lower_;
+        slackUp_  = vector - upper_;
+        slackLow_ = (slackLow_.array() < 0).template cast<double>() * slackLow_.array();
+        slackUp_  = (slackUp_.array() > 0).template cast<double>() * slackUp_.array();
+
+        slacksValid_ = true;
+    }
+    return {slackLow_, slackUp_};
 }
 
 
@@ -47,6 +50,10 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_metric(c
     assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
     cholMetric_.setIdentity();
     lltOf.matrixU().solveInPlace<Eigen::OnTheLeft>(cholMetric_);
+
+    // Invalidate caches when metric changes
+    primalValid_ = false;
+    slacksValid_ = false;
 }
 
 
@@ -117,6 +124,9 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
 
         start = breaks(k);
     }
+
+    primalValid_ = false;
+    slacksValid_ = false;
 }
 
 }  // namespace hqp

@@ -65,10 +65,19 @@ class HierarchicalQP {
     Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> upper_;
     /** Right-hand side vector. */
     Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> vector_;
+    /** Cached slack variables for lower bounds (negative violations only). */
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> slackLow_;
+    /** Cached slack variables for upper bounds (positive violations only). */
+    Eigen::Matrix<double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> slackUp_;
     /** Constraint matrix computed by the task. */
     Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Left-hand side matrix in decompositions. */
     Eigen::Matrix<double, ROWS, ROWS, Eigen::AutoAlign, MaxRows, MaxRows> codLefts_;
+
+    /** Flag indicating if slack variables are up-to-date. */
+    bool slacksValid_ = false;
+    /** Flag indicating if primal solution is up-to-date. */
+    bool primalValid_ = false;
 
     /** Degrees of Freedom available for the task. */
     Eigen::Matrix<int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1> dofs_;
@@ -109,6 +118,7 @@ class HierarchicalQP {
     void swap_constraints(int i, int j);
     /** Computes the parent level for a given task level. */
     int get_parent(int level);
+
 
   public:
     /** Tolerance for convergence and numerical stability. */
