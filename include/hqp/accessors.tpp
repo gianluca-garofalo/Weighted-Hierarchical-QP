@@ -1,6 +1,8 @@
 #ifndef _HierarchicalQP_ACCESSORS_TPP_
 #define _HierarchicalQP_ACCESSORS_TPP_
 
+#include <stdexcept>
+
 namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
@@ -57,9 +59,16 @@ std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_metric(const Eigen::MatrixXd& metric) {
-    assert(metric.rows() == metric.cols() && metric.rows() == col_ && "Metric must be a square matrix");
+    if (metric.rows() != metric.cols() || metric.rows() != col_) {
+        throw std::invalid_argument("Metric must be a square matrix of size " + std::to_string(col_));
+    }
+    if (!metric.isApprox(metric.transpose(), tolerance)) {
+        throw std::invalid_argument("Metric must be symmetric");
+    }
     Eigen::LLT<Eigen::MatrixXd> lltOf(metric);
-    assert(metric.isApprox(metric.transpose()) && lltOf.info() != Eigen::NumericalIssue);
+    if (lltOf.info() == Eigen::NumericalIssue) {
+        throw std::invalid_argument("Metric must be positive definite");
+    }
     cholMetric_.setIdentity();
     lltOf.matrixU().solveInPlace<Eigen::OnTheLeft>(cholMetric_);
 
@@ -87,16 +96,24 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
                       "MaxLevels template parameter must be >= breaks size or -1");
     }
 
-    assert(matrix.rows() == lower.size() && lower.size() == upper.size() &&
-           "matrix, upper and lower must have the same number of rows");
-    assert(breaks.size() > 0 && "breaks must not be empty");
-    int prev = 0;
-    for (int k = 0; k < breaks.size(); ++k) {
-        assert(breaks(k) >= prev && "breaks must be increasing");
+    if (matrix.rows() != lower.size() || lower.size() != upper.size()) {
+        throw std::invalid_argument("matrix, lower and upper must have the same number of rows");
+    }
+    if (breaks.size() <= 0) {
+        throw std::invalid_argument("breaks must not be empty");
+    }
+    for (int prev = 0, k = 0; k < breaks.size(); ++k) {
+        if (breaks(k) < prev) {
+            throw std::invalid_argument("breaks must be non-decreasing");
+        }
         prev = breaks(k);
     }
-    assert(breaks(Eigen::last) == matrix.rows() && "The last break must be equal to matrix.rows()");
-    assert((lower.array() <= upper.array()).all() && "Lower bounds must be less than or equal to upper bounds");
+    if (breaks(Eigen::last) != matrix.rows()) {
+        throw std::invalid_argument("The last break must equal matrix.rows()");
+    }
+    if (!(lower.array() <= upper.array()).all()) {
+        throw std::invalid_argument("Lower bounds must be <= upper bounds");
+    }
 
     matrix_ = matrix;
     lower_  = lower;
@@ -116,7 +133,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
     breaksFix_.resize(lev_);
     breaksAct_.resize(lev_);
 
-    for (int stop = 0, start = 0, k = 0; k < lev_; ++k) {
+    for (int start = 0, k = 0; k < lev_; ++k) {
         int dim                    = breaks(k) - start;
         codMids_[k]                = nullSpace_;
         codRights_[k]              = nullSpace_;
