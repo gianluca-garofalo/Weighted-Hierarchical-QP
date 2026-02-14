@@ -18,7 +18,7 @@ sys.path.insert(
     0, os.path.join(os.path.dirname(__file__), "..", "build", "python", "Release")
 )
 
-import pyhqp
+import pyhqp  # noqa: E402
 
 
 def main():
