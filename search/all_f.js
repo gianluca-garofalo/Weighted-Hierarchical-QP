@@ -1,7 +1,13 @@
 var searchData=
 [
-  ['ranks_5f_0',['ranks_',['../classhqp_1_1HierarchicalQP.html#afa3c8315b436469c38bd30156c5790e0',1,'hqp::HierarchicalQP']]],
-  ['readme_2emd_1',['README.md',['../README_8md.html',1,'']]],
-  ['row_5f_2',['row_',['../classhqp_1_1HierarchicalQP.html#a2271e15434942a20c867a088c779382b',1,'hqp::HierarchicalQP']]],
-  ['run_5f_3',['run_',['../structhqp_1_1Task.html#ad2ffc6aa8e924c52e9d4b2f7a5d4cd6a',1,'hqp::Task']]]
+  ['set_5fmask_0',['set_mask',['../structhqp_1_1TaskBase.html#a6b3f87cf7de08486b63df8255448b294',1,'hqp::TaskBase']]],
+  ['set_5fmetric_1',['set_metric',['../classhqp_1_1HierarchicalQP.html#a051fcab24cc9064cb9ca7122b97b5ea7',1,'hqp::HierarchicalQP']]],
+  ['set_5fproblem_2',['set_problem',['../classhqp_1_1HierarchicalQP.html#a69daa0202c39b94aff02a274a7918699',1,'hqp::HierarchicalQP']]],
+  ['set_5fstack_3',['set_stack',['../structhqp_1_1StackOfTasks.html#a40e59bf955c5e1d03535d3d25863e250',1,'hqp::StackOfTasks']]],
+  ['slacklow_5f_4',['slackLow_',['../classhqp_1_1HierarchicalQP.html#a955875e7c1aa680d1b399f449395b436',1,'hqp::HierarchicalQP']]],
+  ['slacksvalid_5f_5',['slacksValid_',['../classhqp_1_1HierarchicalQP.html#a04b32ddd68ef70508aa5c0670061031c',1,'hqp::HierarchicalQP']]],
+  ['slackup_5f_6',['slackUp_',['../classhqp_1_1HierarchicalQP.html#a2d5bdcb892e2144a5c0913d311e7c4d5',1,'hqp::HierarchicalQP']]],
+  ['solve_7',['solve',['../classhqp_1_1HierarchicalQP.html#a22085be2d3bc2757bd1325908fcc917c',1,'hqp::HierarchicalQP']]],
+  ['stackoftasks_8',['StackOfTasks',['../structhqp_1_1StackOfTasks.html',1,'hqp']]],
+  ['swap_5fconstraints_9',['swap_constraints',['../classhqp_1_1HierarchicalQP.html#a673be4424ca5dcd9339790908b55eed3',1,'hqp::HierarchicalQP']]]
 ];

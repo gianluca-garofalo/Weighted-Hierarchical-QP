@@ -145,13 +145,12 @@ C++ Example</h2>
 <div class="line">    <span class="keyword">auto</span> solution = solver.get_primal();</div>
 <div class="line">    <span class="keywordflow">if</span> (solver.is_solved()) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Success!&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Solve time: &quot;</span> &lt;&lt; solver.get_solver_info().solve_time_seconds &lt;&lt; <span class="stringliteral">&quot;s&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">    } <span class="keywordflow">else</span> {</div>
 <div class="line">        std::cout &lt;&lt; solver.get_status_message() &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasshqp_1_1HierarchicalQP_html"><div class="ttname"><a href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></div><div class="ttdef"><b>Definition:</b> hqp.hpp:28</div></div>
+<div class="ttc" id="aclasshqp_1_1HierarchicalQP_html"><div class="ttname"><a href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></div><div class="ttdef"><b>Definition:</b> hqp.hpp:26</div></div>
 <div class="ttc" id="ahqp_8hpp_html"><div class="ttname"><a href="hqp_8hpp.html">hqp.hpp</a></div><div class="ttdoc">Main interface for the HQP (Hierarchical Quadratic Programming) solver.</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
 Python Example</h2>
@@ -211,8 +210,8 @@ Generate Docs</h2>
 API Reference</h2>
 <ul>
 <li><b>Main Class</b>: <code><a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></code> - Main solver class</li>
-<li><b>Status Enum</b>: <code><a class="el" href="namespacehqp.html#a3d5c61d99022f073a8ddd2df208cf184" title="Status codes for the HQP solver.">hqp::SolverStatus</a></code> - Solver status codes</li>
-<li><b>Info Struct</b>: <code><a class="el" href="structhqp_1_1SolverInfo.html" title="Detailed solver statistics and information.">hqp::SolverInfo</a></code> - Solver details and stats</li>
+<li><b>Status Enum</b>: <code>hqp::SolverStatus</code> - Solver status codes</li>
+<li><b>Info Struct</b>: <code>hqp::SolverInfo</code> - Solver details and stats</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md20"></a>
 Contributing</h1>

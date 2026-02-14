@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ranks_5f_0',['ranks_',['../classhqp_1_1HierarchicalQP.html#afa3c8315b436469c38bd30156c5790e0',1,'hqp::HierarchicalQP']]],
-  ['row_5f_1',['row_',['../classhqp_1_1HierarchicalQP.html#a2271e15434942a20c867a088c779382b',1,'hqp::HierarchicalQP']]],
-  ['run_5f_2',['run_',['../structhqp_1_1Task.html#ad2ffc6aa8e924c52e9d4b2f7a5d4cd6a',1,'hqp::Task']]]
+  ['slacklow_5f_0',['slackLow_',['../classhqp_1_1HierarchicalQP.html#a955875e7c1aa680d1b399f449395b436',1,'hqp::HierarchicalQP']]],
+  ['slacksvalid_5f_1',['slacksValid_',['../classhqp_1_1HierarchicalQP.html#a04b32ddd68ef70508aa5c0670061031c',1,'hqp::HierarchicalQP']]],
+  ['slackup_5f_2',['slackUp_',['../classhqp_1_1HierarchicalQP.html#a2d5bdcb892e2144a5c0913d311e7c4d5',1,'hqp::HierarchicalQP']]]
 ];

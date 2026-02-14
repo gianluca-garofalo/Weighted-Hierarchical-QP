@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['head_5f_0',['head_',['../classhqp_1_1HierarchicalQP_1_1ConstraintTracker.html#ad565784a64cc90d58d09a9460ad07cf7',1,'hqp::HierarchicalQP::ConstraintTracker']]]
+  ['inverse_5f_0',['inverse_',['../classhqp_1_1HierarchicalQP.html#ad68ae090d5713edd5b15501475c5383c',1,'hqp::HierarchicalQP']]]
 ];

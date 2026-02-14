@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['primal_5f_0',['primal_',['../classhqp_1_1HierarchicalQP.html#ace15c425ea430bfda65ee1a6cc7b0a13',1,'hqp::HierarchicalQP']]],
-  ['print_1',['print',['../structhqp_1_1SolverInfo.html#a109b2dac37c36b89bc0ae49f1297adf1',1,'hqp::SolverInfo']]],
-  ['print_5factive_5fset_2',['print_active_set',['../classhqp_1_1HierarchicalQP.html#ab6be65b2fa3d598c561c30c177639674',1,'hqp::HierarchicalQP']]]
+  ['ranks_5f_0',['ranks_',['../classhqp_1_1HierarchicalQP.html#afa3c8315b436469c38bd30156c5790e0',1,'hqp::HierarchicalQP']]],
+  ['readme_2emd_1',['README.md',['../README_8md.html',1,'']]],
+  ['row_5f_2',['row_',['../classhqp_1_1HierarchicalQP.html#a2271e15434942a20c867a088c779382b',1,'hqp::HierarchicalQP']]],
+  ['run_5f_3',['run_',['../structhqp_1_1Task.html#ad2ffc6aa8e924c52e9d4b2f7a5d4cd6a',1,'hqp::Task']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vector_5f_0',['vector_',['../classhqp_1_1HierarchicalQP.html#ac9ac86cd217e9d7134f39dc8718b667a',1,'hqp::HierarchicalQP']]]
+  ['weight_5f_0',['weight_',['../structhqp_1_1TaskBase.html#aa6255a61495bd557dedae561e96c324a',1,'hqp::TaskBase']]]
 ];

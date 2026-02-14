@@ -74,7 +74,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
@@ -85,18 +84,7 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="hqp_8hpp_source.html">hqp.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for hqp::HierarchicalQP&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classhqp_1_1HierarchicalQP__coll__graph.svg" width="202" height="168"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP_1_1ConstraintTracker.html">ConstraintTracker</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a20aae964624c0ead04c4566d2e663b67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a20aae964624c0ead04c4566d2e663b67">HierarchicalQP</a> (int m, int n)</td></tr>
@@ -116,9 +104,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a502960472e01bfbba1fce515221c1e5b"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a502960472e01bfbba1fce515221c1e5b">get_primal</a> ()</td></tr>
 <tr class="memdesc:a502960472e01bfbba1fce515221c1e5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes and retrieves the primal solution.  <br /></td></tr>
 <tr class="separator:a502960472e01bfbba1fce515221c1e5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb176e2a554fc69464847ef62127a211"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structhqp_1_1SolverInfo.html">SolverInfo</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#afb176e2a554fc69464847ef62127a211">get_solver_info</a> () const</td></tr>
-<tr class="memdesc:afb176e2a554fc69464847ef62127a211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets detailed solver information and statistics.  <br /></td></tr>
-<tr class="separator:afb176e2a554fc69464847ef62127a211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a832d68ca3377d445f06792991e62114b"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; Eigen::Vector&lt; double, ROWS &gt;, Eigen::Vector&lt; double, ROWS &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a832d68ca3377d445f06792991e62114b">get_slack</a> ()</td></tr>
+<tr class="memdesc:a832d68ca3377d445f06792991e62114b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the slack variables.  <br /></td></tr>
+<tr class="separator:a832d68ca3377d445f06792991e62114b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dfa66bfc96b7eb84abce7a3e991e68c"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a0dfa66bfc96b7eb84abce7a3e991e68c">get_costs</a> ()</td></tr>
+<tr class="memdesc:a0dfa66bfc96b7eb84abce7a3e991e68c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the cost per level in the hierarchical problem.  <br /></td></tr>
+<tr class="separator:a0dfa66bfc96b7eb84abce7a3e991e68c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace87bda2baaf09bb95e4fc5d8b9eb301"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#ace87bda2baaf09bb95e4fc5d8b9eb301">is_progressing</a> (int level, const Eigen::VectorXd &amp;previous_costs, double <a class="el" href="classhqp_1_1HierarchicalQP.html#ae68c08c3c01ce533bdbfcff60f3dfded">tolerance</a>=1e-8) const</td></tr>
+<tr class="memdesc:ace87bda2baaf09bb95e4fc5d8b9eb301"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if lexicographic progress is being made at a given level.  <br /></td></tr>
+<tr class="separator:ace87bda2baaf09bb95e4fc5d8b9eb301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6be65b2fa3d598c561c30c177639674"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#ab6be65b2fa3d598c561c30c177639674">print_active_set</a> ()</td></tr>
 <tr class="memdesc:ab6be65b2fa3d598c561c30c177639674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs the active set details to the console.  <br /></td></tr>
 <tr class="separator:ab6be65b2fa3d598c561c30c177639674"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,8 +164,6 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a90c7bea3ea19ca0cb9bae94f880d242a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structhqp_1_1SolverInfo.html">SolverInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a90c7bea3ea19ca0cb9bae94f880d242a">solver_info_</a></td></tr>
-<tr class="separator:a90c7bea3ea19ca0cb9bae94f880d242a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2271e15434942a20c867a088c779382b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a2271e15434942a20c867a088c779382b">row_</a></td></tr>
 <tr class="separator:a2271e15434942a20c867a088c779382b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b603ab4680ba58487a62a92dabab78a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a4b603ab4680ba58487a62a92dabab78a">col_</a></td></tr>
@@ -231,15 +223,24 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ac9ac86cd217e9d7134f39dc8718b667a"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#ac9ac86cd217e9d7134f39dc8718b667a">vector_</a></td></tr>
 <tr class="memdesc:ac9ac86cd217e9d7134f39dc8718b667a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right-hand side vector.  <br /></td></tr>
 <tr class="separator:ac9ac86cd217e9d7134f39dc8718b667a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bcffcd58a1fb384e351ad2b51ce657b"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a3bcffcd58a1fb384e351ad2b51ce657b">frequency_</a></td></tr>
-<tr class="memdesc:a3bcffcd58a1fb384e351ad2b51ce657b"><td class="mdescLeft">&#160;</td><td class="mdescRight">(De)Activations counter for anti-cycling.  <br /></td></tr>
-<tr class="separator:a3bcffcd58a1fb384e351ad2b51ce657b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a955875e7c1aa680d1b399f449395b436"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a955875e7c1aa680d1b399f449395b436">slackLow_</a></td></tr>
+<tr class="memdesc:a955875e7c1aa680d1b399f449395b436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached slack variables for lower bounds (negative violations only).  <br /></td></tr>
+<tr class="separator:a955875e7c1aa680d1b399f449395b436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d5bdcb892e2144a5c0913d311e7c4d5"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a2d5bdcb892e2144a5c0913d311e7c4d5">slackUp_</a></td></tr>
+<tr class="memdesc:a2d5bdcb892e2144a5c0913d311e7c4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cached slack variables for upper bounds (positive violations only).  <br /></td></tr>
+<tr class="separator:a2d5bdcb892e2144a5c0913d311e7c4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a571fa42ab9be966f817cd3f6392e96b0"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a571fa42ab9be966f817cd3f6392e96b0">matrix_</a></td></tr>
 <tr class="memdesc:a571fa42ab9be966f817cd3f6392e96b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constraint matrix computed by the task.  <br /></td></tr>
 <tr class="separator:a571fa42ab9be966f817cd3f6392e96b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdcf697a027f63fc2d369ffa4157fd2c"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; double, ROWS, ROWS, Eigen::AutoAlign, MaxRows, MaxRows &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#afdcf697a027f63fc2d369ffa4157fd2c">codLefts_</a></td></tr>
 <tr class="memdesc:afdcf697a027f63fc2d369ffa4157fd2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left-hand side matrix in decompositions.  <br /></td></tr>
 <tr class="separator:afdcf697a027f63fc2d369ffa4157fd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04b32ddd68ef70508aa5c0670061031c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a04b32ddd68ef70508aa5c0670061031c">slacksValid_</a> = false</td></tr>
+<tr class="memdesc:a04b32ddd68ef70508aa5c0670061031c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if slack variables are up-to-date.  <br /></td></tr>
+<tr class="separator:a04b32ddd68ef70508aa5c0670061031c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1572b4eeae033c7837516cf8a06baa9e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a1572b4eeae033c7837516cf8a06baa9e">primalValid_</a> = false</td></tr>
+<tr class="memdesc:a1572b4eeae033c7837516cf8a06baa9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag indicating if primal solution is up-to-date.  <br /></td></tr>
+<tr class="separator:a1572b4eeae033c7837516cf8a06baa9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc955a61a88e8a2bfe9866daa096a773"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#adc955a61a88e8a2bfe9866daa096a773">dofs_</a></td></tr>
 <tr class="memdesc:adc955a61a88e8a2bfe9866daa096a773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Degrees of Freedom available for the task.  <br /></td></tr>
 <tr class="separator:adc955a61a88e8a2bfe9866daa096a773"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,6 +262,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a78c3a5ca7417c8ce819ed898a8c1c0eb"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix&lt; int, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#a78c3a5ca7417c8ce819ed898a8c1c0eb">breaks_</a></td></tr>
 <tr class="memdesc:a78c3a5ca7417c8ce819ed898a8c1c0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index in sorted list of inactive constraints for each task level.  <br /></td></tr>
 <tr class="separator:a78c3a5ca7417c8ce819ed898a8c1c0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6ec0ddbbf9db66a00907df1b5c45e41"><td class="memItemLeft" align="right" valign="top">Eigen::Array&lt; double, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhqp_1_1HierarchicalQP.html#ae6ec0ddbbf9db66a00907df1b5c45e41">costs_</a></td></tr>
+<tr class="memdesc:ae6ec0ddbbf9db66a00907df1b5c45e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cost per level (squared norm of slacks in lexicographic order).  <br /></td></tr>
+<tr class="separator:ae6ec0ddbbf9db66a00907df1b5c45e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a20aae964624c0ead04c4566d2e663b67" name="a20aae964624c0ead04c4566d2e663b67"></a>
@@ -515,6 +519,29 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 
 </div>
 </div>
+<a id="a0dfa66bfc96b7eb84abce7a3e991e68c" name="a0dfa66bfc96b7eb84abce7a3e991e68c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dfa66bfc96b7eb84abce7a3e991e68c">&#9670;&#160;</a></span>get_costs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::get_costs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieves the cost per level in the hierarchical problem. </p>
+<dl class="section return"><dt>Returns</dt><dd>Vector of costs (squared norm of slacks) for each level in lexicographic order</dd></dl>
+<p>The cost for each level is computed as the squared norm of the slack variables at that level. This respects the hierarchical structure and constraint swapping. </p>
+
+</div>
+</div>
 <a id="a50c6fd893e3ab8b30c4b551968e6b28c" name="a50c6fd893e3ab8b30c4b551968e6b28c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50c6fd893e3ab8b30c4b551968e6b28c">&#9670;&#160;</a></span>get_parent()</h2>
 
@@ -574,34 +601,26 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 
 </div>
 </div>
-<a id="afb176e2a554fc69464847ef62127a211" name="afb176e2a554fc69464847ef62127a211"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb176e2a554fc69464847ef62127a211">&#9670;&#160;</a></span>get_solver_info()</h2>
+<a id="a832d68ca3377d445f06792991e62114b" name="a832d68ca3377d445f06792991e62114b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a832d68ca3377d445f06792991e62114b">&#9670;&#160;</a></span>get_slack()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structhqp_1_1SolverInfo.html">SolverInfo</a> &amp; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::get_solver_info </td>
+          <td class="memname">std::tuple&lt; Eigen::Vector&lt; double, ROWS &gt;, Eigen::Vector&lt; double, ROWS &gt; &gt; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::get_slack </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Gets detailed solver information and statistics. </p>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structhqp_1_1SolverInfo.html" title="Detailed solver statistics and information.">SolverInfo</a> structure containing status, statistics, and performance metrics</dd></dl>
-<p>Returns details about iterations, timing, constraint changes, and more. Useful for debugging and performance analysis. </p>
+<p>Retrieves the slack variables. </p>
+<dl class="section return"><dt>Returns</dt><dd>The computed slack variables</dd></dl>
+<p>Call this method to get the slack variables after solving the problem. The solver will automatically run if it hasn't been solved yet. </p>
 
 </div>
 </div>
@@ -701,6 +720,54 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 </div><div class="memdoc">
 
 <p>Handles inequality constrained tasks. </p>
+
+</div>
+</div>
+<a id="ace87bda2baaf09bb95e4fc5d8b9eb301" name="ace87bda2baaf09bb95e4fc5d8b9eb301"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace87bda2baaf09bb95e4fc5d8b9eb301">&#9670;&#160;</a></span>is_progressing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::is_progressing </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"><em>previous_costs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tolerance</em> = <code>1e-8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks if lexicographic progress is being made at a given level. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">level</td><td>The level to check progress for </td></tr>
+    <tr><td class="paramname">previous_costs</td><td>The costs from the previous iteration </td></tr>
+    <tr><td class="paramname">tolerance</td><td>Tolerance for progress detection </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if sufficient progress is made, false if should proceed to next level</dd></dl>
+<p>Uses lexicographic ordering: progress at higher priority levels is more important. If no significant progress is made at the current level, the solver should proceed to the next level. </p>
 
 </div>
 </div>
@@ -1177,6 +1244,32 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 
 </div>
 </div>
+<a id="ae6ec0ddbbf9db66a00907df1b5c45e41" name="ae6ec0ddbbf9db66a00907df1b5c45e41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6ec0ddbbf9db66a00907df1b5c45e41">&#9670;&#160;</a></span>costs_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Array&lt;double, Eigen::Dynamic, 1, Eigen::AutoAlign, MaxLevels, 1&gt; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::costs_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cost per level (squared norm of slacks in lexicographic order). </p>
+
+</div>
+</div>
 <a id="adc955a61a88e8a2bfe9866daa096a773" name="adc955a61a88e8a2bfe9866daa096a773"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc955a61a88e8a2bfe9866daa096a773">&#9670;&#160;</a></span>dofs_</h2>
 
@@ -1278,32 +1371,6 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 </div><div class="memdoc">
 
 <p>Force vector for primal updates. </p>
-
-</div>
-</div>
-<a id="a3bcffcd58a1fb384e351ad2b51ce657b" name="a3bcffcd58a1fb384e351ad2b51ce657b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3bcffcd58a1fb384e351ad2b51ce657b">&#9670;&#160;</a></span>frequency_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Array&lt;double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1&gt; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::frequency_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>(De)Activations counter for anti-cycling. </p>
 
 </div>
 </div>
@@ -1541,6 +1608,32 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 
 </div>
 </div>
+<a id="a1572b4eeae033c7837516cf8a06baa9e" name="a1572b4eeae033c7837516cf8a06baa9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1572b4eeae033c7837516cf8a06baa9e">&#9670;&#160;</a></span>primalValid_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::primalValid_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flag indicating if primal solution is up-to-date. </p>
+
+</div>
+</div>
 <a id="afa3c8315b436469c38bd30156c5790e0" name="afa3c8315b436469c38bd30156c5790e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afa3c8315b436469c38bd30156c5790e0">&#9670;&#160;</a></span>ranks_</h2>
 
@@ -1591,8 +1684,8 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
 
 </div>
 </div>
-<a id="a90c7bea3ea19ca0cb9bae94f880d242a" name="a90c7bea3ea19ca0cb9bae94f880d242a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90c7bea3ea19ca0cb9bae94f880d242a">&#9670;&#160;</a></span>solver_info_</h2>
+<a id="a955875e7c1aa680d1b399f449395b436" name="a955875e7c1aa680d1b399f449395b436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a955875e7c1aa680d1b399f449395b436">&#9670;&#160;</a></span>slackLow_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1603,7 +1696,7 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structhqp_1_1SolverInfo.html">SolverInfo</a> <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::solver_info_</td>
+          <td class="memname">Eigen::Matrix&lt;double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1&gt; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::slackLow_</td>
         </tr>
       </table>
   </td>
@@ -1612,6 +1705,60 @@ template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = E
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Cached slack variables for lower bounds (negative violations only). </p>
+
+</div>
+</div>
+<a id="a04b32ddd68ef70508aa5c0670061031c" name="a04b32ddd68ef70508aa5c0670061031c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04b32ddd68ef70508aa5c0670061031c">&#9670;&#160;</a></span>slacksValid_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::slacksValid_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Flag indicating if slack variables are up-to-date. </p>
+
+</div>
+</div>
+<a id="a2d5bdcb892e2144a5c0913d311e7c4d5" name="a2d5bdcb892e2144a5c0913d311e7c4d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d5bdcb892e2144a5c0913d311e7c4d5">&#9670;&#160;</a></span>slackUp_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int MaxRows = -1, int MaxCols = -1, int MaxLevels = -1, int ROWS = Eigen::Dynamic, int COLS = Eigen::Dynamic, int LEVS = Eigen::Dynamic&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix&lt;double, ROWS, 1, Eigen::AutoAlign, MaxRows, 1&gt; <a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a>&lt; MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS &gt;::slackUp_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cached slack variables for upper bounds (positive violations only). </p>
 
 </div>
 </div>
