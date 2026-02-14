@@ -124,7 +124,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
     lev_ = breaks.size();
     // Resize vectors to the number of levels
     dofs_.resize(lev_);
-    ranks_ = Eigen::VectorXi::Zero(lev_);
+    ranks_.setZero(lev_);
     codMids_.resize(lev_);
     codRights_.resize(lev_);
     breaksFix_.resize(lev_);
