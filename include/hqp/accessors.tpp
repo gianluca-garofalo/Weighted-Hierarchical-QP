@@ -44,12 +44,9 @@ std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
   HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_slack() {
     if (!slacksValid_) {
         solve();
-        Eigen::Vector<double, ROWS> vector = matrix_ * primal_;
-
-        slackLow_ = vector - lower_;
-        slackUp_  = vector - upper_;
-        slackLow_ = (slackLow_.array() < 0).template cast<double>() * slackLow_.array();
-        slackUp_  = (slackUp_.array() > 0).template cast<double>() * slackUp_.array();
+        slackUp_.noalias() = matrix_ * primal_;
+        slackLow_ = (slackUp_ - lower_).cwiseMin(0.0);
+        slackUp_  = (slackUp_ - upper_).cwiseMax(0.0);
 
         slacksValid_ = true;
     }
