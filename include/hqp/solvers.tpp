@@ -45,22 +45,22 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
     double slack, dual, mValue;
     bool isLowerBound;     // needed to distinguish between upper and lower bound in case they are both active
 
-    // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
-    int maxIter = 500;
+    int maxChanges = 500;  // Maximum constraint activations + deactivations
+    int changes    = 0;
 
     // Lexicographic progress tracking
     double cost, best_cost;
     int stale, budget;
 
     equality_hqp();
-    for (int iter = 0, h = 0; iter < maxIter && h < lev_; ++h) {
+    for (int h = 0; changes < maxChanges && h < lev_; ++h) {
         slack = dual = 1;
 
         best_cost = get_level_cost(h);
         stale     = 0;
         budget    = 2 * (breaks_(h) - (h == 0 ? 0 : breaks_(h - 1)));
 
-        while ((slack > 0 || dual > 0) && iter < maxIter && stale < budget) {
+        while ((slack > 0 || dual > 0) && changes < maxChanges && stale < budget) {
             // Add tasks to the active set.
             slack = -1;
             for (int k = 0; k < lev_; ++k) {
@@ -91,6 +91,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 decrement_from(level_(row));
                 activate_constraint(row, isLowerBound);
                 increment_from(level_(row));
+                ++changes;
                 cost = get_level_cost(h);
                 if (best_cost - cost > tolerance) {
                     best_cost = cost;
@@ -124,6 +125,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 decrement_from(level_(row));
                 deactivate_constraint(row);
                 increment_from(level_(row));
+                ++changes;
                 cost = get_level_cost(h);
                 if (best_cost - cost > tolerance) {
                     best_cost = cost;
@@ -141,8 +143,6 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                     }
                 }
             }
-
-            ++iter;
         }
     }
 }
