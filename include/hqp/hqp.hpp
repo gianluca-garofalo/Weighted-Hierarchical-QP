@@ -11,6 +11,7 @@
 #ifndef HQP_HIERARCHICALQP_HPP
 #define HQP_HIERARCHICALQP_HPP
 
+#include <iostream>
 #include <vector>
 #include <tuple>
 #include <Eigen/Dense>
@@ -207,11 +208,12 @@ class HierarchicalQP {
     std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>> get_slack();
 
     /**
-     * @brief Outputs the active set details to the console.
+     * @brief Outputs the active set details to a stream.
+     * @param os Output stream (defaults to std::cout)
      *
      * Provides a comprehensive summary of active constraints at each task level.
      */
-    void print_active_set();
+    void print_active_set(std::ostream& os = std::cout);
 
 };  // class HierarchicalQP
 

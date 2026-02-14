@@ -30,7 +30,7 @@ PYBIND11_MODULE(pyhqp, m) {
         .def("get_primal", &HQPDynamic::get_primal,
              "Compute and retrieve the primal solution")
         
-        .def("print_active_set", &HQPDynamic::print_active_set,
+        .def("print_active_set", [](HQPDynamic& self) { self.print_active_set(); },
              "Print the active set details to console")
         
         .def_readwrite("tolerance", &HQPDynamic::tolerance,
