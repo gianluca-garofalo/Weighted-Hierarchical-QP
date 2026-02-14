@@ -181,7 +181,7 @@ class HierarchicalQP {
 
     /**
      * @brief Computes and retrieves the primal solution.
-     * @return The computed primal solution vector
+     * @return Const reference to the computed primal solution vector
      *
      * Call this method to solve your problem and get the solution. The solver will automatically run if it hasn't been
      * solved yet.
@@ -192,7 +192,7 @@ class HierarchicalQP {
      * 3. Returns the optimal solution vector
      * 4. Updates solver statistics
      */
-    Eigen::VectorXd get_primal();
+    const Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1>& get_primal();
 
     /**
      * @brief Retrieves the slack variables.

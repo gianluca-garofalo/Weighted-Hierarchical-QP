@@ -29,8 +29,8 @@ double HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_level_
 
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
-Eigen::VectorXd HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_primal() {
-    // TODO: move k = 0 in loop (leave int k out) and check style of all loops
+const Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1>&
+  HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_primal() {
     if (!primalValid_) {
         solve();
         primalValid_ = true;
