@@ -18,8 +18,8 @@ int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_parent(in
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 double HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_level_cost(int k) {
-    int start = k == 0 ? 0 : breaks_(k - 1);
-    int dim   = breaks_(k) - start;
+    int start                             = k == 0 ? 0 : breaks_(k - 1);
+    int dim                               = breaks_(k) - start;
     vector_.segment(start, dim).noalias() = matrix_.middleRows(start, dim) * primal_;
     return (lower_.segment(start, dim) - vector_.segment(start, dim))
       .cwiseMax(vector_.segment(start, dim) - upper_.segment(start, dim))
@@ -45,8 +45,8 @@ std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
     if (!slacksValid_) {
         solve();
         slackUp_.noalias() = matrix_ * primal_;
-        slackLow_ = (slackUp_ - lower_).cwiseMin(0.0);
-        slackUp_  = (slackUp_ - upper_).cwiseMax(0.0);
+        slackLow_          = (slackUp_ - lower_).cwiseMin(0.0);
+        slackUp_           = (slackUp_ - upper_).cwiseMax(0.0);
 
         slacksValid_ = true;
     }
@@ -131,10 +131,10 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
     breaksAct_.resize(lev_);
 
     for (int start = 0, k = 0; k < lev_; ++k) {
-        int dim                    = breaks(k) - start;
-        codMids_[k]                = nullSpace_;
-        codRights_[k]              = nullSpace_;
-        level_.segment(start, dim) = k * Eigen::VectorXi::Ones(dim);
+        int dim = breaks(k) - start;
+        codMids_[k].resizeLike(nullSpace_);
+        codRights_[k].resizeLike(nullSpace_);
+        level_.segment(start, dim).setConstant(k);
 
         breaksFix_(k) = breaksAct_(k) = start;
         for (int row = start; row < breaks(k); ++row) {

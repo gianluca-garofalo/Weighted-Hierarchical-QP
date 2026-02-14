@@ -8,8 +8,9 @@ namespace hqp {
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
     // Shift problem to the origin
-    lower_ -= matrix_ * guess_;
-    upper_ -= matrix_ * guess_;
+    vector_.noalias() = matrix_ * guess_;
+    lower_ -= vector_;
+    upper_ -= vector_;
 
     if (equalitySet_.all()) {
         equality_hqp();
