@@ -5,8 +5,7 @@ namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(int m, int n)
-  : row_{m}
-  , col_{n}
+  : col_{n}
   , primal_(n)
   , task_(n)
   , guess_(n)

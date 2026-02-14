@@ -25,7 +25,6 @@ template<int MaxRows   = -1,
          int LEVS      = Eigen::Dynamic>
 class HierarchicalQP {
   private:
-    int row_;
     /** Number of variables in the problem. */
     int col_;
     /** Number of levels in the task hierarchy. */
