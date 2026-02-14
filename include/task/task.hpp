@@ -1,5 +1,5 @@
-#ifndef _Task_
-#define _Task_
+#ifndef HQP_TASK_HPP
+#define HQP_TASK_HPP
 
 #include <functional>
 #include <memory>
@@ -65,4 +65,4 @@ struct StackOfTasks : public std::vector<TaskPtr> {
 
 #include "task.tpp"
 
-#endif  // _Task_
+#endif  // HQP_TASK_HPP

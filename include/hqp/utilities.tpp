@@ -1,5 +1,5 @@
-#ifndef _HierarchicalQP_UTILITIES_TPP_
-#define _HierarchicalQP_UTILITIES_TPP_
+#ifndef HQP_UTILITIES_TPP
+#define HQP_UTILITIES_TPP
 
 #include <iostream>
 
@@ -21,4 +21,4 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::print_active
 
 }  // namespace hqp
 
-#endif  // _HierarchicalQP_UTILITIES_TPP_
+#endif  // HQP_UTILITIES_TPP

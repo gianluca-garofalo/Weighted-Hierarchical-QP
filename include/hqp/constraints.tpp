@@ -1,5 +1,5 @@
-#ifndef _HierarchicalQP_CONSTRAINTS_TPP_
-#define _HierarchicalQP_CONSTRAINTS_TPP_
+#ifndef HQP_CONSTRAINTS_TPP
+#define HQP_CONSTRAINTS_TPP
 
 namespace hqp {
 
@@ -58,4 +58,4 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::swap_constra
 
 }  // namespace hqp
 
-#endif  // _HierarchicalQP_CONSTRAINTS_TPP_
+#endif  // HQP_CONSTRAINTS_TPP

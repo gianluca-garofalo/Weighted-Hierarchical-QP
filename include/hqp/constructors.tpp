@@ -1,5 +1,5 @@
-#ifndef _HierarchicalQP_CONSTRUCTORS_TPP_
-#define _HierarchicalQP_CONSTRUCTORS_TPP_
+#ifndef HQP_CONSTRUCTORS_TPP
+#define HQP_CONSTRUCTORS_TPP
 
 namespace hqp {
 
@@ -45,4 +45,4 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(co
 
 }  // namespace hqp
 
-#endif  // _HierarchicalQP_CONSTRUCTORS_TPP_
+#endif  // HQP_CONSTRUCTORS_TPP

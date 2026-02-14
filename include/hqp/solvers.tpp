@@ -1,5 +1,5 @@
-#ifndef _HierarchicalQP_SOLVERS_TPP_
-#define _HierarchicalQP_SOLVERS_TPP_
+#ifndef HQP_SOLVERS_TPP
+#define HQP_SOLVERS_TPP
 
 #include <limits>
 
@@ -279,4 +279,4 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
 
 }  // namespace hqp
 
-#endif  // _HierarchicalQP_SOLVERS_TPP_
+#endif  // HQP_SOLVERS_TPP

@@ -1,5 +1,5 @@
-#ifndef _HierarchicalQP_ACCESSORS_TPP_
-#define _HierarchicalQP_ACCESSORS_TPP_
+#ifndef HQP_ACCESSORS_TPP
+#define HQP_ACCESSORS_TPP
 
 #include <stdexcept>
 
@@ -157,4 +157,4 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
 
 }  // namespace hqp
 
-#endif  // _HierarchicalQP_ACCESSORS_TPP_
+#endif  // HQP_ACCESSORS_TPP

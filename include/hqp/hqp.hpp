@@ -8,8 +8,8 @@
  * @version 0.1.1
  * @date 2025
  */
-#ifndef _HierarchicalQP_
-#define _HierarchicalQP_
+#ifndef HQP_HIERARCHICALQP_HPP
+#define HQP_HIERARCHICALQP_HPP
 
 #include <vector>
 #include <tuple>
@@ -220,4 +220,4 @@ HierarchicalQP(int, int) -> HierarchicalQP<>;
 
 #include "hqp.tpp"
 
-#endif  // _HierarchicalQP_
+#endif  // HQP_HIERARCHICALQP_HPP
