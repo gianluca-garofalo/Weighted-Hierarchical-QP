@@ -170,7 +170,8 @@ class HierarchicalQP {
      * @brief Computes and retrieves the primal solution.
      * @return The computed primal solution vector
      *
-     * Call this method to solve your problem and get the solution. The solver will automatically run if it hasn't been solved yet.
+     * Call this method to solve your problem and get the solution. The solver will automatically run if it hasn't been
+     * solved yet.
      *
      * What happens inside:
      * 1. If not already solved, triggers the solve process

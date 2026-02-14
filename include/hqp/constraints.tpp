@@ -4,17 +4,6 @@
 namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
-void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::lock_constraint(int row) {
-    if (breaksFix_(level_(row)) < breaksAct_(level_(row))) {
-        swap_constraints(breaksFix_(level_(row)), row);
-    } else {
-        throw std::runtime_error("Cannot lock more constraints than the active ones.");
-    }
-    ++breaksFix_(level_(row));
-}
-
-
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::activate_constraint(int row, bool isLowerBound) {
     if (isLowerBound) {
         activeLowSet_(row) = true;
@@ -37,6 +26,17 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::deactivate_c
     activeUpSet_(row)  = false;
 
     swap_constraints(--breaksAct_(level_(row)), row);
+}
+
+
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::lock_constraint(int row) {
+    if (breaksFix_(level_(row)) < breaksAct_(level_(row))) {
+        swap_constraints(breaksFix_(level_(row)), row);
+    } else {
+        throw std::runtime_error("Cannot lock more constraints than the active ones.");
+    }
+    ++breaksFix_(level_(row));
 }
 
 

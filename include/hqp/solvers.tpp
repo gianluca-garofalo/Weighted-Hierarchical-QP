@@ -48,7 +48,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
     equality_hqp();
     // TODO: replace maxIter with maxChanges for activations plus deactivations (each considered separately though)
     int maxIter = 500;
-    for (auto iter = 0, h = 0; iter < maxIter && h < lev_; ++h) {
+    for (int iter = 0, h = 0; iter < maxIter && h < lev_; ++h) {
         slack = dual = 1;
         while ((slack > 0 || dual > 0) && iter < maxIter) {
             // Add tasks to the active set.
