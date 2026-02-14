@@ -118,6 +118,8 @@ class HierarchicalQP {
     void swap_constraints(int i, int j);
     /** Computes the parent level for a given task level. */
     int get_parent(int level);
+    /** Computes the squared constraint violation cost at a given level. */
+    double get_level_cost(int k);
 
 
   public:
@@ -191,7 +193,6 @@ class HierarchicalQP {
      */
     Eigen::VectorXd get_primal();
 
-    
     /**
      * @brief Retrieves the slack variables.
      * @return The computed slack variables
@@ -200,7 +201,6 @@ class HierarchicalQP {
      * hasn't been solved yet.
      */
     std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>> get_slack();
-
 
     /**
      * @brief Outputs the active set details to the console.
