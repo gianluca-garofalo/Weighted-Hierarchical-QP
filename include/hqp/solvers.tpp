@@ -245,22 +245,21 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
     } else {
         nullSpace_.leftCols(dof).noalias() = codRights_[parent].middleCols(ranks_(parent), dof);
     }
-    Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod;
-    cod.setThreshold(tolerance);
-    cod.compute(matrix_.middleRows(start, n_rows) * nullSpace_.leftCols(dof));
-    ranks_(k)   = cod.rank();
+    cod_.setThreshold(tolerance);
+    cod_.compute(matrix_.middleRows(start, n_rows) * nullSpace_.leftCols(dof));
+    ranks_(k)   = cod_.rank();
     int leftDof = dof - ranks_(k);
 
     if (leftDof > 0) {
         // In this case matrixZ() is not the identity, so Eigen computes it and is not garbage
         codRights_[k].leftCols(dof).noalias() =
-          nullSpace_.leftCols(dof) * cod.colsPermutation() * cod.matrixZ().transpose();
+          nullSpace_.leftCols(dof) * cod_.colsPermutation() * cod_.matrixZ().transpose();
     } else {
-        codRights_[k].leftCols(dof).noalias() = nullSpace_.leftCols(dof) * cod.colsPermutation();
+        codRights_[k].leftCols(dof).noalias() = nullSpace_.leftCols(dof) * cod_.colsPermutation();
     }
     auto codLeft = codLefts_.block(start, 0, n_rows, n_rows);
     codLeft.setIdentity();
-    cod.householderQ().applyThisOnTheLeft(codLeft);
+    cod_.householderQ().applyThisOnTheLeft(codLeft);
 
     inverse_.middleCols(col_ - dof, ranks_(k)).noalias() = codRights_[k].leftCols(ranks_(k));
     task_.segment(col_ - dof, ranks_(k)).noalias() =
@@ -268,13 +267,13 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
     dual_.segment(start, n_rows).noalias() =
       vector_.segment(start, n_rows) -
       codLefts_.block(start, 0, n_rows, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
-    cod.matrixT()
+    cod_.matrixT()
       .topLeftCorner(ranks_(k), ranks_(k))
       .template triangularView<Eigen::Upper>()
       .template solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, ranks_(k)));
     primal_ += inverse_.middleCols(col_ - dof, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
 
-    codMids_[k].topLeftCorner(ranks_(k), ranks_(k)).noalias() = cod.matrixT().topLeftCorner(ranks_(k), ranks_(k));
+    codMids_[k].topLeftCorner(ranks_(k), ranks_(k)).noalias() = cod_.matrixT().topLeftCorner(ranks_(k), ranks_(k));
 }
 
 }  // namespace hqp
