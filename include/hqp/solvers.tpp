@@ -161,7 +161,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::dual_update(
           activeUpSet_.segment(start, dim).select(upper_.segment(start, dim), lower_.segment(start, dim)) -
           matrix_.middleRows(start, dim) * primal_;
     }
-    tau_ = matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
+    tau_.noalias() = matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
 
     for (int dof = ranks_(h), k = h - 1; k >= 0; --k) {
         start = k == 0 ? 0 : breaks_(k - 1);
@@ -177,7 +177,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::dual_update(
                   .template solveInPlace<Eigen::OnTheLeft>(force_.head(ranks_(k)));
                 dual_.segment(start, dim).noalias() =
                   codLefts_.block(start, 0, dim, ranks_(k)) * force_.head(ranks_(k));
-                tau_ += matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
+                tau_.noalias() += matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
             } else {
                 dual_.segment(start, dim).setZero();
             }
@@ -196,7 +196,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::decrement_fr
     for (int k = level; k < lev_; ++k) {
         // if (k == k_) {k_ = parent;} no needed because it always calls increment_from right after
         if (breaksAct_(k) > start && ranks_(k) > 0) {
-            primal_  -= inverse_.middleCols(col_ - dofs_(k), ranks_(k)) * task_.segment(col_ - dofs_(k), ranks_(k));
+            primal_.noalias() -= inverse_.middleCols(col_ - dofs_(k), ranks_(k)) * task_.segment(col_ - dofs_(k), ranks_(k));
             dofs_(k) = ranks_(k) = 0;
             start                = breaks_(k);
         }
@@ -272,7 +272,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
       .topLeftCorner(ranks_(k), ranks_(k))
       .template triangularView<Eigen::Upper>()
       .template solveInPlace<Eigen::OnTheLeft>(task_.segment(col_ - dof, ranks_(k)));
-    primal_ += inverse_.middleCols(col_ - dof, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
+    primal_.noalias() += inverse_.middleCols(col_ - dof, ranks_(k)) * task_.segment(col_ - dof, ranks_(k));
 
     codMids_[k].topLeftCorner(ranks_(k), ranks_(k)).noalias() = cod_.matrixT().topLeftCorner(ranks_(k), ranks_(k));
 }
