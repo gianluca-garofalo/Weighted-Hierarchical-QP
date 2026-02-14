@@ -215,10 +215,6 @@ class HierarchicalQP {
 // Deduction guide for dynamic sizing (default behavior)
 HierarchicalQP(int, int) -> HierarchicalQP<>;
 
-// Deduction guide for Eigen matrix with compile-time size
-template<int m, int n>
-HierarchicalQP(const Eigen::Matrix<double, m, n>&) -> HierarchicalQP<m, n, -1, m, n>;
-
 }  // namespace hqp
 
 
