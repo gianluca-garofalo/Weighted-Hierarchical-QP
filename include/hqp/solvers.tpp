@@ -68,10 +68,11 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
             for (int k = 0; k < lev_; ++k) {
                 int dim = breaks_(k) - breaksAct_(k);
                 if (dim > 0) {
-                    vector_.segment(breaksAct_(k), dim).noalias() =
-                      (!activeUpSet_.segment(breaksAct_(k), dim))
-                        .select(upper_.segment(breaksAct_(k), dim), std::numeric_limits<double>::infinity());
-                    mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
+                    vector_.segment(breaksAct_(k), dim).noalias() = matrix_.middleRows(breaksAct_(k), dim) * primal_;
+
+                    mValue = (vector_.segment(breaksAct_(k), dim) -
+                              (!activeUpSet_.segment(breaksAct_(k), dim))
+                                .select(upper_.segment(breaksAct_(k), dim), std::numeric_limits<double>::infinity()))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
@@ -79,10 +80,9 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                         isLowerBound = false;
                     }
 
-                    vector_.segment(breaksAct_(k), dim).noalias() =
-                      (!activeLowSet_.segment(breaksAct_(k), dim))
-                        .select(lower_.segment(breaksAct_(k), dim), -std::numeric_limits<double>::infinity());
-                    mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
+                    mValue = ((!activeLowSet_.segment(breaksAct_(k), dim))
+                                .select(lower_.segment(breaksAct_(k), dim), -std::numeric_limits<double>::infinity()) -
+                              vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
@@ -113,8 +113,6 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
             for (auto k = 0; k <= h; ++k) {
                 int dim = breaksAct_(k) - breaksFix_(k);
                 if (dim > 0) {
-                    // TODO: as it seems that both sides can be active, this might not be correct. Or rather it still
-                    // considers one active constraint at a time?
                     dual_.segment(breaksFix_(k), dim).noalias() =
                       activeUpSet_.segment(breaksFix_(k), dim)
                         .select(dual_.segment(breaksFix_(k), dim), -dual_.segment(breaksFix_(k), dim));
