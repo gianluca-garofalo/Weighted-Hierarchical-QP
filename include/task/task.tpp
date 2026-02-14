@@ -100,7 +100,7 @@ void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
 
     if (breaks.size() != this->size()) {
         this->clear();
-        this->reserve(breaks.size());
+        this->resize(breaks.size());
     }
     for (int k = 0, start = 0; k < breaks.size(); ++k) {
         const int stop = breaks(k);
