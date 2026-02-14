@@ -63,7 +63,7 @@ std::tuple<Eigen::MatrixXd, Eigen::VectorXd, Eigen::VectorXd, Eigen::VectorXi> S
         if (task->matrix.rows() <= 0) {
             throw std::runtime_error("Task not configured - call update() first");
         }
-        assert(cols == -1 || task->matrix.cols() == cols && "Inconsistent column size in tasks");
+        assert((cols == -1 || task->matrix.cols() == cols) && "Inconsistent column size in tasks");
         cols  = task->matrix.cols();
         rows += task->matrix.rows();
     }
