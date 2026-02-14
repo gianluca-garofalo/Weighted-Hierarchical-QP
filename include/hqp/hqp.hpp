@@ -46,7 +46,8 @@ class HierarchicalQP {
     /** Reusable nullspace matrix to avoid re-instantiation. */
     Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> nullSpace_;
     /** Reusable COD decomposition to avoid repeated heap allocation. */
-    Eigen::CompleteOrthogonalDecomposition<Eigen::MatrixXd> cod_;
+    Eigen::CompleteOrthogonalDecomposition<
+      Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols>> cod_;
 
     /** Index tracking the active task level. */
     int k_ = 0;
