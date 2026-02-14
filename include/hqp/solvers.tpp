@@ -1,6 +1,8 @@
 #ifndef _HierarchicalQP_SOLVERS_TPP_
 #define _HierarchicalQP_SOLVERS_TPP_
 
+#include <limits>
+
 namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
@@ -67,7 +69,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 int dim = breaks_(k) - breaksAct_(k);
                 if (dim > 0) {
                     vector_.segment(breaksAct_(k), dim).noalias() =
-                      (!activeUpSet_.segment(breaksAct_(k), dim)).select(upper_.segment(breaksAct_(k), dim), 1e9);
+                      (!activeUpSet_.segment(breaksAct_(k), dim))
+                        .select(upper_.segment(breaksAct_(k), dim), std::numeric_limits<double>::infinity());
                     mValue = (matrix_.middleRows(breaksAct_(k), dim) * primal_ - vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
@@ -77,7 +80,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                     }
 
                     vector_.segment(breaksAct_(k), dim).noalias() =
-                      (!activeLowSet_.segment(breaksAct_(k), dim)).select(lower_.segment(breaksAct_(k), dim), -1e9);
+                      (!activeLowSet_.segment(breaksAct_(k), dim))
+                        .select(lower_.segment(breaksAct_(k), dim), -std::numeric_limits<double>::infinity());
                     mValue = (vector_.segment(breaksAct_(k), dim) - matrix_.middleRows(breaksAct_(k), dim) * primal_)
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
