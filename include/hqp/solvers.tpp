@@ -258,8 +258,9 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
     } else {
         codRights_[k].leftCols(dof).noalias() = nullSpace_.leftCols(dof) * cod.colsPermutation();
     }
-    codLefts_.block(start, 0, n_rows, n_rows).noalias() =
-      cod.householderQ() * Eigen::MatrixXd::Identity(n_rows, n_rows);
+    auto codLeft = codLefts_.block(start, 0, n_rows, n_rows);
+    codLeft.setIdentity();
+    cod.householderQ().applyThisOnTheLeft(codLeft);
 
     inverse_.middleCols(col_ - dof, ranks_(k)).noalias() = codRights_[k].leftCols(ranks_(k));
     task_.segment(col_ - dof, ranks_(k)).noalias() =
