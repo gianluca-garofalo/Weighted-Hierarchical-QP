@@ -31,6 +31,7 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
     cholMetric_.setIdentity();
     activeLowSet_.setZero();
     activeUpSet_.setZero();
+    for (int i = 0; i < m; ++i) perm_(i) = i;
 }
 
 
