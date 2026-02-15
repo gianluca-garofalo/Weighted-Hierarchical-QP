@@ -18,7 +18,13 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
         inequality_hqp();
     }
 
-    // Shift problem back
+    // Restore bounds (matrix_ rows may be permuted, but the shift
+    // A_perm * guess cancels the original shift permute(A * guess))
+    vector_.noalias() = matrix_ * guess_;
+    lower_ += vector_;
+    upper_ += vector_;
+
+    // Shift primal back to original frame
     primal_ += guess_;
     guess_   = primal_;
 

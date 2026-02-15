@@ -43,14 +43,24 @@ template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 std::tuple<Eigen::Vector<double, ROWS>, Eigen::Vector<double, ROWS>>
   HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_slack() {
     if (!slacksValid_) {
-        solve();
+        if (!primalValid_) {
+            solve();
+            primalValid_ = true;
+        }
         slackUp_.noalias() = matrix_ * primal_;
         slackLow_          = (slackUp_ - lower_).cwiseMin(0.0);
         slackUp_           = (slackUp_ - upper_).cwiseMax(0.0);
 
         slacksValid_ = true;
     }
-    return {slackLow_, slackUp_};
+    // Un-permute slacks to match original constraint ordering
+    int m = slackLow_.size();
+    Eigen::Vector<double, ROWS> outLow(m), outUp(m);
+    for (int i = 0; i < m; ++i) {
+        outLow(perm_(i)) = slackLow_(i);
+        outUp(perm_(i))  = slackUp_(i);
+    }
+    return {outLow, outUp};
 }
 
 
@@ -116,6 +126,9 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
     lower_  = lower;
     upper_  = upper;
     breaks_ = breaks;
+
+    // Initialize identity permutation
+    for (int i = 0; i < matrix.rows(); ++i) perm_(i) = i;
 
     equalitySet_  = lower.array() == upper.array();
     activeLowSet_ = equalitySet_.select(true, activeLowSet_);

@@ -25,7 +25,8 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
   , slackLow_(m)
   , slackUp_(m)
   , matrix_(m, n)
-  , codLefts_(m, m) {
+  , codLefts_(m, m)
+  , perm_(m) {
     guess_.setZero();
     cholMetric_.setIdentity();
     activeLowSet_.setZero();

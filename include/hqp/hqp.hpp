@@ -74,6 +74,8 @@ class HierarchicalQP {
     Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> matrix_;
     /** Left-hand side matrix in decompositions. */
     Eigen::Matrix<double, ROWS, ROWS, Eigen::AutoAlign, MaxRows, MaxRows> codLefts_;
+    /** Row permutation tracking: perm_(i) = original row index of current row i. */
+    Eigen::Matrix<int, ROWS, 1, Eigen::AutoAlign, MaxRows, 1> perm_;
 
     /** Flag indicating if slack variables are up-to-date. */
     bool slacksValid_ = false;

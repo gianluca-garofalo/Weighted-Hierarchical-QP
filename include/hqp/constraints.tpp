@@ -52,6 +52,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::swap_constra
     std::swap(lower_(i), lower_(j));
     std::swap(upper_(i), upper_(j));
     std::swap(dual_(i), dual_(j));
+    std::swap(perm_(i), perm_(j));
     matrix_.row(i).swap(matrix_.row(j));
     codLefts_.row(i).swap(codLefts_.row(j));
 }
