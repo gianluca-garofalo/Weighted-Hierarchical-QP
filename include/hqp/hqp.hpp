@@ -130,6 +130,8 @@ class HierarchicalQP {
   public:
     /** Tolerance for convergence and numerical stability. */
     double tolerance = 1e-9;
+    /** Number of active-set changes in the last solve (activations + deactivations). */
+    int changes = 0;
 
     /**
      * @brief Constructs the HierarchicalQP solver.

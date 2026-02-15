@@ -29,12 +29,14 @@ add_executable(04_random_problem 04_random_problem.cpp)
 add_executable(05_lex_slacks 05_lex_slacks.cpp)
 add_executable(06_timing_stats 06_timing_stats.cpp)
 add_executable(07_template_demo 07_template_demo.cpp)
+add_executable(08_warm_start 08_warm_start.cpp)
 
-set(TARGETS 
+set(TARGETS
     00_basic_select
     01_metric_swap
 	03_set_stack
 	07_template_demo
+	08_warm_start
 )
 
 foreach(TARGET ${TARGETS})

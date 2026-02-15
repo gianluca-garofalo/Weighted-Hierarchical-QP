@@ -122,6 +122,16 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
         throw std::invalid_argument("Lower bounds must be <= upper bounds");
     }
 
+    // Un-permute active flags from previous solve to original row ordering
+    {
+        auto prevLow = activeLowSet_;
+        auto prevUp  = activeUpSet_;
+        for (int i = 0; i < matrix.rows(); ++i) {
+            activeLowSet_(perm_(i)) = prevLow(i);
+            activeUpSet_(perm_(i))  = prevUp(i);
+        }
+    }
+
     matrix_ = matrix;
     lower_  = lower;
     upper_  = upper;

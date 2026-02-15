@@ -7,41 +7,19 @@ namespace hqp {
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::solve() {
-    // Shift problem to the origin
-    vector_.noalias() = matrix_ * guess_;
-    lower_ -= vector_;
-    upper_ -= vector_;
-
     if (equalitySet_.all()) {
         equality_hqp();
     } else {
         inequality_hqp();
     }
 
-    // Restore bounds (matrix_ rows may be permuted, but the shift
-    // A_perm * guess cancels the original shift permute(A * guess))
-    vector_.noalias() = matrix_ * guess_;
-    lower_ += vector_;
-    upper_ += vector_;
-
-    // Shift primal back to original frame
-    primal_ += guess_;
-    guess_   = primal_;
-
-    // Deactivate unused tasks for next guess
-    for (int level = k_; level < lev_; ++level) {
-        for (int row = level == 0 ? 0 : breaks_(level - 1); row < breaksAct_(level); ++row) {
-            if (!equalitySet_(row)) {
-                deactivate_constraint(row);
-            }
-        }
-    }
+    guess_ = primal_;
 }
 
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::equality_hqp() {
-    primal_.setZero();
+    primal_ = guess_;
     k_ = std::numeric_limits<int>::max();
     increment_from(0);
 }
@@ -55,7 +33,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
     bool isLowerBound;     // needed to distinguish between upper and lower bound in case they are both active
 
     int maxChanges = 500;  // Maximum constraint activations + deactivations
-    int changes    = 0;
+    changes        = 0;
 
     // Lexicographic progress tracking
     double cost, best_cost;
