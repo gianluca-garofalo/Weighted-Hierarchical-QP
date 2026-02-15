@@ -19,7 +19,7 @@ if(NOT TARGET HQP::HQP)
     add_library(HQP INTERFACE)
     add_library(HQP::HQP ALIAS HQP)
     
-    find_package(Eigen3 3.4.0 REQUIRED NO_MODULE)
+    find_package(Eigen3 REQUIRED NO_MODULE)
     target_link_libraries(HQP INTERFACE Eigen3::Eigen)
     
     target_include_directories(HQP INTERFACE ${HQP_INCLUDE_DIR})
@@ -67,8 +67,10 @@ set_target_properties(pyhqp PROPERTIES
 
 # Add compiler flags for better debugging/optimization
 target_compile_options(pyhqp PRIVATE
-    $<$<CONFIG:Debug>:-g -O0>
-    $<$<CONFIG:Release>:-O3 -DNDEBUG>
+    $<$<AND:$<CONFIG:Debug>,$<NOT:$<CXX_COMPILER_ID:MSVC>>>:-g -O0>
+    $<$<AND:$<CONFIG:Release>,$<NOT:$<CXX_COMPILER_ID:MSVC>>>:-O3 -DNDEBUG>
+    $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:MSVC>>:/Zi /Od>
+    $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/O2 /DNDEBUG>
 )
 
 # Install the Python module

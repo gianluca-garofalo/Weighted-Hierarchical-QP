@@ -96,7 +96,7 @@ void StackOfTasks::set_stack(Eigen::MatrixXd const& matrix,
         assert(breaks[k] >= prev && "breaks must be increasing");
         prev = breaks[k];
     }
-    assert(breaks(Eigen::last) == matrix.rows() && "The last break_point must be equal to matrix.rows()");
+    assert(breaks(breaks.size() - 1) == matrix.rows() && "The last break_point must be equal to matrix.rows()");
 
     if (breaks.size() != this->size()) {
         this->clear();

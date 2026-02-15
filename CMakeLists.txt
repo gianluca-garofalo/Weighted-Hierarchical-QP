@@ -20,7 +20,7 @@ include(GNUInstallDirs)
 add_library(${PROJECT_NAME} INTERFACE)
 add_library("${PROJECT_NAME}::${PROJECT_NAME}" ALIAS ${PROJECT_NAME})
 
-find_package (Eigen3 3.4.0 REQUIRED NO_MODULE)
+find_package (Eigen3 REQUIRED NO_MODULE)
 target_link_libraries(${PROJECT_NAME} INTERFACE Eigen3::Eigen)
 
 target_include_directories(${PROJECT_NAME} 

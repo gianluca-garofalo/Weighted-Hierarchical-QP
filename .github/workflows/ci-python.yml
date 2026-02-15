@@ -53,7 +53,7 @@ jobs:
     - name: Install system dependencies (Windows)
       if: runner.os == 'Windows'
       run: |
-        choco install cmake ninja
+        choco install ninja -y
         vcpkg install eigen3:x64-windows
 
     - name: Install Python dependencies
@@ -61,15 +61,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install pybind11 numpy pytest
 
-    - name: Configure CMake (Ubuntu/macOS)
-      if: runner.os != 'Windows'
+    - name: Configure CMake (Ubuntu)
+      if: runner.os == 'Linux'
       run: |
         cmake --preset python-release
+
+    - name: Configure CMake (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        cmake --preset python-release -DCMAKE_PREFIX_PATH=$(brew --prefix)
 
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
       run: |
-        cmake --preset python-release -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+        cmake --preset python-release -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
 
     - name: Build Python bindings
       run: |
@@ -85,7 +90,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         cd python
-        $env:PATH = "C:\vcpkg\installed\x64-windows\bin;$env:PATH"
+        $env:PATH = "$env:VCPKG_INSTALLATION_ROOT\installed\x64-windows\bin;$env:PATH"
         $env:PYTHONPATH = "../build/python/Release"
         python -m pytest test_pyhqp.py -v
 

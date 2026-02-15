@@ -115,7 +115,7 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
         }
         prev = breaks(k);
     }
-    if (breaks(Eigen::last) != matrix.rows()) {
+    if (breaks(breaks.size() - 1) != matrix.rows()) {
         throw std::invalid_argument("The last break must equal matrix.rows()");
     }
     if (!(lower.array() <= upper.array()).all()) {
