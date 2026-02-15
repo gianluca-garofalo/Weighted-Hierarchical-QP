@@ -48,7 +48,7 @@ auto bind_task(F&& f) {
 
 template<typename Derived>
 Derived* TaskPtr::cast() {
-    return std::static_pointer_cast<Derived>(*this).get();
+    return static_cast<Derived*>(this->get());
 }
 
 
