@@ -49,26 +49,23 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
 
         while ((slack > 0 || dual > 0) && changes < maxChanges && stale < budget) {
             // Add tasks to the active set.
+            // Optimization: Constraints are explicitly partitioned and swapped so that the segment
+            // [breaksAct_(k), breaks_(k)) is guaranteed to contain only inactive constraints.
+            // Hence, checking activeUpSet_ or activeLowSet_ via select() on this segment is redundant.
             slack = -1;
             for (int k = 0; k < lev_; ++k) {
                 int dim = breaks_(k) - breaksAct_(k);
                 if (dim > 0) {
                     vector_.segment(breaksAct_(k), dim).noalias() = matrix_.middleRows(breaksAct_(k), dim) * primal_;
 
-                    mValue = (vector_.segment(breaksAct_(k), dim) -
-                              (!activeUpSet_.segment(breaksAct_(k), dim))
-                                .select(upper_.segment(breaksAct_(k), dim), std::numeric_limits<double>::infinity()))
-                               .maxCoeff(&idx);
+                    mValue = (vector_.segment(breaksAct_(k), dim) - upper_.segment(breaksAct_(k), dim)).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
                         isLowerBound = false;
                     }
 
-                    mValue = ((!activeLowSet_.segment(breaksAct_(k), dim))
-                                .select(lower_.segment(breaksAct_(k), dim), -std::numeric_limits<double>::infinity()) -
-                              vector_.segment(breaksAct_(k), dim))
-                               .maxCoeff(&idx);
+                    mValue = (lower_.segment(breaksAct_(k), dim) - vector_.segment(breaksAct_(k), dim)).maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
                         row          = breaksAct_(k) + idx;
