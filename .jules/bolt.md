@@ -1,0 +1,3 @@
+## 2025-02-14 - Redundant Active-Set select() Operations in HQP
+**Learning:** In the active-set QP solver implementation of HQP, constraints are explicitly partitioned and swapped so that the segment from `breaksAct_(k)` to `breaks_(k)` contains only inactive constraints. Therefore, checking `activeUpSet_` or `activeLowSet_` via `.select()` on this segment is redundant and introduces significant computational overhead (array negation, selection, and branch operations).
+**Action:** Remove the `.select()` operations and directly compare the evaluated constraint values to their respective bounds on the inactive constraint segment.
