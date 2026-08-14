@@ -72,6 +72,7 @@ int main() {
     // Benchmark HQP
     for (int i = 0; i < num_iterations; ++i) {
         auto t_start  = std::chrono::high_resolution_clock::now();
+        hqp.set_problem(A, bl, bu, breaks);
         auto solution = hqp.get_primal();
         auto t_end    = std::chrono::high_resolution_clock::now();
 

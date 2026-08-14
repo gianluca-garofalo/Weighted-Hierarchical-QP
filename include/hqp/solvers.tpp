@@ -55,9 +55,10 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 if (dim > 0) {
                     vector_.segment(breaksAct_(k), dim).noalias() = matrix_.middleRows(breaksAct_(k), dim) * primal_;
 
+                    // Since constraints in segment [breaksAct_(k), dim] are inactive, they cannot be in activeUpSet_.
+                    // Therefore, we can directly subtract upper_ and avoid constructing the temporary select expression.
                     mValue = (vector_.segment(breaksAct_(k), dim) -
-                              (!activeUpSet_.segment(breaksAct_(k), dim))
-                                .select(upper_.segment(breaksAct_(k), dim), std::numeric_limits<double>::infinity()))
+                              upper_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
                         slack        = mValue;
@@ -65,8 +66,8 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                         isLowerBound = false;
                     }
 
-                    mValue = ((!activeLowSet_.segment(breaksAct_(k), dim))
-                                .select(lower_.segment(breaksAct_(k), dim), -std::numeric_limits<double>::infinity()) -
+                    // Similarly, they cannot be in activeLowSet_, so we directly subtract vector_ from lower_ and avoid select.
+                    mValue = (lower_.segment(breaksAct_(k), dim) -
                               vector_.segment(breaksAct_(k), dim))
                                .maxCoeff(&idx);
                     if (mValue > tolerance && mValue > slack) {
