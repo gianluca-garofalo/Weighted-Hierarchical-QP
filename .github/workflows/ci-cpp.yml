@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y cmake ninja-build libeigen3-dev
+          sudo apt install -y cmake ninja-build libeigen3-dev clang
 
       - name: Cache CMake build
         uses: actions/cache@v4
@@ -54,9 +54,10 @@ jobs:
             cmake-${{ runner.os }}-${{ matrix.compiler }}-
 
       - name: Configure CMake
+        env:
+          CC: ${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
+          CXX: ${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
         run: |
-          # export CC=${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
-          # export CXX=${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
           cmake --preset=${{ matrix.build_type }}
 
       - name: Build
