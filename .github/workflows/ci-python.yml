@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-24.04, macos-latest, windows-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
@@ -95,7 +95,7 @@ jobs:
         python -m pytest test_pyhqp.py -v
 
   test-setup-py:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python-version: ['3.9', '3.12']
@@ -127,7 +127,7 @@ jobs:
         python -c "import pyhqp; print('Import successful')"
 
   lint-python:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
 
