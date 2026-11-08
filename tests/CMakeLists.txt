@@ -44,17 +44,10 @@ foreach(var FETCHCONTENT_SOURCE_DIR_HQP-COMPARE FETCHCONTENT_SOURCE_DIR_HQP_COMP
     endif()
 endforeach()
 
-# Option to fetch external test repositories (default ON if local repos exist, else OFF)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../hqp-tasks/CMakeLists.txt" OR
-   EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../hqp-compare/CMakeLists.txt")
-    set(HQP_FETCH_EXTERNAL_TESTS_DEFAULT ON)
-else()
-    set(HQP_FETCH_EXTERNAL_TESTS_DEFAULT OFF)
-endif()
+# Option to fetch and build external repositories (hqp-tasks, hqp-compare)
+option(HQP_BUILD_EXTERNAL_TESTS "Fetch and build external tests (hqp-tasks, hqp-compare)" OFF)
 
-option(HQP_FETCH_EXTERNAL_TESTS "Fetch external test repositories (hqp-tasks, hqp-compare)" ${HQP_FETCH_EXTERNAL_TESTS_DEFAULT})
-
-if(HQP_FETCH_EXTERNAL_TESTS)
+if(HQP_BUILD_EXTERNAL_TESTS)
     if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../hqp-tasks/CMakeLists.txt")
         get_filename_component(HQP_TASKS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../hqp-tasks" ABSOLUTE)
         set(FETCHCONTENT_SOURCE_DIR_HQP-TASKS "${HQP_TASKS_DIR}" CACHE PATH "Path to hqp-tasks source" FORCE)
