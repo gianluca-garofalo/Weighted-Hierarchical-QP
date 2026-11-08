@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
+# Modularized solver configuration
 project(HQP VERSION 0.1.1 DESCRIPTION "A HQP solver" LANGUAGES CXX)
 message(PROJECT_NAME="${PROJECT_NAME}")
 message(PROJECT_VERSION="${PROJECT_VERSION}")
