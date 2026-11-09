@@ -21,6 +21,13 @@ jobs:
       matrix:
         compiler: [gcc, clang]
         build_type: [debug, release]
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+          - compiler: clang
+            cc: clang
+            cxx: clang++
     steps:
       # Status badge (add to README):
       # ![C++ CI](https://github.com/${{ github.repository }}/actions/workflows/ci-cpp/badge.svg)
@@ -55,8 +62,8 @@ jobs:
 
       - name: Configure CMake
         env:
-          CC: ${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
-          CXX: ${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
+          CC: ${{ matrix.cc }}
+          CXX: ${{ matrix.cxx }}
         run: |
           cmake --preset=${{ matrix.build_type }}
 
