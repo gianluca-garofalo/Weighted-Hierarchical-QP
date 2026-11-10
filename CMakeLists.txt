@@ -13,7 +13,9 @@ set(CMAKE_DEBUG_POSTFIX deb)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(BUILD_PYTHON_BINDINGS "Build Python bindings" OFF)
 
-include(CTest)
+if(PROJECT_IS_TOP_LEVEL)
+    include(CTest)
+endif()
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 
@@ -32,7 +34,9 @@ target_include_directories(${PROJECT_NAME}
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 
 
-if(BUILD_TESTING)
+# Tests are only built when HQP is the top-level project, not when a dependent
+# project pulls it in (e.g. via FetchContent).
+if(PROJECT_IS_TOP_LEVEL AND BUILD_TESTING)
 	add_subdirectory(tests)
 endif()
 
@@ -60,20 +64,28 @@ install(
 add_subdirectory(doc)
 
 write_basic_package_version_file(
-    ${PROJECT_NAME}ConfigVersion.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY SameMajorVersion
+    ARCH_INDEPENDENT
 )
 
 configure_package_config_file(
     ${CMAKE_CURRENT_LIST_DIR}/cmake/${PROJECT_NAME}_config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
     INSTALL_DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME}
 )
 
 install(
+    FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME}
+)
+
+install(
     EXPORT ${PROJECT_NAME}_targets
-    FILE ${PROJECT_NAME}_targets.cmake
+    FILE ${PROJECT_NAME}Targets.cmake
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/cmake/${PROJECT_NAME}
 )
