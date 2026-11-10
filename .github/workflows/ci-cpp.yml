@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y cmake ninja-build libeigen3-dev
+          sudo apt install -y cmake ninja-build libeigen3-dev clang
 
       - name: Cache CMake build
         uses: actions/cache@v4
@@ -54,9 +54,10 @@ jobs:
             cmake-${{ runner.os }}-${{ matrix.compiler }}-
 
       - name: Configure CMake
+        env:
+          CC: ${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
+          CXX: ${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
         run: |
-          # export CC=${{ matrix.compiler == 'clang' && 'clang' || 'gcc' }}
-          # export CXX=${{ matrix.compiler == 'clang' && 'clang++' || 'g++' }}
           cmake --preset=${{ matrix.build_type }}
 
       - name: Build
@@ -89,3 +90,53 @@ jobs:
           name: coverage-report
           path: coverage.html
           retention-days: 30
+
+  # The stack-of-tasks layer and the comparisons against DAQP and LexLS live in
+  # their own repositories. Build their main branches against this HQP so a
+  # change here that breaks them, or changes results against LexLS, shows up
+  # on the pull request that causes it.
+  downstream:
+    name: Downstream (hqp-tasks, hqp-compare)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout HQP
+        uses: actions/checkout@v4
+        with:
+          path: hqp
+
+      - name: Checkout hqp-tasks
+        uses: actions/checkout@v4
+        with:
+          repository: gianluca-garofalo/hqp-tasks
+          path: hqp-tasks
+
+      - name: Checkout hqp-compare
+        uses: actions/checkout@v4
+        with:
+          repository: gianluca-garofalo/hqp-compare
+          path: hqp-compare
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake ninja-build libeigen3-dev
+
+      - name: Install HQP
+        run: |
+          cmake -S hqp -B build/hqp -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF
+          cmake --install build/hqp --prefix "$GITHUB_WORKSPACE/prefix"
+
+      - name: Build, test and install hqp-tasks
+        run: |
+          cmake -S hqp-tasks -B build/hqp-tasks -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/prefix"
+          cmake --build build/hqp-tasks
+          ctest --test-dir build/hqp-tasks --output-on-failure
+          cmake --install build/hqp-tasks --prefix "$GITHUB_WORKSPACE/prefix"
+
+      - name: Build and test hqp-compare
+        run: |
+          cmake -S hqp-compare -B build/hqp-compare -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/prefix"
+          cmake --build build/hqp-compare
+          ctest --test-dir build/hqp-compare --output-on-failure
