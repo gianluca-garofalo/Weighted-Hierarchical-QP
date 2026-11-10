@@ -11,8 +11,7 @@
             "generator": "Ninja Multi-Config",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
-                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
-                "EIGEN": "ON"
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES"
             }
         },
         {

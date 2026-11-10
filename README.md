@@ -108,6 +108,17 @@ print(f"Solved successfully: {solver.is_solved()}")
 
 
 
+## Companion Repositories
+
+This repository holds only the solver: a header-only library whose sole dependency is Eigen. Two companion projects build on it:
+
+- [hqp-tasks](https://github.com/gianluca-garofalo/hqp-tasks): `hqp::Task` and `hqp::StackOfTasks`, for building the hierarchy from per-task callbacks with masks and weights, plus the `pyhqp_tasks` Python module.
+- [hqp-compare](https://github.com/gianluca-garofalo/hqp-compare): comparisons and benchmarks against DAQP and LexLS.
+
+Both use an installed HQP through `find_package(HQP)` and fall back to fetching it with CMake `FetchContent`.
+
+
+
 ## Configuration Options
 
 You can adjust solver behavior with these CMake options:
