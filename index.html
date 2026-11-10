@@ -167,13 +167,21 @@ Python Example</h2>
 <div class="line">print(f<span class="stringliteral">&quot;Status: {solver.get_status_message()}&quot;</span>)</div>
 <div class="line">print(f<span class="stringliteral">&quot;Solved successfully: {solver.is_solved()}&quot;</span>)</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+Companion Repositories</h1>
+<p>This repository holds only the solver: a header-only library whose sole dependency is Eigen. Two companion projects build on it:</p>
+<ul>
+<li><a href="https://github.com/gianluca-garofalo/hqp-tasks">hqp-tasks</a>: <code>hqp::Task</code> and <code>hqp::StackOfTasks</code>, for building the hierarchy from per-task callbacks with masks and weights, plus the <code>pyhqp_tasks</code> Python module.</li>
+<li><a href="https://github.com/gianluca-garofalo/hqp-compare">hqp-compare</a>: comparisons and benchmarks against DAQP and LexLS.</li>
+</ul>
+<p>Both use an installed HQP through <code>find_package(HQP)</code> and fall back to fetching it with CMake <code>FetchContent</code>.</p>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Configuration Options</h1>
 <p>You can adjust solver behavior with these CMake options:</p>
 <div class="fragment"><div class="line">cmake --preset=release -DHQP_TIMEOUT_SECONDS=10.0         # Set a faster timeout</div>
 <div class="line">cmake --preset=release -DHQP_MAX_ITERATIONS=5000          # Allow more iterations</div>
 <div class="line">cmake --preset=release -DHQP_ANTI_CYCLING_BUFFER_SIZE=100 # Use a bigger anti-cycling buffer</div>
 <div class="line">cmake --preset=debug -DHQP_STAGNATION_THRESHOLD=5         # Lower stagnation threshold for debugging</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md16"></a>
 Status Codes</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -195,25 +203,25 @@ Status Codes</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>UNBOUNDED</code>   </td><td class="markdownTableBodyNone">Solution is unbounded   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Testing</h1>
 <div class="fragment"><div class="line">ctest --preset=release                       # Run all tests</div>
 <div class="line">./build/tests/HQP_tests                      # Run a specific test (after preset build)</div>
 <div class="line">ctest --preset=release --output-on-failure   # Run with verbose output</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
 Documentation</h1>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Generate Docs</h2>
 <div class="fragment"><div class="line">cmake --build --preset=release --target doc</div>
 <div class="line">open build/doc/html/index.html</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md20"></a>
 API Reference</h2>
 <ul>
 <li><b>Main Class</b>: <code><a class="el" href="classhqp_1_1HierarchicalQP.html">hqp::HierarchicalQP</a></code> - Main solver class</li>
 <li><b>Status Enum</b>: <code>hqp::SolverStatus</code> - Solver status codes</li>
 <li><b>Info Struct</b>: <code>hqp::SolverInfo</code> - Solver details and stats</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Contributing</h1>
 <p>Contributions are welcome. If you find a bug or want to add a feature:</p>
 <ol type="1">
@@ -222,26 +230,26 @@ Contributing</h1>
 <li>Write tests</li>
 <li>Open a pull request</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 Development Setup</h2>
 <div class="fragment"><div class="line">git clone https://github.com/your-username/HQP.git</div>
 <div class="line">cd HQP</div>
 <div class="line">cmake --preset=debug</div>
 <div class="line">cmake --build --preset=debug</div>
 <div class="line">ctest --preset=debug</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md23"></a>
 Troubleshooting</h1>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 Common Issues</h2>
 <p><b>CMake can't find Eigen</b> </p><div class="fragment"><div class="line">sudo apt-get install libeigen3-dev  # Ubuntu/Debian</div>
 <div class="line">brew install eigen                  # macOS</div>
 </div><!-- fragment --><p><b>Solver times out</b> </p><div class="fragment"><div class="line">cmake --preset=release -DHQP_TIMEOUT_SECONDS=60.0</div>
 </div><!-- fragment --><p><b>Python bindings don't work</b> </p><div class="fragment"><div class="line">python --version</div>
 <div class="line">pip install numpy pybind11</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md25"></a>
 License</h1>
 <p>BSD 3-Clause License.</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 What's New</h1>
 <ul>
 <li>Performance improvements</li>

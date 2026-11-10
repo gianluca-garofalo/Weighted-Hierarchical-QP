@@ -1,8 +1,8 @@
 <map id="include/hqp/hqp.hpp" name="include/hqp/hqp.hpp">
-<area shape="rect" id="node1" title="Main interface for the HQP (Hierarchical Quadratic Programming) solver." alt="" coords="147,5,301,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,85,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="110,79,173,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="197,79,251,104"/>
-<area shape="rect" id="node5" title=" " alt="" coords="275,79,378,104"/>
-<area shape="rect" id="node6" title=" " alt="" coords="402,79,473,104"/>
+<area shape="rect" id="node1" title="Main interface for the HQP (Hierarchical Quadratic Programming) solver." alt="" coords="146,5,298,33"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,81,85,109"/>
+<area shape="rect" id="node3" title=" " alt="" coords="108,81,171,109"/>
+<area shape="rect" id="node4" title=" " alt="" coords="195,81,250,109"/>
+<area shape="rect" id="node5" title=" " alt="" coords="274,81,376,109"/>
+<area shape="rect" id="node6" title=" " alt="" coords="400,81,471,109"/>
 </map>

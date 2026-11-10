@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hierarchicalqp_0',['HierarchicalQP',['../classhqp_1_1HierarchicalQP.html#a20aae964624c0ead04c4566d2e663b67',1,'hqp::HierarchicalQP::HierarchicalQP(int m, int n)'],['../classhqp_1_1HierarchicalQP.html#ac9c9c2ef036e6a36860e01479d849333',1,'hqp::HierarchicalQP::HierarchicalQP(const Eigen::Matrix&lt; double, m, n &gt; &amp;matrix, const Eigen::Vector&lt; double, m &gt; &amp;lower, const Eigen::Vector&lt; double, m &gt; &amp;upper, const Eigen::Vector&lt; int, l &gt; &amp;breaks)'],['../namespacehqp.html#aea820b47af640c4051c704aa3fd3df89',1,'hqp::HierarchicalQP()']]]
+  ['lock_5fconstraint_0',['lock_constraint',['../classhqp_1_1HierarchicalQP.html#ae2b6e360af12b86ac93f27725dcf9019',1,'hqp::HierarchicalQP']]]
 ];
