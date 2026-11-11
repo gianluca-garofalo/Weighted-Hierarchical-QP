@@ -7,6 +7,7 @@ set(TARGETS
     07_template_demo
     08_warm_start
     09_equality_lock
+    10_ratio_test
 )
 
 foreach(TARGET ${TARGETS})
