@@ -1,0 +1,39 @@
+name: Install Eigen
+description: >
+  Install the distribution's libeigen3-dev from a cached .deb, so the Ubuntu
+  package mirror is only needed when the cache is empty.
+
+runs:
+  using: composite
+  steps:
+    - name: Identify the Ubuntu release
+      id: release
+      shell: bash
+      run: echo "id=$(. /etc/os-release && echo "$ID-$VERSION_ID")" >> "$GITHUB_OUTPUT"
+
+    - name: Restore the Eigen package
+      id: cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ~/.cache/eigen-deb
+        key: libeigen3-dev-${{ steps.release.outputs.id }}
+
+    - name: Download the Eigen package
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        mkdir -p ~/.cache/eigen-deb
+        sudo apt-get update
+        cd ~/.cache/eigen-deb && apt-get download libeigen3-dev
+
+    - name: Save the Eigen package
+      if: steps.cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: ~/.cache/eigen-deb
+        key: libeigen3-dev-${{ steps.release.outputs.id }}
+
+    # Its only dependency, pkg-config, is preinstalled on the runner images.
+    - name: Install the Eigen package
+      shell: bash
+      run: sudo dpkg -i ~/.cache/eigen-deb/libeigen3-dev_*.deb
