@@ -6,6 +6,7 @@ set(TARGETS
     03_set_stack
     07_template_demo
     08_warm_start
+    09_equality_lock
 )
 
 foreach(TARGET ${TARGETS})

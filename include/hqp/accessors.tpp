@@ -161,13 +161,14 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::set_problem(
 
         breaksFix_(k) = breaksAct_(k) = start;
         for (int row = start; row < breaks(k); ++row) {
+            bool isEquality = equalitySet_(row);  // activate_constraint may swap another row into row
             if (activeLowSet_(row)) {
                 activate_constraint(row, true);
             } else if (activeUpSet_(row)) {
                 activate_constraint(row, false);
             }
-            if (equalitySet_(row)) {
-                lock_constraint(breaksAct_(level_(row)) - 1);
+            if (isEquality) {
+                lock_constraint(breaksAct_(k) - 1);
             }
         }
 
