@@ -15,6 +15,7 @@ jobs:
   build-and-test:
     name: Build and Test C++ (CMake)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     strategy:
@@ -98,6 +99,7 @@ jobs:
   downstream:
     name: Downstream (hqp-tasks, hqp-compare)
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
     steps:

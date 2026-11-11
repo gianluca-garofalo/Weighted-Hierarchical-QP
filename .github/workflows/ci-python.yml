@@ -19,6 +19,7 @@ on:
 jobs:
   test-python-bindings:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -97,6 +98,7 @@ jobs:
 
   test-setup-py:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     strategy:
       matrix:
         python-version: ['3.9', '3.12']
@@ -129,6 +131,7 @@ jobs:
 
   lint-python:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
     - uses: actions/checkout@v4
 
