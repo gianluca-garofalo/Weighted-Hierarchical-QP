@@ -17,18 +17,6 @@ int HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_parent(in
 
 
 template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
-double HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_level_cost(int k) {
-    int start                             = k == 0 ? 0 : breaks_(k - 1);
-    int dim                               = breaks_(k) - start;
-    vector_.segment(start, dim).noalias() = matrix_.middleRows(start, dim) * primal_;
-    return (lower_.segment(start, dim) - vector_.segment(start, dim))
-      .cwiseMax(vector_.segment(start, dim) - upper_.segment(start, dim))
-      .cwiseMax(0.0)
-      .squaredNorm();
-}
-
-
-template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 const Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1>&
   HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::get_primal() {
     if (!primalValid_) {

@@ -1,6 +1,7 @@
 #ifndef HQP_SOLVERS_TPP
 #define HQP_SOLVERS_TPP
 
+#include <algorithm>
 #include <limits>
 
 namespace hqp {
@@ -29,64 +30,31 @@ template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
 void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_hqp() {
     Eigen::Index idx;
     int row;
-    double slack, dual, mValue;
+    double dual, mValue;
     bool isLowerBound;     // needed to distinguish between upper and lower bound in case they are both active
 
     int maxChanges = 500;  // Maximum constraint activations + deactivations
     changes        = 0;
 
-    // Lexicographic progress tracking
-    double cost, best_cost;
-    int stale, budget;
-
+    // primal_ solves the current active set, point_ moves towards it up to the first blocking constraint.
     equality_hqp();
+    point_ = primal_;
     for (int h = 0; changes < maxChanges && h < lev_; ++h) {
-        slack = dual = 1;
+        // Activate the constraints of level h already violated at point_.
+        activate_violated(h, maxChanges);
 
-        best_cost = get_level_cost(h);
-        stale     = 0;
-        budget    = 2 * (breaks_(h) - (h == 0 ? 0 : breaks_(h - 1)));
-
-        while ((slack > 0 || dual > 0) && changes < maxChanges && stale < budget) {
+        while (changes < maxChanges) {
             // Add tasks to the active set.
-            // Optimization: Constraints are explicitly partitioned and swapped so that the segment
-            // [breaksAct_(k), breaks_(k)) is guaranteed to contain only inactive constraints.
-            // Hence, checking activeUpSet_ or activeLowSet_ via select() on this segment is redundant.
-            slack = -1;
-            for (int k = 0; k < lev_; ++k) {
-                int dim = breaks_(k) - breaksAct_(k);
-                if (dim > 0) {
-                    vector_.segment(breaksAct_(k), dim).noalias() = matrix_.middleRows(breaksAct_(k), dim) * primal_;
-
-                    mValue = (vector_.segment(breaksAct_(k), dim) - upper_.segment(breaksAct_(k), dim)).maxCoeff(&idx);
-                    if (mValue > tolerance && mValue > slack) {
-                        slack        = mValue;
-                        row          = breaksAct_(k) + idx;
-                        isLowerBound = false;
-                    }
-
-                    mValue = (lower_.segment(breaksAct_(k), dim) - vector_.segment(breaksAct_(k), dim)).maxCoeff(&idx);
-                    if (mValue > tolerance && mValue > slack) {
-                        slack        = mValue;
-                        row          = breaksAct_(k) + idx;
-                        isLowerBound = true;
-                    }
-                }
-            }
-            if (slack > tolerance) {
+            double step = ratio_test(h, row, isLowerBound);
+            if (row >= 0) {
+                point_ += step * (primal_ - point_);
                 decrement_from(level_(row));
                 activate_constraint(row, isLowerBound);
                 increment_from(level_(row));
                 ++changes;
-                cost = get_level_cost(h);
-                if (best_cost - cost > tolerance) {
-                    best_cost = cost;
-                    stale     = 0;
-                } else {
-                    ++stale;
-                }
                 continue;
             }
+            point_ = primal_;
 
             // Remove tasks from the active set.
             dual_update(h);
@@ -110,13 +78,6 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                 deactivate_constraint(row);
                 increment_from(level_(row));
                 ++changes;
-                cost = get_level_cost(h);
-                if (best_cost - cost > tolerance) {
-                    best_cost = cost;
-                    stale     = 0;
-                } else {
-                    ++stale;
-                }
                 continue;
             }
 
@@ -127,8 +88,64 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::inequality_h
                     }
                 }
             }
+            break;
         }
     }
+    primal_ = point_;
+}
+
+
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::activate_violated(int h, int maxChanges) {
+    int inactive = breaks_(h) - breaksAct_(h);
+    if (inactive <= 0) {
+        return;
+    }
+
+    vector_.segment(breaksAct_(h), inactive).noalias() = matrix_.middleRows(breaksAct_(h), inactive) * point_;
+    bool activated = false;
+    // activate_constraint only swaps rows already checked into i, so vector_ stays valid ahead of i.
+    for (int i = breaksAct_(h), end = breaks_(h); i < end && changes < maxChanges; ++i) {
+        bool low = lower_(i) - vector_(i) > tolerance;
+        if (low || vector_(i) - upper_(i) > tolerance) {
+            if (!activated) {
+                decrement_from(h);
+                activated = true;
+            }
+            activate_constraint(i, low);
+            ++changes;
+        }
+    }
+    if (activated) {
+        increment_from(h);
+    }
+}
+
+template<int MaxRows, int MaxCols, int MaxLevels, int ROWS, int COLS, int LEVS>
+double HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::ratio_test(int h, int& row, bool& isLowerBound) {
+    double step = 1;
+    row         = -1;
+    for (int k = 0; k <= h; ++k) {
+        int dim = breaks_(k) - breaksAct_(k);
+        if (dim > 0) {
+            vector_.segment(breaksAct_(k), dim).noalias() = matrix_.middleRows(breaksAct_(k), dim) * primal_;
+            for (int i = breaksAct_(k); i < breaks_(k); ++i) {
+                bool up = vector_(i) - upper_(i) > tolerance;
+                if (up || lower_(i) - vector_(i) > tolerance) {
+                    // point_ satisfies the bounds, so the denominator is nonzero.
+                    double from  = matrix_.row(i).dot(point_);
+                    double bound = up ? upper_(i) : lower_(i);
+                    double t     = std::clamp((bound - from) / (vector_(i) - from), 0.0, 1.0);
+                    if (row < 0 || t < step) {
+                        step         = t;
+                        row          = i;
+                        isLowerBound = !up;
+                    }
+                }
+            }
+        }
+    }
+    return step;
 }
 
 

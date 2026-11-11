@@ -9,6 +9,7 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
   , primal_(n)
   , task_(n)
   , guess_(n)
+  , point_(n)
   , force_(n)
   , tau_(n)
   , inverse_(n, n)

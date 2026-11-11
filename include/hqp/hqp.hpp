@@ -36,6 +36,8 @@ class HierarchicalQP {
     Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> task_;
     /** Previous solution used as a warm start. */
     Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> guess_;
+    /** Iterate of the active-set search. */
+    Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> point_;
     /** Force vector for primal updates. */
     Eigen::Matrix<double, COLS, 1, Eigen::AutoAlign, MaxCols, 1> force_;
     /** Stores the tau vector for dual updates. */
@@ -107,6 +109,10 @@ class HierarchicalQP {
     void inequality_hqp();
     /** Updates dual variables. */
     void dual_update(int h);
+    /** Activates the constraints of level h violated at point_ with a single update, within maxChanges changes. */
+    void activate_violated(int h, int maxChanges);
+    /** Step from point_ towards primal_ up to the first blocking constraint of levels <= h (ratio test). */
+    double ratio_test(int h, int& row, bool& isLowerBound);
     /** Decrement solution after a change in the active set. */
     void decrement_from(int level);
     /** Increment solution after a change in the active set. */
@@ -123,8 +129,6 @@ class HierarchicalQP {
     void swap_constraints(int i, int j);
     /** Computes the parent level for a given task level. */
     int get_parent(int level);
-    /** Computes the squared constraint violation cost at a given level. */
-    double get_level_cost(int k);
 
 
   public:
