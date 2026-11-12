@@ -8,6 +8,7 @@ set(TARGETS
     08_warm_start
     09_equality_lock
     10_ratio_test
+    11_level_multipliers
 )
 
 foreach(TARGET ${TARGETS})
