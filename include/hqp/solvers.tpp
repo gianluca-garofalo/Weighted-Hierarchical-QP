@@ -161,13 +161,12 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::dual_update(
     }
     tau_.noalias() = matrix_.middleRows(start, dim).transpose() * dual_.segment(start, dim);
 
-    for (int dof = ranks_(h), k = h - 1; k >= 0; --k) {
+    for (int k = h - 1; k >= 0; --k) {
         start = k == 0 ? 0 : breaks_(k - 1);
         dim   = breaksAct_(k) - start;
         if (dim > 0) {
             if (ranks_(k) && k < k_) {
-                dof                              += ranks_(k);
-                force_.head(ranks_(k)).noalias()  = -inverse_.middleCols(col_ - dof, ranks_(k)).transpose() * tau_;
+                force_.head(ranks_(k)).noalias() = -inverse_.middleCols(col_ - dofs_(k), ranks_(k)).transpose() * tau_;
                 codMids_[k]
                   .topLeftCorner(ranks_(k), ranks_(k))
                   .template triangularView<Eigen::Upper>()
