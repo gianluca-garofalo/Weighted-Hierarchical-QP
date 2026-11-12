@@ -15,6 +15,7 @@ HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::HierarchicalQP(in
   , inverse_(n, n)
   , cholMetric_(n, n)
   , nullSpace_(n, n)
+  , projected_(m, n)
   , activeLowSet_(m)
   , activeUpSet_(m)
   , equalitySet_(m)

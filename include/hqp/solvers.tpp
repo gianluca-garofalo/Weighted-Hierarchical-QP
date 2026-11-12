@@ -243,8 +243,16 @@ void HierarchicalQP<MaxRows, MaxCols, MaxLevels, ROWS, COLS, LEVS>::increment_pr
     } else {
         nullSpace_.leftCols(dof).noalias() = codRights_[parent].middleCols(ranks_(parent), dof);
     }
-    cod_.setThreshold(tolerance);
-    cod_.compute(matrix_.middleRows(start, n_rows) * nullSpace_.leftCols(dof));
+    // Absolute rank threshold: Eigen's is relative to the largest pivot, which is noise when the rows vanish.
+    projected_.topLeftCorner(n_rows, dof).noalias() = matrix_.middleRows(start, n_rows) * nullSpace_.leftCols(dof);
+    double noise = 0, pivot = 0;
+    if (n_rows > 0) {
+        noise = tolerance * matrix_.middleRows(start, n_rows).rowwise().norm().maxCoeff() *
+                nullSpace_.leftCols(dof).colwise().norm().maxCoeff();
+        pivot = projected_.topLeftCorner(n_rows, dof).colwise().norm().maxCoeff();
+    }
+    cod_.setThreshold(pivot > noise ? noise / pivot : 1.0);
+    cod_.compute(projected_.topLeftCorner(n_rows, dof));
     ranks_(k)   = cod_.rank();
     int leftDof = dof - ranks_(k);
 

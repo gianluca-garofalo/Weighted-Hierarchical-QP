@@ -48,6 +48,8 @@ class HierarchicalQP {
     Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> cholMetric_;
     /** Reusable nullspace matrix to avoid re-instantiation. */
     Eigen::Matrix<double, COLS, COLS, Eigen::AutoAlign, MaxCols, MaxCols> nullSpace_;
+    /** Reusable projection of a level onto the remaining null space. */
+    Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols> projected_;
     /** Reusable COD decomposition to avoid repeated heap allocation. */
     Eigen::CompleteOrthogonalDecomposition<
       Eigen::Matrix<double, ROWS, COLS, Eigen::AutoAlign, MaxRows, MaxCols>> cod_;
